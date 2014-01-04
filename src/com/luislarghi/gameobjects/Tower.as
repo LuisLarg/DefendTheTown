@@ -52,7 +52,7 @@ package com.luislarghi.gameobjects
 			switch(towerType)
 			{
 				case "cura":
-					SpriteSheet = new Engine_SpriteSheet(R.BM_Cura, false, R.tileWidth, R.tileHeight);
+					SpriteSheet = new Engine_SpriteSheet(R.BM_Cura, false, R.tileWidth, 102);
 					break;
 					
 				case "perrero":

@@ -24,7 +24,7 @@ package com.luislarghi
 		
 		//External embeded images
 		[Embed(source="images/map.png")] private static const BG_Map:Class;
-		[Embed(source="images/cura.png")] private static const SS_Cura:Class;
+		[Embed(source="images/cura2.png")] private static const SS_Cura:Class;
 		[Embed(source="images/perrero.png")] private static const SS_Perrero:Class;
 		[Embed(source="images/piromano.png")] private static const SS_Piromano:Class;
 		[Embed(source="images/momia.png")] private static const SS_Momia:Class;

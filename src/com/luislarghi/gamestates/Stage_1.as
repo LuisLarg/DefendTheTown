@@ -326,7 +326,7 @@ package com.luislarghi.gamestates
 					
 					if(currentMap[clickPoint.y][clickPoint.x] == 0)
 					{
-						var tmpTower:Tower = new Tower(R.MapToScreen(clickPoint.x, clickPoint.y), R.towerTypes.tower[1]);
+						var tmpTower:Tower = new Tower(R.MapToScreen(clickPoint.x, clickPoint.y), R.towerTypes.tower[2]);
 						
 						if(Stats.money >= tmpTower.BuildCost)
 						{
