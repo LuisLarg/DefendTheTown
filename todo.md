@@ -4,7 +4,7 @@ TO DO List
 Need to Fix
 -----------
 
-- [ ] Recreate sprite-sheets with the same W and H
+- [x] Recreate sprite-sheets with the same W and H
 
 Features missing
 ----------------
