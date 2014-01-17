@@ -21,7 +21,7 @@ package com.luislarghi.gameobjects
 		private var currentLife:int;
 		private var points:int;
 		private var money:int;
-		private var maxFramePerRow:int;
+		private var maxFramesPerAnim:int;
 		private var dead:Boolean = false;
 		private var survivor:Boolean = false;
 		private var active:Boolean = false;
@@ -42,7 +42,7 @@ package com.luislarghi.gameobjects
 			this.originalLife = data.@life;
 			this.points = data.@points;
 			this.money = data.@money;
-			this.maxFramePerRow = data.@framesPerRow;
+			this.maxFramesPerAnim = data.@framePerAnim;
 		}
 		
 		protected override function Init(e:Event):void 
@@ -54,20 +54,19 @@ package com.luislarghi.gameobjects
 			switch(enemyType)
 			{
 				case "vampire":
-					SpriteSheet = new Engine_SpriteSheet(R.BM_Vampiro, false, 64, 91);
+					SpriteSheet = new Engine_SpriteSheet(R.BM_Vampiro, false, R.tileWidth, R.tileHeight * 2);
 					break;
 				
 				case "mummy":
-					SpriteSheet = new Engine_SpriteSheet(R.BM_Momia, false, 70, 72);
+					SpriteSheet = new Engine_SpriteSheet(R.BM_Momia, false, R.tileWidth, R.tileHeight * 2);
 					break;
 				
 				case "zomby":
-					SpriteSheet = new Engine_SpriteSheet(R.BM_Zomby, false, 57, 85);
+					SpriteSheet = new Engine_SpriteSheet(R.BM_Zomby, false, R.tileWidth, R.tileHeight * 2);
 					break;
 			}
 			
 			this.addChild(SpriteSheet);
-			currentAnimTile = (maxFramePerRow * 2) - 1;
 		}
 		
 		protected override function Clear(e:Event):void 
@@ -100,25 +99,25 @@ package com.luislarghi.gameobjects
 			{
 				currentAnimTile++;
 				
-				if(currentAnimTile > (maxFramePerRow * 3) - 3) currentAnimTile = (maxFramePerRow * 2) - 1;
+				if(currentAnimTile > maxFramesPerAnim - 1) currentAnimTile = 0;
 			}
 			else if(currentDirection.x == 0 && currentDirection.y == 1) //Down
 			{
 				currentAnimTile++;
 				
-				if(currentAnimTile > (maxFramePerRow * 2) - 2) currentAnimTile = maxFramePerRow;
+				if(currentAnimTile > (maxFramesPerAnim * 2) - 1) currentAnimTile = maxFramesPerAnim;
 			}
 			else if(currentDirection.x == -1 && currentDirection.y == 0) //Left
 			{
 				currentAnimTile++;
 				
-				if(currentAnimTile > (maxFramePerRow * 3) - 3) currentAnimTile = (maxFramePerRow * 2) - 1;
+				if(currentAnimTile > maxFramesPerAnim - 1) currentAnimTile = 0;
 			}
 			else if(currentDirection.x == 0 && currentDirection.y == -1) //Up
 			{
 				currentAnimTile++;
 				
-				if(currentAnimTile > maxFramePerRow - 1) currentAnimTile = 0;
+				if(currentAnimTile > (maxFramesPerAnim * 3) - 1) currentAnimTile = maxFramesPerAnim * 2;
 			}
 		}
 		
@@ -133,7 +132,7 @@ package com.luislarghi.gameobjects
 					currentDirection.y = 0;
 					currentPivot.x = 0;
 					currentPivot.y = R.tileHeight / 2;
-					currentAnimTile = (maxFramePerRow * 2) - 1;
+					//currentAnimTile = 0;
 					break;
 					
 				case 2: // Down
@@ -141,7 +140,7 @@ package com.luislarghi.gameobjects
 					currentDirection.y = 1;
 					currentPivot.x = R.tileWidth / 2;
 					currentPivot.y = 0;
-					currentAnimTile = maxFramePerRow;
+					//currentAnimTile = maxFramesPerAnim;
 					break;
 					
 				case 3: //Left
@@ -149,7 +148,7 @@ package com.luislarghi.gameobjects
 					currentDirection.y = 0;
 					currentPivot.x = R.tileWidth;
 					currentPivot.y = R.tileHeight / 2;
-					currentAnimTile = (maxFramePerRow * 2) - 1;
+					//currentAnimTile = 0;
 					break;
 					
 				case 4: //Up
@@ -157,7 +156,7 @@ package com.luislarghi.gameobjects
 					currentDirection.y = -1;
 					currentPivot.x = R.tileWidth / 2;
 					currentPivot.y = R.tileHeight;
-					if(currentAnimTile > maxFramePerRow - 1) currentAnimTile = 0;
+					//if(currentAnimTile > maxFramesPerAnim - 1) currentAnimTile = 0;
 					break;
 				
 				case -2: //Destination Reached

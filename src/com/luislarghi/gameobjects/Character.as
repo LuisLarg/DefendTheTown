@@ -13,11 +13,11 @@ package com.luislarghi.gameobjects
 	public class Character extends Sprite
 	{
 		protected var SpriteSheet:Engine_SpriteSheet;
-		protected var currentAnimTile:int;
+		protected var currentAnimTile:int = 0;
 		
 		public function Character()
 		{
-			this.scaleX = this.scaleY = Engine_Game.newScale;
+			//this.scaleX = this.scaleY = Engine_Game.newScale;
 			
 			this.addEventListener(Event.ADDED_TO_STAGE, Init);
 			this.addEventListener(Event.REMOVED_FROM_STAGE, Clear);

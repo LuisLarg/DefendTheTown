@@ -17,7 +17,7 @@ package com.luislarghi.gameobjects
 		private var deployPoint:Point;
 		private var aimDirection:Point = new Point(0, 1);
 		private var towerType:String;
-		private var maxFramePerRow:int;
+		private var maxFramePerAnim:int;
 		
 		private var shootRate:int;
 		private var counter:int;
@@ -31,7 +31,7 @@ package com.luislarghi.gameobjects
 			this.towerType = data.@name;
 			this.shootRate = data.@shootRate;
 			this.cost = data.@cost;
-			this.maxFramePerRow = data.@framesPerRow;
+			this.maxFramePerAnim = data.@framePerAnim;
 			
 			this.x = deployPoint.x + (R.tileWidth / 2);
 			this.y = deployPoint.y + (R.tileHeight / 2);
@@ -52,15 +52,15 @@ package com.luislarghi.gameobjects
 			switch(towerType)
 			{
 				case "cura":
-					SpriteSheet = new Engine_SpriteSheet(R.BM_Cura, false, R.tileWidth, 102);
+					SpriteSheet = new Engine_SpriteSheet(R.BM_Cura, false, R.tileWidth, R.tileHeight * 2);
 					break;
 					
 				case "perrero":
-					SpriteSheet = new Engine_SpriteSheet(R.BM_Perrero, false, 57, 69);
+					SpriteSheet = new Engine_SpriteSheet(R.BM_Perrero, false, R.tileWidth, R.tileHeight * 2);
 					break;
 				
 				case "piromano":
-					SpriteSheet = new Engine_SpriteSheet(R.BM_Piromano, false, 64, 77);
+					SpriteSheet = new Engine_SpriteSheet(R.BM_Piromano, false, R.tileWidth, R.tileHeight * 2);
 					break;
 			}
 			
@@ -119,7 +119,7 @@ package com.luislarghi.gameobjects
 				aimDirection.x = -1;
 				aimDirection.y = 0;
 				
-				currentAnimTile = (maxFramePerRow * 2) - 1;
+				currentAnimTile = 0;
 				SpriteSheet.scaleX = -1;
 			}
 			else if(this.rotation < -45 && this.rotation >= -135) //Aim Up
@@ -127,7 +127,7 @@ package com.luislarghi.gameobjects
 				aimDirection.x = 0;
 				aimDirection.y = -1;
 				
-				currentAnimTile = 0;
+				currentAnimTile = maxFramePerAnim * 2;
 				SpriteSheet.scaleX = 1;
 			}
 			else if((this.rotation < -135 && this.rotation >= -180) || (this.rotation > 0 && this.rotation <= 45)) //Aim Right
@@ -135,7 +135,7 @@ package com.luislarghi.gameobjects
 				aimDirection.x = 1;
 				aimDirection.y = 0;
 				
-				currentAnimTile = (maxFramePerRow * 2) - 1;
+				currentAnimTile = 0;
 				SpriteSheet.scaleX = 1;
 			}
 			else if(this.rotation > 45 && this.rotation >= 135) //Aim Down
@@ -143,7 +143,7 @@ package com.luislarghi.gameobjects
 				aimDirection.x = 0;
 				aimDirection.y = 1;
 				
-				currentAnimTile = maxFramePerRow;
+				currentAnimTile = maxFramePerAnim;
 				SpriteSheet.scaleX = 1;
 			}
 		}
@@ -156,10 +156,10 @@ package com.luislarghi.gameobjects
 				{
 					currentAnimTile++;
 					
-					if(currentAnimTile > (maxFramePerRow * 3) - 3) currentAnimTile = (maxFramePerRow * 2) - 1;
+					if(currentAnimTile > maxFramePerAnim - 1) currentAnimTile = 0;
 				}
 				else
-					currentAnimTile = (maxFramePerRow * 2) - 1;
+					currentAnimTile = 0;
 			}
 			else if(aimDirection.x == 0 && aimDirection.y == 1) //Down
 			{
@@ -167,10 +167,10 @@ package com.luislarghi.gameobjects
 				{
 					currentAnimTile++;
 					
-					if(currentAnimTile > (maxFramePerRow * 2) - 2) currentAnimTile = maxFramePerRow;
+					if(currentAnimTile > (maxFramePerAnim * 2) - 1) currentAnimTile = maxFramePerAnim;
 				}
 				else
-					currentAnimTile = maxFramePerRow;
+					currentAnimTile = maxFramePerAnim;
 			}
 			else if(aimDirection.x == -1 && aimDirection.y == 0) //Left
 			{
@@ -178,10 +178,10 @@ package com.luislarghi.gameobjects
 				{
 					currentAnimTile++;
 					
-					if(currentAnimTile > (maxFramePerRow * 3) - 3) currentAnimTile = (maxFramePerRow * 2) - 1;
+					if(currentAnimTile > maxFramePerAnim - 1) currentAnimTile = 0;
 				}
 				else
-					currentAnimTile = (maxFramePerRow * 2) - 1;
+					currentAnimTile = 0;
 			}
 			else if(aimDirection.x == 0 && aimDirection.y == -1) //Up
 			{
@@ -189,10 +189,10 @@ package com.luislarghi.gameobjects
 				{
 					currentAnimTile++;
 					
-					if(currentAnimTile > maxFramePerRow - 1) currentAnimTile = 0;
+					if(currentAnimTile > (maxFramePerAnim * 3) - 1) currentAnimTile = maxFramePerAnim * 2;
 				}
 				else
-					currentAnimTile = 0;
+					currentAnimTile = maxFramePerAnim * 2;
 			}
 		}
 		

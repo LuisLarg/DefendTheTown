@@ -6,12 +6,12 @@ A tower defense game halloween themed.
 Game Story
 ----------
 
-In the old days, every Oct 31th a little town gets attacked by monsters hungry for human flesh. Every citizen must protect his town until the end of that day, in order to survive.
+In the old days, every Oct. 31th a little town gets attacked by monsters hungry for human flesh. Every citizen must protect his town until the end of that day, in order to survive.
 
 Game Objective
 --------------
 
-Place citizens along the road that leads to the town. Each citizen has a special attack effect that deals more damage to one monster in particulary than others. The special attack effect goes like this:
+Place citizens along the road that leads to the town. Each citizen has a special attack effect that deals more damage to one monster in particularly than others. The special attack effect goes like this:
 
 <table>
 <tr>
@@ -33,8 +33,21 @@ Until the time runs out, try to defend the town from the monsters attack!
 Technical Info.
 ---------------
 
-- <b>Lenguaje:</b> ActionScript 3.
+- <b>Language:</b> ActionScript 3.
 - <b>IDE:</b> Flash Builder 4.6.
 - <b>Platforms:</b> all that Adobe Air supports.
+- <b>3rd-Party Tech.:</b> Adobe Flash Pro 6 (to create Sprites) | Inkscape 0.48 (to create SpriteSheets).
+- I used [my own game engine](https://github.com/Xertz/MyFirstEngine)
 
-I used [my own game engine](https://github.com/Xertz/MyFirstEngine)
+TO DO List
+----------
+
+<b>Need to Fix</b>
+
+- [x] Recreate sprite-sheets with the same W and H.
+- [ ] Resolution handling for multiple resolutions.
+
+<b>Features missing</b>
+
+- [ ] Citizen HUD icons to pick witch one to place.
+- [ ] Implement corresponding code for the citizen HUD icons.

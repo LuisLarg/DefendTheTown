@@ -24,12 +24,12 @@ package com.luislarghi
 		
 		//External embeded images
 		[Embed(source="images/map.png")] private static const BG_Map:Class;
-		[Embed(source="images/cura2.png")] private static const SS_Cura:Class;
-		[Embed(source="images/perrero.png")] private static const SS_Perrero:Class;
-		[Embed(source="images/piromano.png")] private static const SS_Piromano:Class;
-		[Embed(source="images/momia.png")] private static const SS_Momia:Class;
-		[Embed(source="images/vampiro.png")] private static const SS_Vampiro:Class;
-		[Embed(source="images/zomby.png")] private static const SS_Zomby:Class;		
+		[Embed(source="images/Cura_SpriteSheet.png")] private static const SS_Cura:Class;
+		[Embed(source="images/Perrero_SpriteSheet.png")] private static const SS_Perrero:Class;
+		[Embed(source="images/Piromano_SpriteSheet.png")] private static const SS_Piromano:Class;
+		[Embed(source="images/Momia_SpriteSheet.png")] private static const SS_Momia:Class;
+		[Embed(source="images/Vampiro_SpriteSheet.png")] private static const SS_Vampiro:Class;
+		[Embed(source="images/Zomby_SpriteSheet.png")] private static const SS_Zomby:Class;		
 		[Embed(source="images/thumnails.png")] private static const SS_HUD:Class;
 		[Embed(source="images/boton.png")] private static const SS_Button:Class;
 		[Embed(source="images/mainmenu.png")] private static const BG_MainMenu:Class;
