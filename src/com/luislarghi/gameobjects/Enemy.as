@@ -69,16 +69,15 @@ package com.luislarghi.gameobjects
 					break;
 			}
 			
-			SpriteSheet.x = deadPoint.x;
-			SpriteSheet.y = deadPoint.y - R.tileHeight;
-			Stage_1.gameObjContainer.addChild(SpriteSheet);
+			SpriteSheet.y -= R.tileHeight;
+			this.addChild(SpriteSheet);
 		}
 		
 		protected override function Clear(e:Event):void 
 		{ 
 			super.Clear(e);
 			
-			Stage_1.gameObjContainer.removeChild(SpriteSheet);
+			this.removeChild(SpriteSheet);
 			
 			SpriteSheet = null;
 			enemyType = null;
@@ -92,9 +91,6 @@ package com.luislarghi.gameobjects
 			{
 				this.x += speed * currentDirection.x;
 				this.y += speed * currentDirection.y;
-				
-				SpriteSheet.x = this.x;
-				SpriteSheet.y = this.y - R.tileHeight;
 				
 				CheckDirection();
 				UpdateAnim();
@@ -145,7 +141,8 @@ package com.luislarghi.gameobjects
 					currentDirection.y = 0;
 					currentPivot.x = 0;
 					currentPivot.y = R.tileHeight / 2;
-					//SpriteSheet.scaleX = 1;
+					SpriteSheet.scaleX = 1;
+					SpriteSheet.x = 0;
 					if(directionChanged) currentAnimTile = 0;
 					break;
 					
@@ -154,7 +151,8 @@ package com.luislarghi.gameobjects
 					currentDirection.y = 1;
 					currentPivot.x = R.tileWidth / 2;
 					currentPivot.y = 0;
-					//this.scaleX = 1;
+					SpriteSheet.scaleX = 1;
+					SpriteSheet.x = 0;
 					if(directionChanged) currentAnimTile = maxFramesPerAnim;
 					break;
 					
@@ -163,7 +161,8 @@ package com.luislarghi.gameobjects
 					currentDirection.y = 0;
 					currentPivot.x = R.tileWidth;
 					currentPivot.y = R.tileHeight / 2;
-					//SpriteSheet.scaleX = -1;
+					SpriteSheet.scaleX = -1;
+					SpriteSheet.x = R.tileWidth;
 					if(directionChanged) currentAnimTile = 0;
 					break;
 					
@@ -172,7 +171,8 @@ package com.luislarghi.gameobjects
 					currentDirection.y = -1;
 					currentPivot.x = R.tileWidth / 2;
 					currentPivot.y = R.tileHeight;
-					//this.scaleX = 1;
+					SpriteSheet.scaleX = 1;
+					SpriteSheet.x = 0;
 					if(directionChanged) currentAnimTile = maxFramesPerAnim * 2;
 					break;
 				
@@ -199,8 +199,8 @@ package com.luislarghi.gameobjects
 		public function Kill():void 
 		{ 
 			dead = true;
-			this.x = SpriteSheet.x = deadPoint.x;
-			this.y = SpriteSheet.y = deadPoint.y;
+			this.x = deadPoint.x;
+			this.y = deadPoint.y;
 		}
 		
 		public function Activate():void 
@@ -219,8 +219,8 @@ package com.luislarghi.gameobjects
 				}
 			}
 			
-			this.x = SpriteSheet.x = spawnPoint.x;
-			this.y = SpriteSheet.y = spawnPoint.y;
+			this.x = spawnPoint.x;
+			this.y = spawnPoint.y;
 		}
 		
 		public function Deactivate():void

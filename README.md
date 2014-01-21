@@ -36,7 +36,7 @@ Technical Info.
 - <b>Language:</b> ActionScript 3.
 - <b>IDE:</b> Flash Builder 4.6.
 - <b>Platforms:</b> all that Adobe Air supports.
-- <b>3rd-Party Tech.:</b> Adobe Flash Pro 6 (to create Sprites) | Inkscape 0.48 (to create SpriteSheets).
+- <b>3rd-Party Tech.:</b> Adobe Flash Pro 6 (to create Sprite Animations) | Inkscape 0.48 (to create SpriteSheets).
 - I used [my own game engine](https://github.com/Xertz/MyFirstEngine)
 
 TO DO List
@@ -46,11 +46,13 @@ TO DO List
 
 - [x] Recreate sprite-sheets with the same W and H.
 - [ ] Resolution handling for multiple resolutions.
-- [ ] Monsters proper rotation.
+- [x] Monsters proper rotation.
 
 <b>Features missing</b>
 
 - [x] Citizen HUD icons to pick witch one to place.
 - [x] Implement corresponding code for the citizen HUD icons.
+- [ ] Add corresponding price for each citizen inside the HUD icons.
+- [ ] Dim a HUD icons when there's no money to pay it's corresponding citizen.
 - [ ] Two more levels.
 - [ ] Code for ending a level and switch to the next one.

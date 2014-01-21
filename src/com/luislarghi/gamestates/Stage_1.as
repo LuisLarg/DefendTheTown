@@ -253,21 +253,29 @@ package com.luislarghi.gamestates
 		
 		private function CheckForBulletsCollition():void
 		{
+			// For each active bullet
 			for(var b:int = 0; b < bullets.length; b++)
 			{
+				// search each enemy in the current wave
 				for(var i:int = 0; i < R.waves[Stats.currentWave].length; i++)
 				{
+					// and if the current bullet collides with the current enemy
 					if(bullets[b].hitTestObject(R.waves[Stats.currentWave][i]))
 					{
+						// deal the corresponding damage to that enemy
 						R.waves[Stats.currentWave][i].Hit(bullets[b].Damage);
 						
+						// deactivate the bullet
 						gameObjContainer.removeChild(bullets[b]);
 						bullets.splice(b, 1);
 						
+						// and if the current enemy dies
 						if(R.waves[Stats.currentWave][i].Life <= 0)
 						{
+							// increase the points and money stats
 							Stats.score += R.waves[Stats.currentWave][i].PointsWorth;
 							Stats.money += R.waves[Stats.currentWave][i].MoneyDropped;
+							// then kill that enemy 
 							R.waves[Stats.currentWave][i].Kill();
 						}
 						
@@ -323,7 +331,7 @@ package com.luislarghi.gamestates
 			// If the game is not paused or finnished
 			if(!pause && !gameOver)
 			{
-				// and if the position clicked is not a non-HUD Button Object
+				// and if the position clicked is a map tile or a HUD Button Object
 				if(!(e.target.parent is GUI_Button) && currentBuildMode != R.NULLMODE)
 				{
 					var clickPoint:Point = R.ScreenToMap(new Point(e.stageX, e.stageY));
@@ -336,19 +344,18 @@ package com.luislarghi.gamestates
 						if(currentBuildMode == R.PIROMODE) towerType = 0;
 						else if(currentBuildMode == R.PERROMODE) towerType = 1;
 						else if(currentBuildMode == R.CURAMODE) towerType = 2;
-						
-						//then create the tower object in that position, updating the game stats as wells
-						var tmpTower:Tower = new Tower(R.MapToScreen(clickPoint.x, clickPoint.y), R.towerTypes.tower[towerType]);
-						
-						if(Stats.money >= tmpTower.BuildCost)
+
+						// then check if there's money to build the selected tower type
+						if(Stats.money >= R.towerTypes.tower[towerType].@cost)
 						{
+							// create the tower in that position
+							var tmpTower:Tower = new Tower(R.MapToScreen(clickPoint.x, clickPoint.y), R.towerTypes.tower[towerType]);
 							gameObjContainer.addChild(tmpTower);
 							towers.push(tmpTower);
 							
+							// and update stats and stuff
 							Stats.money -= tmpTower.BuildCost;
-							
 							currentMap[clickPoint.y][clickPoint.x] = -3;
-							
 							currentBuildMode = R.NULLMODE;
 						}
 					}

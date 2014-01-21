@@ -44,15 +44,15 @@ package com.luislarghi.gui
 			Stage_1.guiContainer.addChild(TF_Score);
 			Stage_1.guiContainer.addChild(TF_Money);
 			Stage_1.guiContainer.addChild(TF_TownH);
+			Stage_1.guiContainer.addChild(BT_CuraIcon);
+			Stage_1.guiContainer.addChild(BT_PiroIcon);
+			Stage_1.guiContainer.addChild(BT_PerroIcon);
 			Stage_1.guiContainer.addChild(window);
 			Stage_1.guiContainer.addChild(TF_WinLabel);
 			Stage_1.guiContainer.addChild(BT_Resume);
 			Stage_1.guiContainer.addChild(BT_Menu);
 			Stage_1.guiContainer.addChild(BT_Replay);
 			Stage_1.guiContainer.addChild(BT_Exit);
-			Stage_1.guiContainer.addChild(BT_CuraIcon);
-			Stage_1.guiContainer.addChild(BT_PiroIcon);
-			Stage_1.guiContainer.addChild(BT_PerroIcon);
 		}
 		
 		public override function Clear():void
@@ -60,15 +60,15 @@ package com.luislarghi.gui
 			Stage_1.guiContainer.removeChild(TF_Score);
 			Stage_1.guiContainer.removeChild(TF_Money);
 			Stage_1.guiContainer.removeChild(TF_TownH);
+			Stage_1.guiContainer.removeChild(BT_CuraIcon);
+			Stage_1.guiContainer.removeChild(BT_PiroIcon);
+			Stage_1.guiContainer.removeChild(BT_PerroIcon);
 			Stage_1.guiContainer.removeChild(window);
 			Stage_1.guiContainer.removeChild(TF_WinLabel);
 			Stage_1.guiContainer.removeChild(BT_Resume);
 			Stage_1.guiContainer.removeChild(BT_Menu);
 			Stage_1.guiContainer.removeChild(BT_Replay);
 			Stage_1.guiContainer.removeChild(BT_Exit);
-			Stage_1.guiContainer.removeChild(BT_CuraIcon);
-			Stage_1.guiContainer.removeChild(BT_PiroIcon);
-			Stage_1.guiContainer.removeChild(BT_PerroIcon);
 		}
 		
 		private function CreateWindow():void

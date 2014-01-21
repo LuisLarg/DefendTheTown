@@ -1,6 +1,7 @@
 package com.luislarghi.gui
 {
 	import com.luislarghi.R;
+	import com.luislarghi.gameobjects.Tower;
 	import com.luislarghi.gamestates.Stage_1;
 	import com.luislarghi.myfirtsengine.Engine_Game;
 	import com.luislarghi.myfirtsengine.Engine_SoundManager;
@@ -24,6 +25,7 @@ package com.luislarghi.gui
 		private var currentAnimFrame:int = 0;
 		
 		private var TF_Label:TextField;
+		private var TF_TowerCost:TextField;
 		private var TF_Format:TextFormat;
 		
 		private var mainGame:Engine_Game;
@@ -58,6 +60,7 @@ package com.luislarghi.gui
 			this.addChild(spriteSheet);
 			
 			this.addChild(TF_Label);
+			this.addChild(TF_TowerCost);
 		}
 		
 		private function Clear(e:Event):void
@@ -68,6 +71,7 @@ package com.luislarghi.gui
 			
 			this.removeChild(spriteSheet);
 			this.removeChild(TF_Label);
+			this.removeChild(TF_TowerCost);
 			
 			spriteSheet = null;
 			TF_Label = null;
@@ -84,8 +88,18 @@ package com.luislarghi.gui
 				TF_Label.text = text;
 				TF_Label.x = (btWidth / 2) - (TF_Label.width / 2);
 				TF_Label.y = (btHeight / 2) - 30;
-				TF_Label.selectable = false;
-				TF_Label.mouseEnabled = false;
+				TF_Label.selectable = TF_Label.mouseEnabled = false;
+			}
+			
+			if(!TF_TowerCost)
+			{
+				TF_TowerCost = new TextField();
+				if(state == R.PIROMODE) TF_TowerCost.text = R.towerTypes.tower[0].@cost;
+				else if(state == R.PERROMODE) TF_TowerCost.text = R.towerTypes.tower[1].@cost;
+				else if(state == R.CURAMODE) TF_TowerCost.text = R.towerTypes.tower[2].@cost;
+				TF_TowerCost.x = btWidth - 30;
+				TF_TowerCost.y = btHeight - 23;
+				TF_TowerCost.selectable = TF_TowerCost.mouseEnabled = false;
 			}
 			
 			if(!TF_Format)
