@@ -46,8 +46,11 @@ TO DO List
 
 - [x] Recreate sprite-sheets with the same W and H.
 - [ ] Resolution handling for multiple resolutions.
+- [ ] Monsters proper rotation.
 
 <b>Features missing</b>
 
-- [ ] Citizen HUD icons to pick witch one to place.
-- [ ] Implement corresponding code for the citizen HUD icons.
+- [x] Citizen HUD icons to pick witch one to place.
+- [x] Implement corresponding code for the citizen HUD icons.
+- [ ] Two more levels.
+- [ ] Code for ending a level and switch to the next one.

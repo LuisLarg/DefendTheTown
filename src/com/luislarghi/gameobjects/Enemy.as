@@ -33,6 +33,9 @@ package com.luislarghi.gameobjects
 		private var spawnPoint:Point;
 		private var deadPoint:Point = new Point(999, 999);
 		
+		private var directionChanged:Boolean = false;
+		private var lastDir:int = 1;
+		
 		function Enemy(data:XML)
 		{
 			super();
@@ -66,14 +69,16 @@ package com.luislarghi.gameobjects
 					break;
 			}
 			
-			this.addChild(SpriteSheet);
+			SpriteSheet.x = deadPoint.x;
+			SpriteSheet.y = deadPoint.y - R.tileHeight;
+			Stage_1.gameObjContainer.addChild(SpriteSheet);
 		}
 		
 		protected override function Clear(e:Event):void 
 		{ 
 			super.Clear(e);
 			
-			this.removeChild(SpriteSheet);
+			Stage_1.gameObjContainer.removeChild(SpriteSheet);
 			
 			SpriteSheet = null;
 			enemyType = null;
@@ -87,6 +92,9 @@ package com.luislarghi.gameobjects
 			{
 				this.x += speed * currentDirection.x;
 				this.y += speed * currentDirection.y;
+				
+				SpriteSheet.x = this.x;
+				SpriteSheet.y = this.y - R.tileHeight;
 				
 				CheckDirection();
 				UpdateAnim();
@@ -125,14 +133,20 @@ package com.luislarghi.gameobjects
 		{
 			currentMP = R.ScreenToMap(localToGlobal(currentPivot));
 			
-			switch(R.map[currentMP.y][currentMP.x])
+			var newDir:int = R.map[currentMP.y][currentMP.x];
+			
+			if(lastDir != newDir) directionChanged = true;
+			else directionChanged = false;
+			
+			switch(newDir)
 			{
 				case 1: // Right
 					currentDirection.x = 1;
 					currentDirection.y = 0;
 					currentPivot.x = 0;
 					currentPivot.y = R.tileHeight / 2;
-					//currentAnimTile = 0;
+					//SpriteSheet.scaleX = 1;
+					if(directionChanged) currentAnimTile = 0;
 					break;
 					
 				case 2: // Down
@@ -140,7 +154,8 @@ package com.luislarghi.gameobjects
 					currentDirection.y = 1;
 					currentPivot.x = R.tileWidth / 2;
 					currentPivot.y = 0;
-					//currentAnimTile = maxFramesPerAnim;
+					//this.scaleX = 1;
+					if(directionChanged) currentAnimTile = maxFramesPerAnim;
 					break;
 					
 				case 3: //Left
@@ -148,7 +163,8 @@ package com.luislarghi.gameobjects
 					currentDirection.y = 0;
 					currentPivot.x = R.tileWidth;
 					currentPivot.y = R.tileHeight / 2;
-					//currentAnimTile = 0;
+					//SpriteSheet.scaleX = -1;
+					if(directionChanged) currentAnimTile = 0;
 					break;
 					
 				case 4: //Up
@@ -156,13 +172,16 @@ package com.luislarghi.gameobjects
 					currentDirection.y = -1;
 					currentPivot.x = R.tileWidth / 2;
 					currentPivot.y = R.tileHeight;
-					//if(currentAnimTile > maxFramesPerAnim - 1) currentAnimTile = 0;
+					//this.scaleX = 1;
+					if(directionChanged) currentAnimTile = maxFramesPerAnim * 2;
 					break;
 				
 				case -2: //Destination Reached
 					survivor = true;
 					break;
 			}
+			
+			lastDir = newDir;
 		}
 		
 		private function Revive():void
@@ -180,8 +199,8 @@ package com.luislarghi.gameobjects
 		public function Kill():void 
 		{ 
 			dead = true;
-			this.x = deadPoint.x;
-			this.y = deadPoint.y;
+			this.x = SpriteSheet.x = deadPoint.x;
+			this.y = SpriteSheet.y = deadPoint.y;
 		}
 		
 		public function Activate():void 
@@ -200,8 +219,8 @@ package com.luislarghi.gameobjects
 				}
 			}
 			
-			this.x = spawnPoint.x;
-			this.y = spawnPoint.y;
+			this.x = SpriteSheet.x = spawnPoint.x;
+			this.y = SpriteSheet.y = spawnPoint.y;
 		}
 		
 		public function Deactivate():void

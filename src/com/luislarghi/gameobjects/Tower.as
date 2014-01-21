@@ -33,8 +33,8 @@ package com.luislarghi.gameobjects
 			this.cost = data.@cost;
 			this.maxFramePerAnim = data.@framePerAnim;
 			
-			this.x = deployPoint.x + (R.tileWidth / 2);
-			this.y = deployPoint.y + (R.tileHeight / 2);
+			this.x = deployPoint.x + R.tileWidth / 2;
+			this.y = deployPoint.y + R.tileHeight / 2;
 		}
 		
 		protected override function Init(e:Event):void
@@ -65,7 +65,7 @@ package com.luislarghi.gameobjects
 			}
 			
 			SpriteSheet.x = deployPoint.x;
-			SpriteSheet.y = deployPoint.y;
+			SpriteSheet.y = deployPoint.y - R.tileHeight;
 			Stage_1.gameObjContainer.addChild(SpriteSheet);
 			currentAnimTile = 0;
 		}
@@ -120,7 +120,7 @@ package com.luislarghi.gameobjects
 				aimDirection.y = 0;
 				
 				currentAnimTile = 0;
-				SpriteSheet.scaleX = -1;
+				this.scaleX = -1;
 			}
 			else if(this.rotation < -45 && this.rotation >= -135) //Aim Up
 			{
@@ -128,7 +128,7 @@ package com.luislarghi.gameobjects
 				aimDirection.y = -1;
 				
 				currentAnimTile = maxFramePerAnim * 2;
-				SpriteSheet.scaleX = 1;
+				this.scaleX = 1;
 			}
 			else if((this.rotation < -135 && this.rotation >= -180) || (this.rotation > 0 && this.rotation <= 45)) //Aim Right
 			{
@@ -136,7 +136,7 @@ package com.luislarghi.gameobjects
 				aimDirection.y = 0;
 				
 				currentAnimTile = 0;
-				SpriteSheet.scaleX = 1;
+				this.scaleX = 1;
 			}
 			else if(this.rotation > 45 && this.rotation >= 135) //Aim Down
 			{
@@ -144,7 +144,7 @@ package com.luislarghi.gameobjects
 				aimDirection.y = 1;
 				
 				currentAnimTile = maxFramePerAnim;
-				SpriteSheet.scaleX = 1;
+				this.scaleX = 1;
 			}
 		}
 		

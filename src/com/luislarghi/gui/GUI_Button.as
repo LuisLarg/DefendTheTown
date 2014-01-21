@@ -21,7 +21,7 @@ package com.luislarghi.gui
 	{
 		private var spriteSheet:Engine_SpriteSheet;
 		private var currentSpriteS:Bitmap;
-		private var currentAnimFrame:int;
+		private var currentAnimFrame:int = 0;
 		
 		private var TF_Label:TextField;
 		private var TF_Format:TextFormat;
@@ -56,7 +56,6 @@ package com.luislarghi.gui
 			
 			spriteSheet = new Engine_SpriteSheet(currentSpriteS, false, btWidth, btHeight);
 			this.addChild(spriteSheet);
-			currentAnimFrame = 0;
 			
 			this.addChild(TF_Label);
 		}

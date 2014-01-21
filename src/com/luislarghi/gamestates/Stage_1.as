@@ -38,7 +38,7 @@ package com.luislarghi.gamestates
 		
 		private var keysMapper:Array;
 
-		public static var currentBuildMode:int = 0;
+		public static var currentBuildMode:int = R.NULLMODE;
 		private static var towers:Vector.<Tower> = new Vector.<Tower>;
 		public static var bullets:Vector.<Bullet> = new Vector.<Bullet>;
 		
@@ -188,6 +188,8 @@ package com.luislarghi.gamestates
 			}
 			
 			GUI_component.Logic();
+			
+			trace("Build mode=" + currentBuildMode);
 		}
 		
 		private function CheckForNextWave():Boolean
@@ -318,15 +320,25 @@ package com.luislarghi.gamestates
 		
 		private function CheckClick(e:MouseEvent):void
 		{
+			// If the game is not paused or finnished
 			if(!pause && !gameOver)
 			{
-				if(!(e.target.parent is GUI_Button))
+				// and if the position clicked is not a non-HUD Button Object
+				if(!(e.target.parent is GUI_Button) && currentBuildMode != R.NULLMODE)
 				{
 					var clickPoint:Point = R.ScreenToMap(new Point(e.stageX, e.stageY));
 					
+					// check first if the position clicked is buildable
 					if(currentMap[clickPoint.y][clickPoint.x] == 0)
 					{
-						var tmpTower:Tower = new Tower(R.MapToScreen(clickPoint.x, clickPoint.y), R.towerTypes.tower[2]);
+						var towerType:int = 0;
+						
+						if(currentBuildMode == R.PIROMODE) towerType = 0;
+						else if(currentBuildMode == R.PERROMODE) towerType = 1;
+						else if(currentBuildMode == R.CURAMODE) towerType = 2;
+						
+						//then create the tower object in that position, updating the game stats as wells
+						var tmpTower:Tower = new Tower(R.MapToScreen(clickPoint.x, clickPoint.y), R.towerTypes.tower[towerType]);
 						
 						if(Stats.money >= tmpTower.BuildCost)
 						{
@@ -336,6 +348,8 @@ package com.luislarghi.gamestates
 							Stats.money -= tmpTower.BuildCost;
 							
 							currentMap[clickPoint.y][clickPoint.x] = -3;
+							
+							currentBuildMode = R.NULLMODE;
 						}
 					}
 				}

@@ -2,6 +2,7 @@ package com.luislarghi
 {
 	import com.luislarghi.gameobjects.Enemy;
 	import com.luislarghi.gameobjects.Stats;
+	import com.luislarghi.myfirtsengine.Engine_Game;
 	
 	import flash.display.Bitmap;
 	import flash.events.Event;
@@ -51,10 +52,10 @@ package com.luislarghi
 		public static const tileWidth:int = 64;
 		
 		//Tower build modes
-		public static const CURAMODE:int = -1;
+		public static const NULLMODE:int = -1;
 		public static const PIROMODE:int = -2;
 		public static const PERROMODE:int = -3;
-		public static const NULLMODE:int = 0;
+		public static const CURAMODE:int = -4;
 		
 		//Map grid array
 		public static const map:Array = new Array([-3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3],
@@ -73,7 +74,7 @@ package com.luislarghi
 		//Helper functions
 		public static function ScreenToMap(screen:Point):Point
 		{
-			return new Point(int(screen.x / tileWidth), int(screen.y / tileHeight));
+			return new Point(int(screen.x / (tileWidth * Engine_Game.newScale)), int(screen.y / (tileHeight * Engine_Game.newScale)));
 		}
 		
 		public static function MapToScreen(col:int, row:int):Point
