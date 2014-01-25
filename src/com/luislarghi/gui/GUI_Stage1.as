@@ -28,11 +28,12 @@ package com.luislarghi.gui
 		private var BT_Resume:GUI_Button;
 		private var BT_Menu:GUI_Button;
 		private var BT_Replay:GUI_Button;
+		private var BT_Next:GUI_Button;
 		private var BT_Exit:GUI_Button;
 		
-		private var BT_CuraIcon:GUI_Button;
-		private var BT_PiroIcon:GUI_Button;
-		private var BT_PerroIcon:GUI_Button;
+		private var BT_CuraIcon:GUI_HUDButton;
+		private var BT_PiroIcon:GUI_HUDButton;
+		private var BT_PerroIcon:GUI_HUDButton;
 		
 		public function GUI_Stage1(g:Engine_Game) { super(Main.mainStage, g); }
 		
@@ -52,6 +53,7 @@ package com.luislarghi.gui
 			Stage_1.guiContainer.addChild(BT_Resume);
 			Stage_1.guiContainer.addChild(BT_Menu);
 			Stage_1.guiContainer.addChild(BT_Replay);
+			Stage_1.guiContainer.addChild(BT_Next);
 			Stage_1.guiContainer.addChild(BT_Exit);
 		}
 		
@@ -68,6 +70,7 @@ package com.luislarghi.gui
 			Stage_1.guiContainer.removeChild(BT_Resume);
 			Stage_1.guiContainer.removeChild(BT_Menu);
 			Stage_1.guiContainer.removeChild(BT_Replay);
+			Stage_1.guiContainer.removeChild(BT_Next);
 			Stage_1.guiContainer.removeChild(BT_Exit);
 		}
 		
@@ -117,6 +120,14 @@ package com.luislarghi.gui
 				BT_Replay.x = Engine_Game.orgGameRes.x / 2 - BT_Replay.Size().x - 5;
 				BT_Replay.y = (Engine_Game.orgGameRes.y / 2)- (BT_Replay.Size().y / 2);
 				BT_Replay.visible = false;
+			}
+			
+			if(!BT_Next)
+			{
+				BT_Next = new GUI_Button("Next", 280, 97, mainGame, R.BM_Button, 100);					
+				BT_Next.x = Engine_Game.orgGameRes.x / 2 - BT_Next.Size().x - 5;
+				BT_Next.y = (Engine_Game.orgGameRes.y / 2)- (BT_Next.Size().y / 2);
+				BT_Next.visible = false;
 			}
 			
 			if(!BT_Exit) 
@@ -170,7 +181,7 @@ package com.luislarghi.gui
 		{
 			if(!BT_CuraIcon)
 			{
-				BT_CuraIcon = new GUI_Button(" ", 128, 128, mainGame, R.BM_HUD, R.CURAMODE);
+				BT_CuraIcon = new GUI_HUDButton(" ", 128, 128, mainGame, R.BM_HUD, R.CURAMODE);
 				BT_CuraIcon.x = (Engine_Game.orgGameRes.x / 2) + BT_CuraIcon.Size().x;
 				BT_CuraIcon.y = Engine_Game.orgGameRes.y - (BT_CuraIcon.Size().y / 2) - BT_CuraIcon.Size().y;
 				BT_CuraIcon.ChangeAnimation(1);
@@ -178,7 +189,7 @@ package com.luislarghi.gui
 			
 			if(!BT_PiroIcon)
 			{
-				BT_PiroIcon = new GUI_Button(" ", 128, 128, mainGame, R.BM_HUD, R.PIROMODE);
+				BT_PiroIcon = new GUI_HUDButton(" ", 128, 128, mainGame, R.BM_HUD, R.PIROMODE);
 				BT_PiroIcon.x = (Engine_Game.orgGameRes.x / 2) - (BT_PiroIcon.Size().x * 2);
 				BT_PiroIcon.y = Engine_Game.orgGameRes.y - (BT_PiroIcon.Size().y / 2) - BT_PiroIcon.Size().y;
 				BT_PiroIcon.ChangeAnimation(2);
@@ -186,7 +197,7 @@ package com.luislarghi.gui
 			
 			if(!BT_PerroIcon)
 			{
-				BT_PerroIcon = new GUI_Button(" ", 128, 128, mainGame, R.BM_HUD, R.PERROMODE);
+				BT_PerroIcon = new GUI_HUDButton(" ", 128, 128, mainGame, R.BM_HUD, R.PERROMODE);
 				BT_PerroIcon.x = (Engine_Game.orgGameRes.x / 2) - (BT_PerroIcon.Size().x / 2);
 				BT_PerroIcon.y = Engine_Game.orgGameRes.y - (BT_PerroIcon.Size().y / 2) - BT_PerroIcon.Size().y;
 				BT_PerroIcon.ChangeAnimation(0);
@@ -225,16 +236,27 @@ package com.luislarghi.gui
 			}
 			else if(Stage_1.GetGameOver())
 			{
-				if(Stats.townHealth > 0) TF_WinLabel.text = "You Win!";
-				else TF_WinLabel.text = "You Lose!";
+				if(Stats.townHealth > 0)
+				{
+					TF_WinLabel.text = "You Win!";
+					BT_Next.visible = true;
+				}
+				else 
+				{
+					TF_WinLabel.text = "You Lose!";
+					BT_Replay.visible = true;
+				}
 				
-				window.visible = BT_Replay.visible = BT_Exit.visible = TF_WinLabel.visible = true;
+				window.visible = BT_Exit.visible = TF_WinLabel.visible = true;
 				
 				TF_WinLabel.setTextFormat(TF_Format, 0, TF_WinLabel.length);
 				TF_WinLabel.autoSize = TextFieldAutoSize.CENTER;
 			}
 			else
-				window.visible = BT_Resume.visible = BT_Menu.visible = BT_Replay.visible = BT_Exit.visible = TF_WinLabel.visible = false;
+			{
+				window.visible = BT_Resume.visible = BT_Next.visible = BT_Menu.visible = false;
+				BT_Replay.visible = BT_Exit.visible = TF_WinLabel.visible = false;
+			}			
 		}
 	}
 }

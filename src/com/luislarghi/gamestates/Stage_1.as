@@ -3,11 +3,22 @@ package com.luislarghi.gamestates
 	import com.luislarghi.Game;
 	import com.luislarghi.R;
 	import com.luislarghi.gameobjects.Bullet;
+	import com.luislarghi.gameobjects.Dog;
+	import com.luislarghi.gameobjects.Dogman;
 	import com.luislarghi.gameobjects.Enemy;
+	import com.luislarghi.gameobjects.GlintLight;
+	import com.luislarghi.gameobjects.Monk;
+	import com.luislarghi.gameobjects.Mummy;
 	import com.luislarghi.gameobjects.Stats;
+	import com.luislarghi.gameobjects.Torch;
+	import com.luislarghi.gameobjects.TorchThrower;
 	import com.luislarghi.gameobjects.Tower;
+	import com.luislarghi.gameobjects.Vampire;
+	import com.luislarghi.gameobjects.Zomby;
 	import com.luislarghi.gui.GUI_Button;
+	import com.luislarghi.gui.GUI_HUDButton;
 	import com.luislarghi.gui.GUI_Stage1;
+	import com.luislarghi.myfirtsengine.Engine_GUIButton;
 	import com.luislarghi.myfirtsengine.Engine_Game;
 	import com.luislarghi.myfirtsengine.Engine_GameState;
 	import com.luislarghi.myfirtsengine.Engine_SpriteSheet;
@@ -35,6 +46,7 @@ package com.luislarghi.gamestates
 	{
 		private var currentBGimg:Engine_SpriteSheet;
 		public static var currentMap:Array;
+		public static var changingLevel:Boolean;
 		
 		private var keysMapper:Array;
 
@@ -48,6 +60,7 @@ package com.luislarghi.gamestates
 		
 		public static var gameObjContainer:Sprite;
 		public static var guiContainer:Sprite;
+		private var levelContainer:Sprite;
 		
 		public function Stage_1(g:Game) { super(Main.mainStage, g); }
 		
@@ -57,21 +70,22 @@ package com.luislarghi.gamestates
 			
 			Stats.Reset();
 			
-			ChangeLevel();
+			changingLevel = true;
 			
-			this.addChild(currentBGimg);
+			gameObjContainer = new Sprite();
+			guiContainer = new Sprite();
+			levelContainer = new Sprite();
 			
-			if(!gameObjContainer) gameObjContainer = new Sprite();
-			if(!guiContainer) guiContainer = new Sprite();
-			
-			this.addChild(gameObjContainer);
-			this.addChild(guiContainer);
+			this.addChildAt(levelContainer, 0);
+			this.addChildAt(gameObjContainer, 1);
+			this.addChildAt(guiContainer, 2);			
 			
 			for(var row:int = 0; row < R.waves.length; row++) 
 			{
 				for (var col:int = 0; col < R.waves[row].length; col++) 
 				{
 					gameObjContainer.addChild(R.waves[row][col]);
+					R.waves[row][col].Init();
 				}
 			}
 			
@@ -106,7 +120,7 @@ package com.luislarghi.gamestates
 			
 			R.ResetWaves();
 			
-			this.removeChild(currentBGimg);
+			levelContainer.removeChild(currentBGimg);
 			currentBGimg = null;
 			currentMap = null;
 			
@@ -117,11 +131,13 @@ package com.luislarghi.gamestates
 				for (var col:int = 0; col < R.waves[row].length; col++) 
 				{
 					gameObjContainer.removeChild(R.waves[row][col]);
+					R.waves[row][col].Clear();
 				}
 			}
 			
 			this.removeChild(gameObjContainer);
 			this.removeChild(guiContainer);
+			this.removeChild(levelContainer);
 			
 			towers.length = bullets.length = 0;
 			
@@ -163,6 +179,14 @@ package com.luislarghi.gamestates
 		
 		public override function Logic():void
 		{
+			if(changingLevel)
+			{
+				if(currentBGimg != null && levelContainer.contains(currentBGimg)) levelContainer.removeChild(currentBGimg);
+				ChangeLevel();
+				levelContainer.addChild(currentBGimg);
+				changingLevel = false;
+			}
+			
 			if(!pause && R.xmlReady &&!gameOver)
 			{	
 				CheckForDeadBullets();
@@ -188,8 +212,6 @@ package com.luislarghi.gamestates
 			}
 			
 			GUI_component.Logic();
-			
-			trace("Build mode=" + currentBuildMode);
 		}
 		
 		private function CheckForNextWave():Boolean
@@ -262,8 +284,18 @@ package com.luislarghi.gamestates
 					// and if the current bullet collides with the current enemy
 					if(bullets[b].hitTestObject(R.waves[Stats.currentWave][i]))
 					{
-						// deal the corresponding damage to that enemy
-						R.waves[Stats.currentWave][i].Hit(bullets[b].Damage);
+						// verify if get a special attack or not
+						if((bullets[b] is Torch && R.waves[Stats.currentWave][i] is Zomby) ||
+						   (bullets[b] is GlintLight && R.waves[Stats.currentWave][i] is Vampire) ||
+						   (bullets[b] is Dog && R.waves[Stats.currentWave][i] is Mummy))
+						{
+							R.waves[Stats.currentWave][i].Hit(bullets[b].Damage * 2);
+						}
+						else 
+						{
+							R.waves[Stats.currentWave][i].Hit(bullets[b].Damage);
+						}
+
 						
 						// deactivate the bullet
 						gameObjContainer.removeChild(bullets[b]);
@@ -285,7 +317,7 @@ package com.luislarghi.gamestates
 			}
 		}
 		
-		private function ChangeLevel():void
+		public function ChangeLevel():void
 		{
 			switch(Stats.currentStage)
 			{
@@ -297,31 +329,33 @@ package com.luislarghi.gamestates
 					break;
 				
 				case 2:
-					currentBGimg = new Engine_SpriteSheet(R.BM_Map, false, 1280, 768);
+					currentBGimg = new Engine_SpriteSheet(R.BM_Map2, false, 1280, 768);
 					currentBGimg.drawTile(0);
 					currentMap = new Array();
-					currentMap = R.CopyMultiDArray(R.map);
+					currentMap = R.CopyMultiDArray(R.map2);
 					break;
 				
 				case 3:
-					currentBGimg = new Engine_SpriteSheet(R.BM_Map, false, 1280, 768);
+					currentBGimg = new Engine_SpriteSheet(R.BM_Map3, false, 1280, 768);
 					currentBGimg.drawTile(0);
 					currentMap = new Array();
-					currentMap = R.CopyMultiDArray(R.map);
+					currentMap = R.CopyMultiDArray(R.map3);
 					break;
 			}
 			
 			Stats.currentStage++;
 			Stats.currentWave = 0;
+			Stats.money = 6;
 			R.ResetWaves();
 			ResetObjects();
 			gameOver = false;
+			changingLevel = true;
 		}
 		
 		private function ResetObjects():void
 		{
-			for(var t:int = 0; t < towers.length; t++) gameObjContainer.removeChild(towers[t]);
-			for(var b:int = 0; b < bullets.length; b++) gameObjContainer.removeChild(bullets[b]);
+			for(var t:int = 0; t < towers.length; t++) { gameObjContainer.removeChild(towers[t]); towers[t].Clear(); }
+			for(var b:int = 0; b < bullets.length; b++) { gameObjContainer.removeChild(bullets[b]); bullets[b].Clear(); }
 			
 			towers.length = bullets.length = 0;
 		}
@@ -332,32 +366,27 @@ package com.luislarghi.gamestates
 			if(!pause && !gameOver)
 			{
 				// and if the position clicked is a map tile or a HUD Button Object
-				if(!(e.target.parent is GUI_Button) && currentBuildMode != R.NULLMODE)
+				if((!(e.target.parent is Engine_GUIButton) || !(e.target.parent is GUI_HUDButton)) && currentBuildMode != R.NULLMODE)
 				{
 					var clickPoint:Point = R.ScreenToMap(new Point(e.stageX, e.stageY));
 					
 					// check first if the position clicked is buildable
 					if(currentMap[clickPoint.y][clickPoint.x] == 0)
 					{
-						var towerType:int = 0;
+						var tmpTower:Tower;
 						
-						if(currentBuildMode == R.PIROMODE) towerType = 0;
-						else if(currentBuildMode == R.PERROMODE) towerType = 1;
-						else if(currentBuildMode == R.CURAMODE) towerType = 2;
-
-						// then check if there's money to build the selected tower type
-						if(Stats.money >= R.towerTypes.tower[towerType].@cost)
-						{
-							// create the tower in that position
-							var tmpTower:Tower = new Tower(R.MapToScreen(clickPoint.x, clickPoint.y), R.towerTypes.tower[towerType]);
-							gameObjContainer.addChild(tmpTower);
-							towers.push(tmpTower);
-							
-							// and update stats and stuff
-							Stats.money -= tmpTower.BuildCost;
-							currentMap[clickPoint.y][clickPoint.x] = -3;
-							currentBuildMode = R.NULLMODE;
-						}
+						if(currentBuildMode == R.PIROMODE) tmpTower = new TorchThrower(R.MapToScreen(clickPoint.x, clickPoint.y), R.towerTypes.tower[0]);
+						else if(currentBuildMode == R.PERROMODE) tmpTower = new Dogman(R.MapToScreen(clickPoint.x, clickPoint.y), R.towerTypes.tower[1]);
+						else if(currentBuildMode == R.CURAMODE) tmpTower = new Monk(R.MapToScreen(clickPoint.x, clickPoint.y), R.towerTypes.tower[2]);
+						
+						gameObjContainer.addChild(tmpTower);
+						tmpTower.Init();
+						towers.push(tmpTower);
+						
+						// and update stats and stuff
+						Stats.money -= tmpTower.BuildCost;
+						currentMap[clickPoint.y][clickPoint.x] = -3;
+						currentBuildMode = R.NULLMODE;
 					}
 				}
 			}

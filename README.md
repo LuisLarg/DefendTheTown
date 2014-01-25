@@ -47,12 +47,18 @@ TO DO List
 - [x] Recreate sprite-sheets with the same W and H.
 - [ ] Resolution handling for multiple resolutions.
 - [x] Monsters proper rotation.
+- [ ] Proper object destruction when restarting the game.
 
 <b>Features missing</b>
 
 - [x] Citizen HUD icons to pick witch one to place.
 - [x] Implement corresponding code for the citizen HUD icons.
-- [ ] Add corresponding price for each citizen inside the HUD icons.
-- [ ] Dim a HUD icons when there's no money to pay it's corresponding citizen.
-- [ ] Two more levels.
-- [ ] Code for ending a level and switch to the next one.
+- [x] Add corresponding price label for each citizen inside the HUD icons.
+- [x] Dim a HUD icons when there's no money to pay it's corresponding citizen.
+- [x] Two more levels.
+- [x] Code for ending a level and switch to the next one.
+- [ ] Add sorting mechanism for sprites.
+- [ ] Add bullet sprite for each citizen.
+- [ ] Add sound when firing bullet, for each citizen.
+- [ ] Add sound when placing a citizen, for each citizen.
+- [ ] Add sound when killing a monster, for each monster.

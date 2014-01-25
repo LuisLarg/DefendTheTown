@@ -13,20 +13,12 @@ package com.luislarghi.gameobjects
 	public class Character extends Sprite
 	{
 		protected var SpriteSheet:Engine_SpriteSheet;
-		protected var currentAnimTile:int = 0;
+		protected var currentAnimTile:int;
 		
-		public function Character()
-		{
-			//this.scaleX = this.scaleY = Engine_Game.newScale;
-			
-			this.addEventListener(Event.ADDED_TO_STAGE, Init);
-			this.addEventListener(Event.REMOVED_FROM_STAGE, Clear);
-		}
-		
-		protected function Init(e:Event):void { this.removeEventListener(Event.ADDED_TO_STAGE, Init); }
-		protected function Clear(e:Event):void { this.removeEventListener(Event.ADDED_TO_STAGE, Clear); }
+		public function Init():void { currentAnimTile = 0; }
+		public function Clear():void { }
 		protected function UpdateAnim():void {}
 		public function Logic():void {}
-		public function Draw():void {}
+		public function Draw():void { SpriteSheet.drawTile(currentAnimTile); }
 	}
 }

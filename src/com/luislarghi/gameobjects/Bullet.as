@@ -4,7 +4,7 @@ package com.luislarghi.gameobjects
 	import flash.display.Stage;
 	import flash.events.Event;
 	
-	public class Bullet extends Sprite
+	public class Bullet extends Character
 	{
 		private var speed:Number = 20;
 		private var dead:Boolean = false;
@@ -15,16 +15,9 @@ package com.luislarghi.gameobjects
 			this.x = posX;
 			this.y = posY;
 			this.rotation = rot;
-			
-			this.addEventListener(Event.ADDED_TO_STAGE, Init);
-			this.addEventListener(Event.REMOVED_FROM_STAGE, Clear);
 		}
 		
-		private function Init(e:Event):void { }
-		
-		private function Clear(e:Event):void { }
-		
-		public function Draw():void
+		public override function Draw():void
 		{
 			this.graphics.clear();
 			this.graphics.beginFill(0xDA32D2);
@@ -32,7 +25,7 @@ package com.luislarghi.gameobjects
 			this.graphics.endFill();
 		}
 		
-		public function Logic():void
+		public override function Logic():void
 		{
 			if(!dead)
 			{

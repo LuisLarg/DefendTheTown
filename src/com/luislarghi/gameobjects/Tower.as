@@ -13,22 +13,18 @@ package com.luislarghi.gameobjects
 	public class Tower extends Character
 	{
 		private var collitionArea:Sprite;
-		private var nearestEnemy:Enemy;
-		private var deployPoint:Point;
-		private var aimDirection:Point = new Point(0, 1);
-		private var towerType:String;
+		protected var nearestEnemy:Enemy;
+		protected var deployPoint:Point;
+		private var aimDirection:Point;
 		private var maxFramePerAnim:int;
 		
-		private var shootRate:int;
-		private var counter:int;
+		protected var shootRate:int;
+		protected var counter:int;
 		private var cost:int;
 		
 		public function Tower(tile:Point, data:XML)
 		{
-			super();
-			
 			this.deployPoint = tile;
-			this.towerType = data.@name;
 			this.shootRate = data.@shootRate;
 			this.cost = data.@cost;
 			this.maxFramePerAnim = data.@framePerAnim;
@@ -37,9 +33,11 @@ package com.luislarghi.gameobjects
 			this.y = deployPoint.y + R.tileHeight / 2;
 		}
 		
-		protected override function Init(e:Event):void
+		public override function Init():void
 		{
-			super.Init(e);
+			super.Init();
+			
+			aimDirection = new Point(0, 1);
 			
 			if(!collitionArea) collitionArea = new Sprite();
 			collitionArea.x = (this.x - (R.tileWidth / 2)) - R.tileWidth;
@@ -49,42 +47,19 @@ package com.luislarghi.gameobjects
 			collitionArea.visible = false;
 			Stage_1.gameObjContainer.addChild(collitionArea);
 			
-			switch(towerType)
-			{
-				case "cura":
-					SpriteSheet = new Engine_SpriteSheet(R.BM_Cura, false, R.tileWidth, R.tileHeight * 2);
-					break;
-					
-				case "perrero":
-					SpriteSheet = new Engine_SpriteSheet(R.BM_Perrero, false, R.tileWidth, R.tileHeight * 2);
-					break;
-				
-				case "piromano":
-					SpriteSheet = new Engine_SpriteSheet(R.BM_Piromano, false, R.tileWidth, R.tileHeight * 2);
-					break;
-			}
-			
-			SpriteSheet.x = deployPoint.x;
-			SpriteSheet.y = deployPoint.y - R.tileHeight;
-			Stage_1.gameObjContainer.addChild(SpriteSheet);
 			currentAnimTile = 0;
 		}
 		
-		protected override function Clear(e:Event):void
+		public override function Clear():void
 		{
-			super.Clear(e);
-			
 			Stage_1.gameObjContainer.removeChild(collitionArea);
 			Stage_1.gameObjContainer.removeChild(SpriteSheet);
 			
 			SpriteSheet = null;		
 			collitionArea = null;
 			nearestEnemy = null;
-			towerType = null;
 		}
-		
-		public override function Draw():void { SpriteSheet.drawTile(currentAnimTile); }
-		
+	
 		public override function Logic():void
 		{
 			NearestEnemy();
@@ -196,21 +171,7 @@ package com.luislarghi.gameobjects
 			}
 		}
 		
-		private function Shoot():void
-		{
-			if(nearestEnemy)
-			{
-				counter += Main.mainStage.frameRate * shootRate / 1000;
-				
-				if(counter >= shootRate)
-				{
-					var bullet:Bullet = new Bullet(this.x, this.y, this.rotation);
-					Stage_1.gameObjContainer.addChild(bullet);
-					Stage_1.bullets.push(bullet);
-					counter = 0;
-				}
-			}
-		}
+		protected function Shoot():void { }
 		
 		public function get BuildCost():int { return cost; }
 	}

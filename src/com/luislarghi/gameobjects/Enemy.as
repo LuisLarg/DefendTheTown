@@ -13,34 +13,28 @@ package com.luislarghi.gameobjects
 	
 	public class Enemy extends Character
 	{
-		private var enemyType:String;
 		private var speed:int;
-		private var originalDirection:Point = new Point(1, 0);
-		private var currentDirection:Point = new Point();
+		private var currentDirection:Point;
 		private var originalLife:int;
 		private var currentLife:int;
 		private var points:int;
 		private var money:int;
 		private var maxFramesPerAnim:int;
-		private var dead:Boolean = false;
-		private var survivor:Boolean = false;
-		private var active:Boolean = false;
+		private var dead:Boolean;
+		private var survivor:Boolean;
+		private var active:Boolean;
 		
 		private var currentMP:Point;
-		private var originalPivot:Point = new Point(0, R.tileHeight / 2);
-		private var currentPivot:Point = new Point();
+		private var currentPivot:Point;
+		private var multipleChoiceTile:Boolean;
 		
 		private var spawnPoint:Point;
-		private var deadPoint:Point = new Point(999, 999);
 		
-		private var directionChanged:Boolean = false;
-		private var lastDir:int = 1;
+		private var directionChanged:Boolean;
+		private var lastDir:int;
 		
 		function Enemy(data:XML)
 		{
-			super();
-			
-			this.enemyType = data.@name;
 			this.speed = data.@speed;
 			this.originalLife = data.@life;
 			this.points = data.@points;
@@ -48,42 +42,18 @@ package com.luislarghi.gameobjects
 			this.maxFramesPerAnim = data.@framePerAnim;
 		}
 		
-		protected override function Init(e:Event):void 
+		public override function Init():void 
 		{
-			super.Init(e);
-			
+			super.Init();
+
 			Revive();
-			
-			switch(enemyType)
-			{
-				case "vampire":
-					SpriteSheet = new Engine_SpriteSheet(R.BM_Vampiro, false, R.tileWidth, R.tileHeight * 2);
-					break;
-				
-				case "mummy":
-					SpriteSheet = new Engine_SpriteSheet(R.BM_Momia, false, R.tileWidth, R.tileHeight * 2);
-					break;
-				
-				case "zomby":
-					SpriteSheet = new Engine_SpriteSheet(R.BM_Zomby, false, R.tileWidth, R.tileHeight * 2);
-					break;
-			}
-			
-			SpriteSheet.y -= R.tileHeight;
-			this.addChild(SpriteSheet);
 		}
 		
-		protected override function Clear(e:Event):void 
+		public override function Clear():void 
 		{ 
-			super.Clear(e);
-			
-			this.removeChild(SpriteSheet);
-			
+			this.removeChild(SpriteSheet);		
 			SpriteSheet = null;
-			enemyType = null;
 		}
-		
-		public override function Draw():void { SpriteSheet.drawTile(currentAnimTile); }
 		
 		public override function Logic():void
 		{
@@ -129,7 +99,19 @@ package com.luislarghi.gameobjects
 		{
 			currentMP = R.ScreenToMap(localToGlobal(currentPivot));
 			
-			var newDir:int = R.map[currentMP.y][currentMP.x];
+			var newDir:int = Stage_1.currentMap[currentMP.y][currentMP.x];
+			
+			if(newDir == -4 && !multipleChoiceTile) 
+			{
+				newDir = int(R.RandomBetween(2, 4, true));
+				multipleChoiceTile = true;
+			}
+			else if(newDir == -5 && !multipleChoiceTile)
+			{
+				newDir = int(R.RandomBetween(1, 4, true));
+				multipleChoiceTile = true;
+			}
+			else if(newDir > -3) multipleChoiceTile = false;
 			
 			if(lastDir != newDir) directionChanged = true;
 			else directionChanged = false;
@@ -187,20 +169,24 @@ package com.luislarghi.gameobjects
 		private function Revive():void
 		{
 			dead = false;
-			this.x = deadPoint.x;
-			this.y = deadPoint.y;
-			currentPivot.x = originalPivot.x;
-			currentPivot.y = originalPivot.y;
-			currentDirection.x = originalDirection.x;
-			currentDirection.y = originalDirection.y;
+			survivor = false;
+			active = false;			
+			multipleChoiceTile = false;
+			directionChanged = false;
+			lastDir= 1;
+			
+			this.x = R.deadPoint.x;
+			this.y = R.deadPoint.y;
+			currentPivot = new Point(0, R.tileHeight / 2);
+			currentDirection = new Point(1, 0);
 			currentLife = originalLife;
 		}
 		
 		public function Kill():void 
 		{ 
 			dead = true;
-			this.x = deadPoint.x;
-			this.y = deadPoint.y;
+			this.x = R.deadPoint.x;
+			this.y = R.deadPoint.y;
 		}
 		
 		public function Activate():void 
@@ -211,7 +197,7 @@ package com.luislarghi.gameobjects
 			{
 				for(var col:int = 0; col < Stage_1.currentMap[row].length; col++)
 				{
-					if(R.map[row][col] == -1)
+					if(Stage_1.currentMap[row][col] == -1)
 					{
 						spawnPoint = R.MapToScreen(col, row);
 						break;

@@ -1,7 +1,10 @@
 package com.luislarghi
 {
 	import com.luislarghi.gameobjects.Enemy;
+	import com.luislarghi.gameobjects.Mummy;
 	import com.luislarghi.gameobjects.Stats;
+	import com.luislarghi.gameobjects.Vampire;
+	import com.luislarghi.gameobjects.Zomby;
 	import com.luislarghi.myfirtsengine.Engine_Game;
 	
 	import flash.display.Bitmap;
@@ -25,6 +28,8 @@ package com.luislarghi
 		
 		//External embeded images
 		[Embed(source="images/map.png")] private static const BG_Map:Class;
+		[Embed(source="images/map2.png")] private static const BG_Map2:Class;
+		[Embed(source="images/map3.png")] private static const BG_Map3:Class;
 		[Embed(source="images/Cura_SpriteSheet.png")] private static const SS_Cura:Class;
 		[Embed(source="images/Perrero_SpriteSheet.png")] private static const SS_Perrero:Class;
 		[Embed(source="images/Piromano_SpriteSheet.png")] private static const SS_Piromano:Class;
@@ -37,6 +42,8 @@ package com.luislarghi
 		
 		//Instances of each image
 		public static var BM_Map:Bitmap = new BG_Map();
+		public static var BM_Map2:Bitmap = new BG_Map2();
+		public static var BM_Map3:Bitmap = new BG_Map3();
 		public static var BM_MainMenu:Bitmap = new BG_MainMenu();
 		public static var BM_Cura:Bitmap = new SS_Cura();
 		public static var BM_Perrero:Bitmap = new SS_Perrero();
@@ -57,19 +64,45 @@ package com.luislarghi
 		public static const PERROMODE:int = -3;
 		public static const CURAMODE:int = -4;
 		
-		//Map grid array
-		public static const map:Array = new Array([-3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3],
- 												  [-3, -3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-												  [-1, 1, 1, 1, 1, 1, 1, 2, 0, 1, 1, 1, 2, 0, 1, 1, 1, 1, 2, 0],
-												  [-3, 0, 0, 0, 0, 0, 0, 2, 0, 4, 0, 0, 2, -3, 4, 0, 0, 0, 2, 0],
-												  [0, 2, 3, 3, 3, 3, 3, 3, 0, 4, 0, 0, 2, 0, 4, 0, -3, 0, 2, 0],
-												  [0, 2, 0, 0, 0, 0, 0, 0, -3, 4, 0, 0, 2, 0, 4, 0, 0, 0, 2, 0],
-												  [0, 1, 1, 2, 0, 1, 1, 2, 0, 4, 0, 0, 2, 0, 4, 0, 2, 3, 3, 0],
-												  [0, 0, 0, 2, 0, 4, 0, 2, 0, 4, 0, 0, 1, 1, 4, 0, 2, 0, 0, -3],
-												  [0, -3, 0, 1, 1, 4, 0, 1, 1, 4, 0, -3, 0, 0, 0, 0, 1, 1, 1, -2],
-												  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -3, -3],
-												  [-3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3],
-												  [-3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3]);
+		//Map grid arrays
+		public static const map:Array = new Array([ -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3],
+ 												  [ -3, -3,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
+												  [ -1,  1,  1,  1,  1,  1,  1,  2,  0,  1,  1,  1,  2,  0,  1,  1,  1,  1,  2,  0],
+												  [ -3,  0,  0,  0,  0,  0,  0,  2,  0,  4,  0,  0,  2, -3,  4,  0,  0,  0,  2,  0],
+												  [  0,  2,  3,  3,  3,  3,  3,  3,  0,  4,  0,  0,  2,  0,  4,  0, -3,  0,  2,  0],
+												  [  0,  2,  0,  0,  0,  0,  0,  0, -3,  4,  0,  0,  2,  0,  4,  0,  0,  0,  2,  0],
+												  [  0,  1,  1,  2,  0,  1,  1,  2,  0,  4,  0,  0,  2,  0,  4,  0,  2,  3,  3,  0],
+												  [  0,  0,  0,  2,  0,  4,  0,  2,  0,  4,  0,  0,  1,  1,  4,  0,  2,  0,  0, -3],
+												  [  0, -3,  0,  1,  1,  4,  0,  1,  1,  4,  0, -3,  0,  0,  0,  0,  1,  1,  1, -2],
+												  [  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, -3, -3],
+												  [ -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3],
+												  [ -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3]);
+		
+		public static const map2:Array = new Array([ -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3],
+												   [ -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3],
+												   [ -3, -3,  0, -3,  0, -3,  0, -3, -3, -3,  0,  0,  0, -3, -3,  0, -3,  1,  1, -2],
+												   [ -3, -3, -3,  1,  1,  1,  1,  1,  1,  2, -3,  1,  2, -3,  0,  0,  0,  4, -3, -3],
+												   [ -3, -3,  0,  4,  0,  0,  0, -3,  0,  2,  0,  4,  2,  0,  1,  1,  1,  4, -3, -3],
+												   [ -3, -3,  0,  4,  0,  2,  3,  3,  3,  3,  0,  4,  2,  0,  4,  0,  0, -3, -3, -3],
+												   [ -3, -3,  0,  4, -3,  2,  0,  0,  0,  0, -3,  4,  2,  0,  4,  3,  3,  0, -3, -3],
+												   [ -3, -3,  0,  4,  0,  2,  0,  0,  0,  0, -3,  4,  2,  0, -3, -3,  4,  0, -3, -3],
+												   [ -3, -3,  0,  4,  0,  1,  1,  1,  1,  1,  1,  4,  1,  1,  1,  1,  4,  0, -3, -3],
+												   [ -1,  1,  1,  4, -3,  0, -3,  0,  0, -3,  0, -3, -3, -3,  0,  0,  0,  0, -3, -3],
+												   [ -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3],
+												   [ -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3]);
+		
+		public static const map3:Array = new Array([ -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3],
+											       [ -3, -3,  1,  1,  1,  2, -3,  1,  1,  1,  1,  2,  0,  1,  1,  2, -3, -3, -3, -3],
+												   [ -3, -3,  4, -3,  0,  2,  0,  4, -3,  0,  0,  2,  0,  4,  0,  2, -3, -3, -3, -2],
+												   [ -3, -3,  4,  0,  0,  2, -3,  4,  0, -3,  0,  1,  1,  4,  0,  1,  2, -3, -3, -3],
+												   [ -3, -3,  4,  0, -3,  2,  0,  4,  3,  3,  3,  0,  1,  1,  2,  0,  2, -3, -3, -3],
+												   [ -3, -3,  4, -3,  0,  2,  0, -3,  0,  0,  4,  0,  4,  0,  2,  0,  1,  1,  1, -2],
+												   [ -1,  1, -4,  0,  0,  1,  1,  1,  1,  1, -5,  1,  4, -3,  1,  1,  4, -3, -3, -3],
+												   [ -3, -3,  2,  0, -3,  0,  1,  1,  2,  1,  2,  0,  1,  2,  0,  1,  4, -3, -3, -3],
+												   [ -3, -3,  2,  0,  0,  0,  4,  0,  2,  4,  2, -3,  4,  2,  0,  4,  0, -3, -3, -3],
+												   [ -3, -3,  2,  0,  0, -3,  4,  0,  2,  4,  2,  0,  4,  2,  0,  4,  0, -3, -3, -3],
+												   [ -3, -3,  1,  1,  1,  1,  4, -3,  1,  4,  1,  1,  4,  1,  1,  4, -3, -3, -3, -3],
+												   [ -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3]);
 		
 		//Helper functions
 		public static function ScreenToMap(screen:Point):Point
@@ -89,6 +122,18 @@ package com.luislarghi
 			return tmpArray;
 		}
 		
+		public static function RandomBetween(min:Number, max:Number, exclusively:Boolean = false):Number
+		{
+			if(exclusively)
+			{
+				var randValue:int = int(RandomBetween(0, 1));
+				
+				if(randValue) return min;
+				else return max;
+			}
+			else return Math.floor(Math.random() * (1 + max - min) + min);
+		}
+		
 		private static var fileStream:FileStream;
 		private static var bytes:ByteArray;
 		private static var content:String = "";
@@ -97,6 +142,7 @@ package com.luislarghi
 		public static var waveEnemies:XMLList;
 		public static var towerTypes:XMLList;
 		public static var waves:Vector.<Vector.<Enemy>> = new Vector.<Vector.<Enemy>>;
+		public static var deadPoint:Point = new Point(999, 999);
 		
 		public static function LoadXML():void
 		{		
@@ -131,9 +177,14 @@ package com.luislarghi
 				
 				for (var i:int = 0; i < waveEnemies.wave.(@id==String(waveCounter + 1)).enemy.length(); i++) 
 				{
-					enemy = new Enemy(waveEnemies.wave.(@id==String(waveCounter + 1)).enemy[enemyCounter]);
-					waves[waveCounter].push(enemy);
+					if(waveEnemies.wave.(@id==String(waveCounter + 1)).enemy[enemyCounter].@name == "zomby")
+						enemy = new Zomby(waveEnemies.wave.(@id==String(waveCounter + 1)).enemy[enemyCounter]);
+					else if(waveEnemies.wave.(@id==String(waveCounter + 1)).enemy[enemyCounter].@name == "mummy")
+						enemy = new Mummy(waveEnemies.wave.(@id==String(waveCounter + 1)).enemy[enemyCounter]);
+					else if(waveEnemies.wave.(@id==String(waveCounter + 1)).enemy[enemyCounter].@name == "vampire")
+						enemy = new Vampire(waveEnemies.wave.(@id==String(waveCounter + 1)).enemy[enemyCounter]);
 					
+					waves[waveCounter].push(enemy);
 					enemyCounter++;
 				}
 				
