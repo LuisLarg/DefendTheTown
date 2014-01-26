@@ -21,6 +21,7 @@ package com.luislarghi.gui
 		private var TF_Score:TextField;
 		private var TF_Money:TextField;
 		private var TF_TownH:TextField;
+		private var TF_WaveN:TextField;
 		private var TF_Format:TextFormat;
 		
 		private var window:Sprite;
@@ -45,6 +46,7 @@ package com.luislarghi.gui
 			Stage_1.guiContainer.addChild(TF_Score);
 			Stage_1.guiContainer.addChild(TF_Money);
 			Stage_1.guiContainer.addChild(TF_TownH);
+			Stage_1.guiContainer.addChild(TF_WaveN);
 			Stage_1.guiContainer.addChild(BT_CuraIcon);
 			Stage_1.guiContainer.addChild(BT_PiroIcon);
 			Stage_1.guiContainer.addChild(BT_PerroIcon);
@@ -62,6 +64,7 @@ package com.luislarghi.gui
 			Stage_1.guiContainer.removeChild(TF_Score);
 			Stage_1.guiContainer.removeChild(TF_Money);
 			Stage_1.guiContainer.removeChild(TF_TownH);
+			Stage_1.guiContainer.removeChild(TF_WaveN);
 			Stage_1.guiContainer.removeChild(BT_CuraIcon);
 			Stage_1.guiContainer.removeChild(BT_PiroIcon);
 			Stage_1.guiContainer.removeChild(BT_PerroIcon);
@@ -144,7 +147,7 @@ package com.luislarghi.gui
 			if(!TF_Score)
 			{
 				TF_Score = new TextField();
-				TF_Score.text = "Score = " + Stats.score;
+				TF_Score.text = "Score = "+Stats.score;
 				TF_Score.x = 20;
 				TF_Score.selectable = false;
 				TF_Score.mouseEnabled = false;
@@ -153,7 +156,7 @@ package com.luislarghi.gui
 			if(!TF_Money)
 			{
 				TF_Money = new TextField();
-				TF_Money.text = "Money = " + Stats.money;
+				TF_Money.text = "Money = "+Stats.money;
 				TF_Money.x = Engine_Game.orgGameRes.x - TF_Money.width - 20;
 				TF_Money.selectable = false;
 				TF_Money.mouseEnabled = false;
@@ -162,10 +165,20 @@ package com.luislarghi.gui
 			if(!TF_TownH)
 			{
 				TF_TownH = new TextField();
-				TF_TownH.text = "Town = " + Stats.townHealth;
+				TF_TownH.text = "Town = "+Stats.townHealth;
 				TF_TownH.x = (Engine_Game.orgGameRes.x / 2) - (TF_TownH.width / 2);
 				TF_TownH.selectable = false;
 				TF_TownH.mouseEnabled = false;
+			}
+			
+			if(!TF_WaveN)
+			{
+				TF_WaveN = new TextField();
+				TF_WaveN.text = "Wave "+(Stats.currentWave + 1)+"-"+Stats.maxWaveCant;
+				TF_WaveN.x = 20;
+				TF_WaveN.y = Engine_Game.orgGameRes.y - TF_WaveN.height;
+				TF_WaveN.selectable = false;
+				TF_WaveN.mouseEnabled = false;
 			}
 			
 			if(!TF_Format)
@@ -206,9 +219,10 @@ package com.luislarghi.gui
 		
 		public override function Logic():void
 		{
-			TF_Score.text = "Score = " + Stats.score;
-			TF_Money.text = "Money = " + Stats.money;
-			TF_TownH.text = "Town = " + Stats.townHealth;
+			TF_Score.text = "Score = "+Stats.score;
+			TF_Money.text = "Money = "+Stats.money;
+			TF_TownH.text = "Town = "+Stats.townHealth;
+			TF_WaveN.text = "Wave "+(Stats.currentWave + 1)+"-"+Stats.maxWaveCant;
 		}
 		
 		public override function Draw():void
@@ -221,6 +235,9 @@ package com.luislarghi.gui
 			
 			TF_TownH.setTextFormat(TF_Format, 0, TF_TownH.length);
 			TF_TownH.autoSize = TextFieldAutoSize.CENTER;
+			
+			TF_WaveN.setTextFormat(TF_Format, 0, TF_WaveN.length);
+			TF_WaveN.autoSize = TextFieldAutoSize.CENTER;
 			
 			BT_CuraIcon.Draw();
 			BT_PerroIcon.Draw();
@@ -236,16 +253,21 @@ package com.luislarghi.gui
 			}
 			else if(Stage_1.GetGameOver())
 			{
-				if(Stats.townHealth > 0)
+				if(Stats.currentStage < 4)
 				{
-					TF_WinLabel.text = "You Win!";
-					BT_Next.visible = true;
+					if(Stats.townHealth > 0)
+					{
+						TF_WinLabel.text = "You Win!";
+						BT_Next.visible = true;
+					}
+					else 
+					{
+						TF_WinLabel.text = "You Lose!";
+						BT_Replay.visible = true;
+					}
 				}
-				else 
-				{
-					TF_WinLabel.text = "You Lose!";
-					BT_Replay.visible = true;
-				}
+				else
+					mainGame.SetNextState(Engine_States.STATE_MAINMENU);
 				
 				window.visible = BT_Exit.visible = TF_WinLabel.visible = true;
 				

@@ -1,9 +1,10 @@
-package com.luislarghi.gameobjects
+package com.luislarghi.gameobjects.enemies
 {
 	import com.luislarghi.R;
 	import com.luislarghi.myfirtsengine.Engine_SpriteSheet;
 	
 	import flash.events.Event;
+	import com.luislarghi.gameobjects.baseclasses.Enemy;
 
 	public class Vampire extends Enemy
 	{

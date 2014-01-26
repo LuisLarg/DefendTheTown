@@ -20,7 +20,7 @@ Place citizens along the road that leads to the town. Each citizen has a special
 </tr>
 <tr>
 <td> Dogman </td>
-<td> Skeleton </td>
+<td> Mummy </td>
 </tr>
 <tr>
 <td> Monk </td>
@@ -36,7 +36,7 @@ Technical Info.
 - <b>Language:</b> ActionScript 3.
 - <b>IDE:</b> Flash Builder 4.6.
 - <b>Platforms:</b> all that Adobe Air supports.
-- <b>3rd-Party Tech.:</b> Adobe Flash Pro 6 (to create Sprite Animations) | Inkscape 0.48 (to create SpriteSheets).
+- <b>3rd-Party Tech.:</b> Adobe Flash Pro 6 (to create Sprite Animations) | [Inkscape](http://www.inkscape.org/) (to create SpriteSheets) | [Gimp 2](http://www.gimp.org/)/[Tiled](http://www.mapeditor.org/) (for map creation).
 - I used [my own game engine](https://github.com/Xertz/MyFirstEngine)
 
 TO DO List
@@ -47,7 +47,7 @@ TO DO List
 - [x] Recreate sprite-sheets with the same W and H.
 - [ ] Resolution handling for multiple resolutions.
 - [x] Monsters proper rotation.
-- [ ] Proper object destruction when restarting the game.
+- [x] Proper object destruction when restarting the game.
 
 <b>Features missing</b>
 
@@ -62,3 +62,4 @@ TO DO List
 - [ ] Add sound when firing bullet, for each citizen.
 - [ ] Add sound when placing a citizen, for each citizen.
 - [ ] Add sound when killing a monster, for each monster.
+- [ ] Complete the Credits screen.

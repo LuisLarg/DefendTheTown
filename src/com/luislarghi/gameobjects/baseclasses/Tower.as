@@ -1,4 +1,4 @@
-package com.luislarghi.gameobjects
+package com.luislarghi.gameobjects.baseclasses
 {
 	import com.luislarghi.R;
 	import com.luislarghi.gamestates.Stage_1;
@@ -9,6 +9,7 @@ package com.luislarghi.gameobjects
 	import flash.events.Event;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import com.luislarghi.gameobjects.Stats;
 	
 	public class Tower extends Character
 	{
@@ -95,7 +96,8 @@ package com.luislarghi.gameobjects
 				aimDirection.y = 0;
 				
 				currentAnimTile = 0;
-				this.scaleX = -1;
+				SpriteSheet.scaleX = -1;
+				SpriteSheet.x = this.x + R.tileWidth / 2;
 			}
 			else if(this.rotation < -45 && this.rotation >= -135) //Aim Up
 			{
@@ -103,7 +105,8 @@ package com.luislarghi.gameobjects
 				aimDirection.y = -1;
 				
 				currentAnimTile = maxFramePerAnim * 2;
-				this.scaleX = 1;
+				SpriteSheet.scaleX = 1;
+				SpriteSheet.x = this.x - R.tileWidth / 2;
 			}
 			else if((this.rotation < -135 && this.rotation >= -180) || (this.rotation > 0 && this.rotation <= 45)) //Aim Right
 			{
@@ -111,7 +114,8 @@ package com.luislarghi.gameobjects
 				aimDirection.y = 0;
 				
 				currentAnimTile = 0;
-				this.scaleX = 1;
+				SpriteSheet.scaleX = 1;
+				SpriteSheet.x = this.x - R.tileWidth / 2;
 			}
 			else if(this.rotation > 45 && this.rotation >= 135) //Aim Down
 			{
@@ -119,13 +123,14 @@ package com.luislarghi.gameobjects
 				aimDirection.y = 1;
 				
 				currentAnimTile = maxFramePerAnim;
-				this.scaleX = 1;
+				SpriteSheet.scaleX = 1;
+				SpriteSheet.x = this.x - R.tileWidth / 2;
 			}
 		}
 		
 		protected override function UpdateAnim():void
 		{
-			if(aimDirection.x == 1 && aimDirection.y == 0) // Right
+			if(aimDirection.x == 1 && aimDirection.y == 0) //Right
 			{
 				if(nearestEnemy)
 				{

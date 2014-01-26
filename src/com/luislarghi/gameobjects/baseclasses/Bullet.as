@@ -1,4 +1,4 @@
-package com.luislarghi.gameobjects
+package com.luislarghi.gameobjects.baseclasses
 {
 	import flash.display.Sprite;
 	import flash.display.Stage;

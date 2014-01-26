@@ -1,10 +1,10 @@
 package com.luislarghi
 {
-	import com.luislarghi.gameobjects.Enemy;
-	import com.luislarghi.gameobjects.Mummy;
 	import com.luislarghi.gameobjects.Stats;
-	import com.luislarghi.gameobjects.Vampire;
-	import com.luislarghi.gameobjects.Zomby;
+	import com.luislarghi.gameobjects.baseclasses.Enemy;
+	import com.luislarghi.gameobjects.enemies.Mummy;
+	import com.luislarghi.gameobjects.enemies.Vampire;
+	import com.luislarghi.gameobjects.enemies.Zomby;
 	import com.luislarghi.myfirtsengine.Engine_Game;
 	
 	import flash.display.Bitmap;

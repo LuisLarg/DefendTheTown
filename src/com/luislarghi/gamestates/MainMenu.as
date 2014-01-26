@@ -51,7 +51,7 @@ package com.luislarghi.gamestates
 			GUI_component = new GUI_MainMenu(mainGame);
 			GUI_component.Init();
 			
-			trace("Main Menu: "+mainStage.stageWidth+", "+mainStage.stageHeight+" | Game resolution: "+Engine_Game.orgGameRes);
+			trace("Main Menu: "+this.width+", "+this.height+" | Game resolution: "+Engine_Game.orgGameRes);
 			//trace("You are in the MAINMENU");
 		}
 		

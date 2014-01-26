@@ -1,4 +1,4 @@
-package com.luislarghi.gameobjects
+package com.luislarghi.gameobjects.baseclasses
 {
 	import com.luislarghi.R;
 	import com.luislarghi.gamestates.Stage_1;

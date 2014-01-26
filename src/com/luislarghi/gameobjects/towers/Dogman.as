@@ -1,4 +1,4 @@
-package com.luislarghi.gameobjects
+package com.luislarghi.gameobjects.towers
 {
 	import com.luislarghi.R;
 	import com.luislarghi.gamestates.Stage_1;
@@ -6,16 +6,19 @@ package com.luislarghi.gameobjects
 	
 	import flash.events.Event;
 	import flash.geom.Point;
+	import com.luislarghi.gameobjects.baseclasses.Tower;
+	import com.luislarghi.gameobjects.baseclasses.Bullet;
+	import com.luislarghi.gameobjects.bullets.Dog;
 	
-	public class Monk extends Tower
+	public class Dogman extends Tower
 	{
-		public function Monk(tile:Point, data:XML) { super(tile, data); }
+		public function Dogman(tile:Point, data:XML) { super(tile, data); }
 		
 		public override function Init():void
 		{
 			super.Init();
 			
-			SpriteSheet = new Engine_SpriteSheet(R.BM_Cura, false, R.tileWidth, R.tileHeight * 2);
+			SpriteSheet = new Engine_SpriteSheet(R.BM_Perrero, false, R.tileWidth, R.tileHeight * 2);
 			SpriteSheet.x = deployPoint.x;
 			SpriteSheet.y = deployPoint.y - R.tileHeight;
 			Stage_1.gameObjContainer.addChild(SpriteSheet);
@@ -29,7 +32,7 @@ package com.luislarghi.gameobjects
 				
 				if(counter >= shootRate)
 				{
-					var bullet:Bullet = new GlintLight(this.x, this.y, this.rotation);
+					var bullet:Bullet = new Dog(this.x, this.y, this.rotation);
 					Stage_1.gameObjContainer.addChild(bullet);
 					Stage_1.bullets.push(bullet);
 					counter = 0;

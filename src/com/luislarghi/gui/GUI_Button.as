@@ -1,7 +1,7 @@
 package com.luislarghi.gui
 {
 	import com.luislarghi.R;
-	import com.luislarghi.gameobjects.Tower;
+	import com.luislarghi.gameobjects.baseclasses.Tower;
 	import com.luislarghi.gamestates.Stage_1;
 	import com.luislarghi.myfirtsengine.Engine_GUIButton;
 	import com.luislarghi.myfirtsengine.Engine_Game;

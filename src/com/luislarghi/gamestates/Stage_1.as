@@ -2,19 +2,19 @@ package com.luislarghi.gamestates
 {
 	import com.luislarghi.Game;
 	import com.luislarghi.R;
-	import com.luislarghi.gameobjects.Bullet;
-	import com.luislarghi.gameobjects.Dog;
-	import com.luislarghi.gameobjects.Dogman;
-	import com.luislarghi.gameobjects.Enemy;
-	import com.luislarghi.gameobjects.GlintLight;
-	import com.luislarghi.gameobjects.Monk;
-	import com.luislarghi.gameobjects.Mummy;
+	import com.luislarghi.gameobjects.baseclasses.Bullet;
+	import com.luislarghi.gameobjects.bullets.Dog;
+	import com.luislarghi.gameobjects.towers.Dogman;
+	import com.luislarghi.gameobjects.baseclasses.Enemy;
+	import com.luislarghi.gameobjects.bullets.GlintLight;
+	import com.luislarghi.gameobjects.towers.Monk;
+	import com.luislarghi.gameobjects.enemies.Mummy;
 	import com.luislarghi.gameobjects.Stats;
-	import com.luislarghi.gameobjects.Torch;
-	import com.luislarghi.gameobjects.TorchThrower;
-	import com.luislarghi.gameobjects.Tower;
-	import com.luislarghi.gameobjects.Vampire;
-	import com.luislarghi.gameobjects.Zomby;
+	import com.luislarghi.gameobjects.bullets.Torch;
+	import com.luislarghi.gameobjects.towers.TorchThrower;
+	import com.luislarghi.gameobjects.baseclasses.Tower;
+	import com.luislarghi.gameobjects.enemies.Vampire;
+	import com.luislarghi.gameobjects.enemies.Zomby;
 	import com.luislarghi.gui.GUI_Button;
 	import com.luislarghi.gui.GUI_HUDButton;
 	import com.luislarghi.gui.GUI_Stage1;
@@ -110,7 +110,7 @@ package com.luislarghi.gamestates
 			if(!GUI_component) GUI_component = new GUI_Stage1(mainGame);
 			GUI_component.Init();
 			
-			trace("In Game: "+mainStage.stageWidth+", "+mainStage.stageHeight+" | Game resolution: "+Engine_Game.orgGameRes);
+			trace("In Game: "+this.width+", "+this.height+" | Game resolution: "+Engine_Game.orgGameRes);
 			//trace("You are INGAME");
 		}
 		
@@ -202,12 +202,8 @@ package com.luislarghi.gamestates
 				
 				if(CheckForNextWave())
 				{
-					if(Stats.currentWave < Stats.maxWaveCant - 1)
-					{
-						Stats.currentWave++;
-					}
-					else
-						gameOver = true;
+					if(Stats.currentWave < Stats.maxWaveCant - 1) Stats.currentWave++;
+					else gameOver = true;
 				}
 			}
 			
@@ -216,8 +212,10 @@ package com.luislarghi.gamestates
 		
 		private function CheckForNextWave():Boolean
 		{
+			// Check all active enemies in the current wave
 			for(var i:int = 0; i < R.waves[Stats.currentWave].length; i++)
 			{
+				// if at least one enemy is not dead...
 				if(!R.waves[Stats.currentWave][i].Dead)
 				{
 					return false;
