@@ -2,22 +2,24 @@ package com.luislarghi.gamestates
 {
 	import com.luislarghi.Game;
 	import com.luislarghi.R;
-	import com.luislarghi.gameobjects.baseclasses.Bullet;
-	import com.luislarghi.gameobjects.bullets.Dog;
-	import com.luislarghi.gameobjects.towers.Dogman;
-	import com.luislarghi.gameobjects.baseclasses.Enemy;
-	import com.luislarghi.gameobjects.bullets.GlintLight;
-	import com.luislarghi.gameobjects.towers.Monk;
-	import com.luislarghi.gameobjects.enemies.Mummy;
 	import com.luislarghi.gameobjects.Stats;
-	import com.luislarghi.gameobjects.bullets.Torch;
-	import com.luislarghi.gameobjects.towers.TorchThrower;
+	import com.luislarghi.gameobjects.baseclasses.Bullet;
+	import com.luislarghi.gameobjects.baseclasses.Enemy;
 	import com.luislarghi.gameobjects.baseclasses.Tower;
+	import com.luislarghi.gameobjects.bullets.Dog;
+	import com.luislarghi.gameobjects.bullets.GlintLight;
+	import com.luislarghi.gameobjects.bullets.Torch;
+	import com.luislarghi.gameobjects.enemies.Mummy;
 	import com.luislarghi.gameobjects.enemies.Vampire;
 	import com.luislarghi.gameobjects.enemies.Zomby;
+	import com.luislarghi.gameobjects.towers.Dogman;
+	import com.luislarghi.gameobjects.towers.Monk;
+	import com.luislarghi.gameobjects.towers.TorchThrower;
 	import com.luislarghi.gui.GUI_Button;
 	import com.luislarghi.gui.GUI_HUDButton;
 	import com.luislarghi.gui.GUI_Stage1;
+	import com.luislarghi.managers.GameObjectsManager;
+	import com.luislarghi.managers.XmlManager;
 	import com.luislarghi.myfirtsengine.Engine_GUIButton;
 	import com.luislarghi.myfirtsengine.Engine_Game;
 	import com.luislarghi.myfirtsengine.Engine_GameState;
@@ -51,15 +53,16 @@ package com.luislarghi.gamestates
 		private var keysMapper:Array;
 
 		public static var currentBuildMode:int = R.NULLMODE;
-		private static var towers:Vector.<Tower> = new Vector.<Tower>;
-		public static var bullets:Vector.<Bullet> = new Vector.<Bullet>;
+		private var towers:Vector.<Tower> = new Vector.<Tower>;
+		public var bullets:Vector.<Bullet> = new Vector.<Bullet>;
+		public var waves:Vector.<Vector.<Enemy>> = new Vector.<Vector.<Enemy>>;
 		
 		private var enemySpanwRate:int = 2000;
 		private var counter:int = 0;
 		private var GUI_component:GUI_Stage1;
 		
-		public static var gameObjContainer:Sprite;
-		public static var guiContainer:Sprite;
+		public var gameObjContainer:Sprite;
+		public var guiContainer:Sprite;
 		private var levelContainer:Sprite;
 		
 		public function Stage_1(g:Game) { super(Main.mainStage, g); }
@@ -67,6 +70,8 @@ package com.luislarghi.gamestates
 		protected override function Init(e:Event):void
 		{
 			super.Init(e);
+			
+			GameObjectsManager.CreateWave(waves, this);
 			
 			Stats.Reset();
 			
@@ -80,12 +85,12 @@ package com.luislarghi.gamestates
 			this.addChildAt(gameObjContainer, 1);
 			this.addChildAt(guiContainer, 2);			
 			
-			for(var row:int = 0; row < R.waves.length; row++) 
+			for(var row:int = 0; row < waves.length; row++) 
 			{
-				for (var col:int = 0; col < R.waves[row].length; col++) 
+				for (var col:int = 0; col < waves[row].length; col++) 
 				{
-					gameObjContainer.addChild(R.waves[row][col]);
-					R.waves[row][col].Init();
+					gameObjContainer.addChild(waves[row][col]);
+					waves[row][col].Init();
 				}
 			}
 			
@@ -107,7 +112,7 @@ package com.luislarghi.gamestates
 			
 			mainStage.addEventListener(MouseEvent.CLICK, CheckClick);
 
-			if(!GUI_component) GUI_component = new GUI_Stage1(mainGame);
+			GUI_component = new GUI_Stage1(mainGame, this);
 			GUI_component.Init();
 			
 			trace("In Game: "+this.width+", "+this.height+" | Game resolution: "+Engine_Game.orgGameRes);
@@ -118,7 +123,7 @@ package com.luislarghi.gamestates
 		{
 			super.Clear(e);
 			
-			R.ResetWaves();
+			GameObjectsManager.ResetWaves(waves);
 			
 			levelContainer.removeChild(currentBGimg);
 			currentBGimg = null;
@@ -126,12 +131,12 @@ package com.luislarghi.gamestates
 			
 			for(var t:int = 0; t < towers.length; t++) gameObjContainer.removeChild(towers[t]);
 			for(var b:int = 0; b < bullets.length; b++) gameObjContainer.removeChild(bullets[b]);
-			for(var row:int = 0; row < R.waves.length; row++) 
+			for(var row:int = 0; row < waves.length; row++) 
 			{
-				for (var col:int = 0; col < R.waves[row].length; col++) 
+				for (var col:int = 0; col < waves[row].length; col++) 
 				{
-					gameObjContainer.removeChild(R.waves[row][col]);
-					R.waves[row][col].Clear();
+					gameObjContainer.removeChild(waves[row][col]);
+					waves[row][col].Clear();
 				}
 			}
 			
@@ -164,11 +169,11 @@ package com.luislarghi.gamestates
 		
 		protected override function Draw():void
 		{
-			if(!pause && R.xmlReady && !gameOver)
+			if(!pause && XmlManager.xmlReady && !gameOver)
 			{
 				for(var t:int = 0; t < towers.length; t++) towers[t].Draw();
 				for(var b:int = 0; b < bullets.length; b++) bullets[b].Draw();
-				for(var w:int = 0; w < R.waves[Stats.currentWave].length; w++) R.waves[Stats.currentWave][w].Draw();
+				for(var w:int = 0; w < waves[Stats.currentWave].length; w++) waves[Stats.currentWave][w].Draw();
 			}
 			
 			GUI_component.Draw();
@@ -187,20 +192,22 @@ package com.luislarghi.gamestates
 				changingLevel = false;
 			}
 			
-			if(!pause && R.xmlReady &&!gameOver)
+			if(!pause && XmlManager.xmlReady &&!gameOver)
 			{	
 				CheckForDeadBullets();
 	
 				SpawnEnemy();
 				
+				GameObjectsManager.SpriteDepthBubbleSort(gameObjContainer);
+				
 				for(var t:int = 0; t < towers.length; t++) towers[t].Logic();
 				for(var b:int = 0; b < bullets.length; b++) bullets[b].Logic();
-				for(var w:int = 0; w < R.waves[Stats.currentWave].length; w++) R.waves[Stats.currentWave][w].Logic();
+				for(var w:int = 0; w < waves[Stats.currentWave].length; w++) waves[Stats.currentWave][w].Logic();
 				
 				CheckForBulletsCollition();
 				CheckForTownAttack();
 				
-				if(CheckForNextWave())
+				if(GameObjectsManager.CheckForNextWave(waves))
 				{
 					if(Stats.currentWave < Stats.maxWaveCant - 1) Stats.currentWave++;
 					else gameOver = true;
@@ -209,29 +216,14 @@ package com.luislarghi.gamestates
 			
 			GUI_component.Logic();
 		}
-		
-		private function CheckForNextWave():Boolean
-		{
-			// Check all active enemies in the current wave
-			for(var i:int = 0; i < R.waves[Stats.currentWave].length; i++)
-			{
-				// if at least one enemy is not dead...
-				if(!R.waves[Stats.currentWave][i].Dead)
-				{
-					return false;
-				}
-			}
 
-			return true;
-		}
-		
 		private function CheckForTownAttack():void
 		{
-			for(var i:int = 0; i < R.waves[Stats.currentWave].length; i++)
+			for(var i:int = 0; i < waves[Stats.currentWave].length; i++)
 			{
-				if(R.waves[Stats.currentWave][i].Survivor && !R.waves[Stats.currentWave][i].Dead && R.waves[Stats.currentWave][i].Active)
+				if(waves[Stats.currentWave][i].Survivor && !waves[Stats.currentWave][i].Dead && waves[Stats.currentWave][i].Active)
 				{
-					R.waves[Stats.currentWave][i].Kill();
+					waves[Stats.currentWave][i].Kill();
 					Stats.townHealth -= 1;
 				}
 			}
@@ -245,11 +237,11 @@ package com.luislarghi.gamestates
 			
 			if(counter >= enemySpanwRate)
 			{
-				for (var i:int = 0; i <R.waves[Stats.currentWave].length; i++) 
+				for (var i:int = 0; i < waves[Stats.currentWave].length; i++) 
 				{
-					if(!R.waves[Stats.currentWave][i].Active && !R.waves[Stats.currentWave][i].Survivor) 
+					if(!waves[Stats.currentWave][i].Active && !waves[Stats.currentWave][i].Survivor) 
 					{
-						R.waves[Stats.currentWave][i].Activate();
+						waves[Stats.currentWave][i].Activate();
 						break;
 					}
 				}
@@ -277,21 +269,21 @@ package com.luislarghi.gamestates
 			for(var b:int = 0; b < bullets.length; b++)
 			{
 				// search each enemy in the current wave
-				for(var i:int = 0; i < R.waves[Stats.currentWave].length; i++)
+				for(var i:int = 0; i < waves[Stats.currentWave].length; i++)
 				{
 					// and if the current bullet collides with the current enemy
-					if(bullets[b].hitTestObject(R.waves[Stats.currentWave][i]))
+					if(bullets[b].hitTestObject(waves[Stats.currentWave][i]))
 					{
 						// verify if get a special attack or not
-						if((bullets[b] is Torch && R.waves[Stats.currentWave][i] is Zomby) ||
-						   (bullets[b] is GlintLight && R.waves[Stats.currentWave][i] is Vampire) ||
-						   (bullets[b] is Dog && R.waves[Stats.currentWave][i] is Mummy))
+						if((bullets[b] is Torch && waves[Stats.currentWave][i] is Zomby) ||
+						   (bullets[b] is GlintLight && waves[Stats.currentWave][i] is Vampire) ||
+						   (bullets[b] is Dog && waves[Stats.currentWave][i] is Mummy))
 						{
-							R.waves[Stats.currentWave][i].Hit(bullets[b].Damage * 2);
+							waves[Stats.currentWave][i].Hit(bullets[b].Damage * 2);
 						}
 						else 
 						{
-							R.waves[Stats.currentWave][i].Hit(bullets[b].Damage);
+							waves[Stats.currentWave][i].Hit(bullets[b].Damage);
 						}
 
 						
@@ -300,13 +292,13 @@ package com.luislarghi.gamestates
 						bullets.splice(b, 1);
 						
 						// and if the current enemy dies
-						if(R.waves[Stats.currentWave][i].Life <= 0)
+						if(waves[Stats.currentWave][i].Life <= 0)
 						{
 							// increase the points and money stats
-							Stats.score += R.waves[Stats.currentWave][i].PointsWorth;
-							Stats.money += R.waves[Stats.currentWave][i].MoneyDropped;
+							Stats.score += waves[Stats.currentWave][i].PointsWorth;
+							Stats.money += waves[Stats.currentWave][i].MoneyDropped;
 							// then kill that enemy 
-							R.waves[Stats.currentWave][i].Kill();
+							waves[Stats.currentWave][i].Kill();
 						}
 						
 						break;
@@ -344,7 +336,7 @@ package com.luislarghi.gamestates
 			Stats.currentStage++;
 			Stats.currentWave = 0;
 			Stats.money = 6;
-			R.ResetWaves();
+			GameObjectsManager.ResetWaves(waves);
 			ResetObjects();
 			gameOver = false;
 			changingLevel = true;
@@ -373,9 +365,9 @@ package com.luislarghi.gamestates
 					{
 						var tmpTower:Tower;
 						
-						if(currentBuildMode == R.PIROMODE) tmpTower = new TorchThrower(R.MapToScreen(clickPoint.x, clickPoint.y), R.towerTypes.tower[0]);
-						else if(currentBuildMode == R.PERROMODE) tmpTower = new Dogman(R.MapToScreen(clickPoint.x, clickPoint.y), R.towerTypes.tower[1]);
-						else if(currentBuildMode == R.CURAMODE) tmpTower = new Monk(R.MapToScreen(clickPoint.x, clickPoint.y), R.towerTypes.tower[2]);
+						if(currentBuildMode == R.PIROMODE) tmpTower = new TorchThrower(R.MapToScreen(clickPoint.x, clickPoint.y), XmlManager.towerTypes.tower[0], this);
+						else if(currentBuildMode == R.PERROMODE) tmpTower = new Dogman(R.MapToScreen(clickPoint.x, clickPoint.y), XmlManager.towerTypes.tower[1], this);
+						else if(currentBuildMode == R.CURAMODE) tmpTower = new Monk(R.MapToScreen(clickPoint.x, clickPoint.y), XmlManager.towerTypes.tower[2], this);
 						
 						gameObjContainer.addChild(tmpTower);
 						tmpTower.Init();

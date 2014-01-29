@@ -36,45 +36,47 @@ package com.luislarghi.gui
 		private var BT_PiroIcon:GUI_HUDButton;
 		private var BT_PerroIcon:GUI_HUDButton;
 		
-		public function GUI_Stage1(g:Engine_Game) { super(Main.mainStage, g); }
+		private var gameStage:Stage_1;
+		
+		public function GUI_Stage1(g:Engine_Game, stage:Stage_1) { super(Main.mainStage, g); gameStage = stage; }
 		
 		public override function Init():void
 		{
 			CreateWindow();
 			CreateHUD();
 			
-			Stage_1.guiContainer.addChild(TF_Score);
-			Stage_1.guiContainer.addChild(TF_Money);
-			Stage_1.guiContainer.addChild(TF_TownH);
-			Stage_1.guiContainer.addChild(TF_WaveN);
-			Stage_1.guiContainer.addChild(BT_CuraIcon);
-			Stage_1.guiContainer.addChild(BT_PiroIcon);
-			Stage_1.guiContainer.addChild(BT_PerroIcon);
-			Stage_1.guiContainer.addChild(window);
-			Stage_1.guiContainer.addChild(TF_WinLabel);
-			Stage_1.guiContainer.addChild(BT_Resume);
-			Stage_1.guiContainer.addChild(BT_Menu);
-			Stage_1.guiContainer.addChild(BT_Replay);
-			Stage_1.guiContainer.addChild(BT_Next);
-			Stage_1.guiContainer.addChild(BT_Exit);
+			gameStage.guiContainer.addChild(TF_Score);
+			gameStage.guiContainer.addChild(TF_Money);
+			gameStage.guiContainer.addChild(TF_TownH);
+			gameStage.guiContainer.addChild(TF_WaveN);
+			gameStage.guiContainer.addChild(BT_CuraIcon);
+			gameStage.guiContainer.addChild(BT_PiroIcon);
+			gameStage.guiContainer.addChild(BT_PerroIcon);
+			gameStage.guiContainer.addChild(window);
+			gameStage.guiContainer.addChild(TF_WinLabel);
+			gameStage.guiContainer.addChild(BT_Resume);
+			gameStage.guiContainer.addChild(BT_Menu);
+			gameStage.guiContainer.addChild(BT_Replay);
+			gameStage.guiContainer.addChild(BT_Next);
+			gameStage.guiContainer.addChild(BT_Exit);
 		}
 		
 		public override function Clear():void
 		{
-			Stage_1.guiContainer.removeChild(TF_Score);
-			Stage_1.guiContainer.removeChild(TF_Money);
-			Stage_1.guiContainer.removeChild(TF_TownH);
-			Stage_1.guiContainer.removeChild(TF_WaveN);
-			Stage_1.guiContainer.removeChild(BT_CuraIcon);
-			Stage_1.guiContainer.removeChild(BT_PiroIcon);
-			Stage_1.guiContainer.removeChild(BT_PerroIcon);
-			Stage_1.guiContainer.removeChild(window);
-			Stage_1.guiContainer.removeChild(TF_WinLabel);
-			Stage_1.guiContainer.removeChild(BT_Resume);
-			Stage_1.guiContainer.removeChild(BT_Menu);
-			Stage_1.guiContainer.removeChild(BT_Replay);
-			Stage_1.guiContainer.removeChild(BT_Next);
-			Stage_1.guiContainer.removeChild(BT_Exit);
+			gameStage.guiContainer.removeChild(TF_Score);
+			gameStage.guiContainer.removeChild(TF_Money);
+			gameStage.guiContainer.removeChild(TF_TownH);
+			gameStage.guiContainer.removeChild(TF_WaveN);
+			gameStage.guiContainer.removeChild(BT_CuraIcon);
+			gameStage.guiContainer.removeChild(BT_PiroIcon);
+			gameStage.guiContainer.removeChild(BT_PerroIcon);
+			gameStage.guiContainer.removeChild(window);
+			gameStage.guiContainer.removeChild(TF_WinLabel);
+			gameStage.guiContainer.removeChild(BT_Resume);
+			gameStage.guiContainer.removeChild(BT_Menu);
+			gameStage.guiContainer.removeChild(BT_Replay);
+			gameStage.guiContainer.removeChild(BT_Next);
+			gameStage.guiContainer.removeChild(BT_Exit);
 		}
 		
 		private function CreateWindow():void
@@ -194,7 +196,7 @@ package com.luislarghi.gui
 		{
 			if(!BT_CuraIcon)
 			{
-				BT_CuraIcon = new GUI_HUDButton(" ", 128, 128, mainGame, R.BM_HUD, R.CURAMODE);
+				BT_CuraIcon = new GUI_HUDButton(R.tileWidth * 2, R.tileHeight * 2, mainGame, R.BM_HUD, R.CURAMODE);
 				BT_CuraIcon.x = (Engine_Game.orgGameRes.x / 2) + BT_CuraIcon.Size().x;
 				BT_CuraIcon.y = Engine_Game.orgGameRes.y - (BT_CuraIcon.Size().y / 2) - BT_CuraIcon.Size().y;
 				BT_CuraIcon.ChangeAnimation(1);
@@ -202,7 +204,7 @@ package com.luislarghi.gui
 			
 			if(!BT_PiroIcon)
 			{
-				BT_PiroIcon = new GUI_HUDButton(" ", 128, 128, mainGame, R.BM_HUD, R.PIROMODE);
+				BT_PiroIcon = new GUI_HUDButton(R.tileWidth * 2, R.tileHeight * 2, mainGame, R.BM_HUD, R.PIROMODE);
 				BT_PiroIcon.x = (Engine_Game.orgGameRes.x / 2) - (BT_PiroIcon.Size().x * 2);
 				BT_PiroIcon.y = Engine_Game.orgGameRes.y - (BT_PiroIcon.Size().y / 2) - BT_PiroIcon.Size().y;
 				BT_PiroIcon.ChangeAnimation(2);
@@ -210,7 +212,7 @@ package com.luislarghi.gui
 			
 			if(!BT_PerroIcon)
 			{
-				BT_PerroIcon = new GUI_HUDButton(" ", 128, 128, mainGame, R.BM_HUD, R.PERROMODE);
+				BT_PerroIcon = new GUI_HUDButton(R.tileWidth * 2, R.tileHeight * 2, mainGame, R.BM_HUD, R.PERROMODE);
 				BT_PerroIcon.x = (Engine_Game.orgGameRes.x / 2) - (BT_PerroIcon.Size().x / 2);
 				BT_PerroIcon.y = Engine_Game.orgGameRes.y - (BT_PerroIcon.Size().y / 2) - BT_PerroIcon.Size().y;
 				BT_PerroIcon.ChangeAnimation(0);

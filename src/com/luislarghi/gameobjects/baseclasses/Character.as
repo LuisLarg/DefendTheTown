@@ -1,6 +1,7 @@
 package com.luislarghi.gameobjects.baseclasses
 {
 	import com.luislarghi.R;
+	import com.luislarghi.gamestates.Stage_1;
 	import com.luislarghi.myfirtsengine.Engine_Game;
 	import com.luislarghi.myfirtsengine.Engine_SpriteSheet;
 	
@@ -14,7 +15,7 @@ package com.luislarghi.gameobjects.baseclasses
 	{
 		protected var SpriteSheet:Engine_SpriteSheet;
 		protected var currentAnimTile:int;
-		
+
 		public function Init():void { currentAnimTile = 0; }
 		public function Clear():void { }
 		protected function UpdateAnim():void {}

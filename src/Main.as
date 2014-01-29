@@ -1,7 +1,7 @@
 package    
 {
 	import com.luislarghi.Game;
-	import com.luislarghi.R;
+	import com.luislarghi.managers.XmlManager;
 	
 	import flash.display.Sprite;
 	import flash.display.Stage;
@@ -20,7 +20,7 @@ package
 			mainStage.scaleMode = StageScaleMode.NO_SCALE;
 			mainStage.align = StageAlign.TOP_LEFT;
 			
-			R.LoadXML();
+			XmlManager.LoadXML();
 			
 			mainGame = new Game();
 		}

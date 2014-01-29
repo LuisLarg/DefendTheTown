@@ -57,7 +57,7 @@ TO DO List
 - [x] Dim a HUD icons when there's no money to pay it's corresponding citizen.
 - [x] Two more levels.
 - [x] Code for ending a level and switch to the next one.
-- [ ] Add sorting mechanism for sprites.
+- [x] Add depth sorting for sprites.
 - [ ] Add bullet sprite for each citizen.
 - [ ] Add sound when firing bullet, for each citizen.
 - [ ] Add sound when placing a citizen, for each citizen.

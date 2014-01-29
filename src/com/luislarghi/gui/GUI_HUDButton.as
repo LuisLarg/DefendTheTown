@@ -3,6 +3,7 @@ package com.luislarghi.gui
 	import com.luislarghi.R;
 	import com.luislarghi.gameobjects.Stats;
 	import com.luislarghi.gamestates.Stage_1;
+	import com.luislarghi.managers.XmlManager;
 	import com.luislarghi.myfirtsengine.Engine_GUIButton;
 	import com.luislarghi.myfirtsengine.Engine_Game;
 	import com.luislarghi.myfirtsengine.Engine_SoundManager;
@@ -21,9 +22,9 @@ package com.luislarghi.gui
 		
 		private var clickable:Boolean = false;
 		
-		public function GUI_HUDButton(label:String, w:int, h:int, g:Engine_Game, bM:Bitmap, s:int = R.NULLMODE)
+		public function GUI_HUDButton(w:int, h:int, g:Engine_Game, bM:Bitmap, s:int)
 		{
-			super(label, w, h, bM, s, g);
+			super(" ", w, h, bM, s, g);
 		}
 		
 		protected override function Init(e:Event):void
@@ -50,9 +51,9 @@ package com.luislarghi.gui
 			if(!TF_TowerCost)
 			{
 				TF_TowerCost = new TextField();
-				if(state == R.PIROMODE) TF_TowerCost.text = R.towerTypes.tower[0].@cost;
-				else if(state == R.PERROMODE) TF_TowerCost.text = R.towerTypes.tower[1].@cost;
-				else if(state == R.CURAMODE) TF_TowerCost.text = R.towerTypes.tower[2].@cost;
+				if(state == R.PIROMODE) TF_TowerCost.text = XmlManager.towerTypes.tower[0].@cost;
+				else if(state == R.PERROMODE) TF_TowerCost.text = XmlManager.towerTypes.tower[1].@cost;
+				else if(state == R.CURAMODE) TF_TowerCost.text = XmlManager.towerTypes.tower[2].@cost;
 				TF_TowerCost.x = btWidth - 70;
 				TF_TowerCost.y = btHeight - 20;
 				TF_TowerCost.selectable = TF_TowerCost.mouseEnabled = false;
@@ -108,7 +109,7 @@ package com.luislarghi.gui
 			else if(state == R.PERROMODE) towerType = 1;
 			else if(state == R.CURAMODE) towerType = 2;
 			
-			if(Stats.money < R.towerTypes.tower[towerType].@cost) 
+			if(Stats.money < XmlManager.towerTypes.tower[towerType].@cost) 
 			{
 				clickable = false;
 				spriteSheet.alpha = 0.5;

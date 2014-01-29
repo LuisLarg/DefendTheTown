@@ -1,6 +1,7 @@
 package com.luislarghi.gameobjects.baseclasses
 {
 	import com.luislarghi.R;
+	import com.luislarghi.gameobjects.Stats;
 	import com.luislarghi.gamestates.Stage_1;
 	import com.luislarghi.myfirtsengine.Engine_SpriteSheet;
 	
@@ -9,13 +10,15 @@ package com.luislarghi.gameobjects.baseclasses
 	import flash.events.Event;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
-	import com.luislarghi.gameobjects.Stats;
 	
 	public class Tower extends Character
 	{
+		protected var mainStage:Stage_1;
+		
 		private var collitionArea:Sprite;
+		protected var aimSight:Sprite;
+		
 		protected var nearestEnemy:Enemy;
-		protected var deployPoint:Point;
 		private var aimDirection:Point;
 		private var maxFramePerAnim:int;
 		
@@ -23,15 +26,16 @@ package com.luislarghi.gameobjects.baseclasses
 		protected var counter:int;
 		private var cost:int;
 		
-		public function Tower(tile:Point, data:XML)
+		public function Tower(tile:Point, data:XML, stage:Stage_1)
 		{
-			this.deployPoint = tile;
+			mainStage = stage;
+			
 			this.shootRate = data.@shootRate;
 			this.cost = data.@cost;
 			this.maxFramePerAnim = data.@framePerAnim;
 			
-			this.x = deployPoint.x + R.tileWidth / 2;
-			this.y = deployPoint.y + R.tileHeight / 2;
+			this.x = tile.x;
+			this.y = tile.y;
 		}
 		
 		public override function Init():void
@@ -40,21 +44,27 @@ package com.luislarghi.gameobjects.baseclasses
 			
 			aimDirection = new Point(0, 1);
 			
-			if(!collitionArea) collitionArea = new Sprite();
-			collitionArea.x = (this.x - (R.tileWidth / 2)) - R.tileWidth;
-			collitionArea.y = (this.y - (R.tileHeight / 2)) -  R.tileHeight;
+			aimSight = new Sprite();
+			aimSight.x = R.tileWidth / 2;
+			aimSight.y = R.tileHeight / 2;
+			this.addChild(aimSight);
+			
+			collitionArea = new Sprite();
+			collitionArea.x = (aimSight.x - (R.tileWidth / 2)) - R.tileWidth;
+			collitionArea.y = (aimSight.y - (R.tileHeight / 2)) -  R.tileHeight;
 			collitionArea.graphics.beginFill(0xFFFFFF);
 			collitionArea.graphics.drawRect(0, 0, R.tileWidth * 3, R.tileHeight * 3);
 			collitionArea.visible = false;
-			Stage_1.gameObjContainer.addChild(collitionArea);
+			this.addChild(collitionArea);
 			
+			this.hitArea = collitionArea;
 			currentAnimTile = 0;
 		}
 		
 		public override function Clear():void
 		{
-			Stage_1.gameObjContainer.removeChild(collitionArea);
-			Stage_1.gameObjContainer.removeChild(SpriteSheet);
+			this.removeChild(collitionArea);
+			this.removeChild(SpriteSheet);
 			
 			SpriteSheet = null;		
 			collitionArea = null;
@@ -71,11 +81,11 @@ package com.luislarghi.gameobjects.baseclasses
 
 		private function NearestEnemy():void
 		{
-			for(var i:int = 0; i < R.waves[Stats.currentWave].length; i++)
+			for(var i:int = 0; i < mainStage.waves[Stats.currentWave].length; i++)
 			{
-				if(collitionArea.hitTestObject(R.waves[Stats.currentWave][i]))
+				if(this.hitTestObject(mainStage.waves[Stats.currentWave][i]))
 				{
-					nearestEnemy = R.waves[Stats.currentWave][i];
+					nearestEnemy = mainStage.waves[Stats.currentWave][i];
 					return;
 				}
 			}
@@ -87,44 +97,44 @@ package com.luislarghi.gameobjects.baseclasses
 		{
 			if(nearestEnemy)
 			{
-				this.rotation = Math.atan2(nearestEnemy.y - this.y, nearestEnemy.x - this.x) * 180 / Math.PI;
+				aimSight.rotation = Math.atan2(nearestEnemy.y - this.y, nearestEnemy.x - this.x) * 180 / Math.PI;
 			}
 			
-			if((this.rotation > 135 && this.rotation <= 180) || (this.rotation < 0 && this.rotation >= -45)) //Aim Left
+			if((aimSight.rotation > 135 && this.rotation <= 180) || (aimSight.rotation < 0 && aimSight.rotation >= -45)) //Aim Left
 			{
 				aimDirection.x = -1;
 				aimDirection.y = 0;
 				
 				currentAnimTile = 0;
 				SpriteSheet.scaleX = -1;
-				SpriteSheet.x = this.x + R.tileWidth / 2;
+				SpriteSheet.x = R.tileWidth;
 			}
-			else if(this.rotation < -45 && this.rotation >= -135) //Aim Up
+			else if(aimSight.rotation < -45 && aimSight.rotation >= -135) //Aim Up
 			{
 				aimDirection.x = 0;
 				aimDirection.y = -1;
 				
 				currentAnimTile = maxFramePerAnim * 2;
 				SpriteSheet.scaleX = 1;
-				SpriteSheet.x = this.x - R.tileWidth / 2;
+				SpriteSheet.x = 0;
 			}
-			else if((this.rotation < -135 && this.rotation >= -180) || (this.rotation > 0 && this.rotation <= 45)) //Aim Right
+			else if((aimSight.rotation < -135 && aimSight.rotation >= -180) || (aimSight.rotation > 0 && aimSight.rotation <= 45)) //Aim Right
 			{
 				aimDirection.x = 1;
 				aimDirection.y = 0;
 				
 				currentAnimTile = 0;
 				SpriteSheet.scaleX = 1;
-				SpriteSheet.x = this.x - R.tileWidth / 2;
+				SpriteSheet.x = 0;
 			}
-			else if(this.rotation > 45 && this.rotation >= 135) //Aim Down
+			else if(aimSight.rotation > 45 && aimSight.rotation >= 135) //Aim Down
 			{
 				aimDirection.x = 0;
 				aimDirection.y = 1;
 				
 				currentAnimTile = maxFramePerAnim;
 				SpriteSheet.scaleX = 1;
-				SpriteSheet.x = this.x - R.tileWidth / 2;
+				SpriteSheet.x = 0;
 			}
 		}
 		

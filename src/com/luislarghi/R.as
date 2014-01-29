@@ -9,12 +9,8 @@ package com.luislarghi
 	
 	import flash.display.Bitmap;
 	import flash.events.Event;
-	import flash.filesystem.File;
-	import flash.filesystem.FileMode;
-	import flash.filesystem.FileStream;
 	import flash.geom.Point;
 	import flash.media.Sound;
-	import flash.utils.ByteArray;
 
 	public final class R
 	{
@@ -132,78 +128,6 @@ package com.luislarghi
 				else return max;
 			}
 			else return Math.floor(Math.random() * (1 + max - min) + min);
-		}
-		
-		private static var fileStream:FileStream;
-		private static var bytes:ByteArray;
-		private static var content:String = "";
-		public static var xmlReady:Boolean = false;
-		public static var xmlData:XML;
-		public static var waveEnemies:XMLList;
-		public static var towerTypes:XMLList;
-		public static var waves:Vector.<Vector.<Enemy>> = new Vector.<Vector.<Enemy>>;
-		public static var deadPoint:Point = new Point(999, 999);
-		
-		public static function LoadXML():void
-		{		
-			var file:File = File.applicationDirectory.resolvePath("data.xml");
-			fileStream = new FileStream();
-			fileStream.addEventListener(Event.COMPLETE, xmlLoadComplete);
-			fileStream.openAsync(file, FileMode.READ);
-		}
-		
-		private static function xmlLoadComplete(e:Event):void
-		{		
-			xmlData = XML(fileStream.readMultiByte(fileStream.bytesAvailable, "iso-8859-1"));
-			fileStream.removeEventListener(Event.COMPLETE, xmlLoadComplete);
-			xmlReady = true;
-			fileStream.close();
-			
-			CreateWave();
-		}
-		
-		private static function CreateWave():void
-		{
-			waveEnemies = R.xmlData.type.(@name=="waves").level.(@id=="1");
-			towerTypes = R.xmlData.type.(@name=="towers");
-			Stats.maxWaveCant = waveEnemies.wave.length();
-			
-			var waveCounter:int = 0;
-			var enemy:Enemy;
-			var enemyCounter:int = 0;
-			for (var w:int = 0; w < Stats.maxWaveCant; w++) 
-			{
-				waves[waveCounter] = new Vector.<Enemy>;
-				
-				for (var i:int = 0; i < waveEnemies.wave.(@id==String(waveCounter + 1)).enemy.length(); i++) 
-				{
-					if(waveEnemies.wave.(@id==String(waveCounter + 1)).enemy[enemyCounter].@name == "zomby")
-						enemy = new Zomby(waveEnemies.wave.(@id==String(waveCounter + 1)).enemy[enemyCounter]);
-					else if(waveEnemies.wave.(@id==String(waveCounter + 1)).enemy[enemyCounter].@name == "mummy")
-						enemy = new Mummy(waveEnemies.wave.(@id==String(waveCounter + 1)).enemy[enemyCounter]);
-					else if(waveEnemies.wave.(@id==String(waveCounter + 1)).enemy[enemyCounter].@name == "vampire")
-						enemy = new Vampire(waveEnemies.wave.(@id==String(waveCounter + 1)).enemy[enemyCounter]);
-					
-					waves[waveCounter].push(enemy);
-					enemyCounter++;
-				}
-				
-				//trace(waves[waveCounter].length + " enemies in wave " + (waveCounter + 1));
-				
-				waveCounter++;
-				enemyCounter = 0;
-			}
-		}
-		
-		public static function ResetWaves():void
-		{
-			for(var row:int = 0; row < waves.length; row++) 
-			{
-				for (var col:int = 0; col < waves[row].length; col++) 
-				{
-					waves[row][col].Deactivate();
-				}
-			}
 		}
 	}
 }

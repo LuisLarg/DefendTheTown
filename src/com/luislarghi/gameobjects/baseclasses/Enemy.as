@@ -16,6 +16,7 @@ package com.luislarghi.gameobjects.baseclasses
 		private var speed:int;
 		private var currentDirection:Point;
 		private var originalLife:int;
+		private const deadPoint:Point = new Point(-999, -999);
 		private var currentLife:int;
 		private var points:int;
 		private var money:int;
@@ -175,8 +176,8 @@ package com.luislarghi.gameobjects.baseclasses
 			directionChanged = false;
 			lastDir= 1;
 			
-			this.x = R.deadPoint.x;
-			this.y = R.deadPoint.y;
+			this.x = deadPoint.x;
+			this.y = deadPoint.y;
 			currentPivot = new Point(0, R.tileHeight / 2);
 			currentDirection = new Point(1, 0);
 			currentLife = originalLife;
@@ -185,8 +186,8 @@ package com.luislarghi.gameobjects.baseclasses
 		public function Kill():void 
 		{ 
 			dead = true;
-			this.x = R.deadPoint.x;
-			this.y = R.deadPoint.y;
+			this.x = deadPoint.x;
+			this.y = deadPoint.y;
 		}
 		
 		public function Activate():void 
