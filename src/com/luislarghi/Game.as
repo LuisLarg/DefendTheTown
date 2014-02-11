@@ -3,6 +3,8 @@ package com.luislarghi
 	import com.luislarghi.gamestates.Credits;
 	import com.luislarghi.gamestates.MainMenu;
 	import com.luislarghi.gamestates.Stage_1;
+	import com.luislarghi.managers.AssetsManager;
+	import com.luislarghi.managers.XmlManager;
 	import com.luislarghi.myfirtsengine.Engine_Game;
 	import com.luislarghi.myfirtsengine.Engine_SoundManager;
 	import com.luislarghi.myfirtsengine.Engine_States;
@@ -21,7 +23,8 @@ package com.luislarghi
 			
 			super(Main.mainStage);
 			
-			orgFrameRate = mainStage.frameRate;
+			XmlManager.LoadXML();
+			AssetsManager.InstantiateAssets();
 			
 			//The game starts with it's menu
 			SetNextState(Engine_States.STATE_MAINMENU);
@@ -46,7 +49,7 @@ package com.luislarghi
 						currentState = new MainMenu(this);
 						mainStage.addChild(currentState);
 						mainStage.frameRate = LOW_FRAME_RATE;
-						Engine_SoundManager.PlayMusic(R.SND_Music);
+						Engine_SoundManager.PlayMusic(AssetsManager.SND_Music);
 						break;
 					
 					case Engine_States.STATE_CREDITS:
@@ -70,6 +73,8 @@ package com.luislarghi
 		
 		protected override function ExitApp():void
 		{
+			AssetsManager.DeallocateAsstes();
+			
 			if(Capabilities.playerType == "Desktop")
 				NativeApplication.nativeApplication.exit();
 			else if(Capabilities.playerType == "StandAlone")

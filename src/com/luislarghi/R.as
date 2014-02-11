@@ -6,49 +6,29 @@ package com.luislarghi
 	import com.luislarghi.gameobjects.enemies.Vampire;
 	import com.luislarghi.gameobjects.enemies.Zomby;
 	import com.luislarghi.myfirtsengine.Engine_Game;
-	
-	import flash.display.Bitmap;
+
 	import flash.events.Event;
 	import flash.geom.Point;
-	import flash.media.Sound;
 
 	public final class R
 	{
 		//External embeded sounds
-		[Embed(source="sounds/DayofChaos.mp3")] private static const SNDFILE_BackGMusic:Class;
-		[Embed(source="sounds/click.mp3")] private static const SNDFILE_Click:Class;
-		
-		//Instances of each sound
-		public static var SND_Music:Sound = new SNDFILE_BackGMusic();
-		public static var SND_Click:Sound = new SNDFILE_Click();
+		[Embed(source="sounds/DayofChaos.mp3")] public static const SNDFILE_BackGMusic:Class;
+		[Embed(source="sounds/click.mp3")] public static const SNDFILE_Click:Class;
 		
 		//External embeded images
-		[Embed(source="images/map.png")] private static const BG_Map:Class;
-		[Embed(source="images/map2.png")] private static const BG_Map2:Class;
-		[Embed(source="images/map3.png")] private static const BG_Map3:Class;
-		[Embed(source="images/Cura_SpriteSheet.png")] private static const SS_Cura:Class;
-		[Embed(source="images/Perrero_SpriteSheet.png")] private static const SS_Perrero:Class;
-		[Embed(source="images/Piromano_SpriteSheet.png")] private static const SS_Piromano:Class;
-		[Embed(source="images/Momia_SpriteSheet.png")] private static const SS_Momia:Class;
-		[Embed(source="images/Vampiro_SpriteSheet.png")] private static const SS_Vampiro:Class;
-		[Embed(source="images/Zomby_SpriteSheet.png")] private static const SS_Zomby:Class;		
-		[Embed(source="images/thumnails.png")] private static const SS_HUD:Class;
-		[Embed(source="images/boton.png")] private static const SS_Button:Class;
-		[Embed(source="images/mainmenu.png")] private static const BG_MainMenu:Class;
-		
-		//Instances of each image
-		public static var BM_Map:Bitmap = new BG_Map();
-		public static var BM_Map2:Bitmap = new BG_Map2();
-		public static var BM_Map3:Bitmap = new BG_Map3();
-		public static var BM_MainMenu:Bitmap = new BG_MainMenu();
-		public static var BM_Cura:Bitmap = new SS_Cura();
-		public static var BM_Perrero:Bitmap = new SS_Perrero();
-		public static var BM_Piromano:Bitmap = new SS_Piromano();
-		public static var BM_Vampiro:Bitmap = new SS_Vampiro();
-		public static var BM_Momia:Bitmap = new SS_Momia();
-		public static var BM_Zomby:Bitmap = new SS_Zomby();
-		public static var BM_HUD:Bitmap = new SS_HUD();
-		public static var BM_Button:Bitmap = new SS_Button();
+		[Embed(source="images/map.png")] public static const BG_Map:Class;
+		[Embed(source="images/map2.png")] public static const BG_Map2:Class;
+		[Embed(source="images/map3.png")] public static const BG_Map3:Class;
+		[Embed(source="images/Cura_SpriteSheet.png")] public static const SS_Cura:Class;
+		[Embed(source="images/Perrero_SpriteSheet.png")] public static const SS_Perrero:Class;
+		[Embed(source="images/Piromano_SpriteSheet.png")] public static const SS_Piromano:Class;
+		[Embed(source="images/Momia_SpriteSheet.png")] public static const SS_Momia:Class;
+		[Embed(source="images/Vampiro_SpriteSheet.png")] public static const SS_Vampiro:Class;
+		[Embed(source="images/Zomby_SpriteSheet.png")] public static const SS_Zomby:Class;		
+		[Embed(source="images/thumnails.png")] public static const SS_HUD:Class;
+		[Embed(source="images/boton.png")] public static const SS_Button:Class;
+		[Embed(source="images/mainmenu.png")] public static const BG_MainMenu:Class;
 
 		//Map tile size
 		public static const tileHeight:int = 64;

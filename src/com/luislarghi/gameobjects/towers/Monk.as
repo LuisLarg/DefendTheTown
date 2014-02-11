@@ -5,6 +5,7 @@ package com.luislarghi.gameobjects.towers
 	import com.luislarghi.gameobjects.baseclasses.Tower;
 	import com.luislarghi.gameobjects.bullets.GlintLight;
 	import com.luislarghi.gamestates.Stage_1;
+	import com.luislarghi.managers.AssetsManager;
 	import com.luislarghi.myfirtsengine.Engine_SpriteSheet;
 	
 	import flash.events.Event;
@@ -18,7 +19,7 @@ package com.luislarghi.gameobjects.towers
 		{
 			super.Init();
 			
-			SpriteSheet = new Engine_SpriteSheet(R.BM_Cura, false, R.tileWidth, R.tileHeight * 2);
+			SpriteSheet = new Engine_SpriteSheet(AssetsManager.BM_Cura, false, R.tileWidth, R.tileHeight * 2);
 			SpriteSheet.y = -R.tileHeight;
 			this.addChild(SpriteSheet);
 		}

@@ -4,6 +4,7 @@ package com.luislarghi.gui
 	import com.luislarghi.R;
 	import com.luislarghi.gameobjects.Stats;
 	import com.luislarghi.gamestates.Stage_1;
+	import com.luislarghi.managers.AssetsManager;
 	import com.luislarghi.myfirtsengine.Engine_GUI;
 	import com.luislarghi.myfirtsengine.Engine_Game;
 	import com.luislarghi.myfirtsengine.Engine_GameState;
@@ -105,7 +106,7 @@ package com.luislarghi.gui
 			
 			if(!BT_Resume)
 			{
-				BT_Resume = new GUI_Button("Resume", 280, 97, mainGame, R.BM_Button);
+				BT_Resume = new GUI_Button("Resume", 280, 97, mainGame, AssetsManager.BM_Button);
 				BT_Resume.x = Engine_Game.orgGameRes.x / 2 - BT_Resume.Size().x - 5;
 				BT_Resume.y = (Engine_Game.orgGameRes.y / 2)- (BT_Resume.Size().y / 2);
 				BT_Resume.visible = false;
@@ -113,7 +114,7 @@ package com.luislarghi.gui
 			
 			if(!BT_Menu)
 			{
-				BT_Menu = new GUI_Button("Exit", 280, 97, mainGame, R.BM_Button, Engine_States.STATE_MAINMENU);	
+				BT_Menu = new GUI_Button("Exit", 280, 97, mainGame, AssetsManager.BM_Button, Engine_States.STATE_MAINMENU);	
 				BT_Menu.x = Engine_Game.orgGameRes.x / 2 + 5;
 				BT_Menu.y = (Engine_Game.orgGameRes.y / 2) - (BT_Menu.Size().y / 2);
 				BT_Menu.visible = false;
@@ -121,7 +122,7 @@ package com.luislarghi.gui
 			
 			if(!BT_Replay)
 			{
-				BT_Replay = new GUI_Button("Replay", 280, 97, mainGame, R.BM_Button, Engine_States.STATE_INGAME);					
+				BT_Replay = new GUI_Button("Replay", 280, 97, mainGame, AssetsManager.BM_Button, Engine_States.STATE_INGAME);					
 				BT_Replay.x = Engine_Game.orgGameRes.x / 2 - BT_Replay.Size().x - 5;
 				BT_Replay.y = (Engine_Game.orgGameRes.y / 2)- (BT_Replay.Size().y / 2);
 				BT_Replay.visible = false;
@@ -129,7 +130,7 @@ package com.luislarghi.gui
 			
 			if(!BT_Next)
 			{
-				BT_Next = new GUI_Button("Next", 280, 97, mainGame, R.BM_Button, 100);					
+				BT_Next = new GUI_Button("Next", 280, 97, mainGame, AssetsManager.BM_Button, 100);					
 				BT_Next.x = Engine_Game.orgGameRes.x / 2 - BT_Next.Size().x - 5;
 				BT_Next.y = (Engine_Game.orgGameRes.y / 2)- (BT_Next.Size().y / 2);
 				BT_Next.visible = false;
@@ -137,7 +138,7 @@ package com.luislarghi.gui
 			
 			if(!BT_Exit) 
 			{
-				BT_Exit = new GUI_Button("Exit", 280, 97, mainGame, R.BM_Button, Engine_States.STATE_MAINMENU);			
+				BT_Exit = new GUI_Button("Exit", 280, 97, mainGame, AssetsManager.BM_Button, Engine_States.STATE_MAINMENU);			
 				BT_Exit.x = Engine_Game.orgGameRes.x / 2 + 5;
 				BT_Exit.y = (Engine_Game.orgGameRes.y / 2) - (BT_Exit.Size().y / 2);
 				BT_Exit.visible = false;
@@ -196,7 +197,7 @@ package com.luislarghi.gui
 		{
 			if(!BT_CuraIcon)
 			{
-				BT_CuraIcon = new GUI_HUDButton(R.tileWidth * 2, R.tileHeight * 2, mainGame, R.BM_HUD, R.CURAMODE);
+				BT_CuraIcon = new GUI_HUDButton(R.tileWidth * 2, R.tileHeight * 2, mainGame, AssetsManager.BM_HUD, R.CURAMODE);
 				BT_CuraIcon.x = (Engine_Game.orgGameRes.x / 2) + BT_CuraIcon.Size().x;
 				BT_CuraIcon.y = Engine_Game.orgGameRes.y - (BT_CuraIcon.Size().y / 2) - BT_CuraIcon.Size().y;
 				BT_CuraIcon.ChangeAnimation(1);
@@ -204,7 +205,7 @@ package com.luislarghi.gui
 			
 			if(!BT_PiroIcon)
 			{
-				BT_PiroIcon = new GUI_HUDButton(R.tileWidth * 2, R.tileHeight * 2, mainGame, R.BM_HUD, R.PIROMODE);
+				BT_PiroIcon = new GUI_HUDButton(R.tileWidth * 2, R.tileHeight * 2, mainGame, AssetsManager.BM_HUD, R.PIROMODE);
 				BT_PiroIcon.x = (Engine_Game.orgGameRes.x / 2) - (BT_PiroIcon.Size().x * 2);
 				BT_PiroIcon.y = Engine_Game.orgGameRes.y - (BT_PiroIcon.Size().y / 2) - BT_PiroIcon.Size().y;
 				BT_PiroIcon.ChangeAnimation(2);
@@ -212,7 +213,7 @@ package com.luislarghi.gui
 			
 			if(!BT_PerroIcon)
 			{
-				BT_PerroIcon = new GUI_HUDButton(R.tileWidth * 2, R.tileHeight * 2, mainGame, R.BM_HUD, R.PERROMODE);
+				BT_PerroIcon = new GUI_HUDButton(R.tileWidth * 2, R.tileHeight * 2, mainGame, AssetsManager.BM_HUD, R.PERROMODE);
 				BT_PerroIcon.x = (Engine_Game.orgGameRes.x / 2) - (BT_PerroIcon.Size().x / 2);
 				BT_PerroIcon.y = Engine_Game.orgGameRes.y - (BT_PerroIcon.Size().y / 2) - BT_PerroIcon.Size().y;
 				BT_PerroIcon.ChangeAnimation(0);

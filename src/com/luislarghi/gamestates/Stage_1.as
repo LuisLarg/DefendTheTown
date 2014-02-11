@@ -18,6 +18,7 @@ package com.luislarghi.gamestates
 	import com.luislarghi.gui.GUI_Button;
 	import com.luislarghi.gui.GUI_HUDButton;
 	import com.luislarghi.gui.GUI_Stage1;
+	import com.luislarghi.managers.AssetsManager;
 	import com.luislarghi.managers.GameObjectsManager;
 	import com.luislarghi.managers.XmlManager;
 	import com.luislarghi.myfirtsengine.Engine_GUIButton;
@@ -41,6 +42,7 @@ package com.luislarghi.gamestates
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import flash.system.Capabilities;
+	import flash.system.System;
 	import flash.ui.Keyboard;
 	import flash.utils.ByteArray;
 	
@@ -215,6 +217,8 @@ package com.luislarghi.gamestates
 			}
 			
 			GUI_component.Logic();
+			
+			trace("Memory usage = "+System.totalMemory);
 		}
 
 		private function CheckForTownAttack():void
@@ -312,21 +316,21 @@ package com.luislarghi.gamestates
 			switch(Stats.currentStage)
 			{
 				case 1:
-					currentBGimg = new Engine_SpriteSheet(R.BM_Map, false, 1280, 768);
+					currentBGimg = new Engine_SpriteSheet(AssetsManager.BM_Map, false, 1280, 768);
 					currentBGimg.drawTile(0);
 					currentMap = new Array();
 					currentMap = R.CopyMultiDArray(R.map);
 					break;
 				
 				case 2:
-					currentBGimg = new Engine_SpriteSheet(R.BM_Map2, false, 1280, 768);
+					currentBGimg = new Engine_SpriteSheet(AssetsManager.BM_Map2, false, 1280, 768);
 					currentBGimg.drawTile(0);
 					currentMap = new Array();
 					currentMap = R.CopyMultiDArray(R.map2);
 					break;
 				
 				case 3:
-					currentBGimg = new Engine_SpriteSheet(R.BM_Map3, false, 1280, 768);
+					currentBGimg = new Engine_SpriteSheet(AssetsManager.BM_Map3, false, 1280, 768);
 					currentBGimg.drawTile(0);
 					currentMap = new Array();
 					currentMap = R.CopyMultiDArray(R.map3);

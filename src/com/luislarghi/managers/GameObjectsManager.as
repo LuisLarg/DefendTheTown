@@ -33,9 +33,7 @@ package com.luislarghi.managers
 					waves[waveCounter].push(enemy);
 					enemyCounter++;
 				}
-				
-				//trace(waves[waveCounter].length + " enemies in wave " + (waveCounter + 1));
-				
+
 				waveCounter++;
 				enemyCounter = 0;
 			}

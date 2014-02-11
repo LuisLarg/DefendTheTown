@@ -3,6 +3,7 @@ package com.luislarghi.gui
 	import com.luislarghi.R;
 	import com.luislarghi.gameobjects.baseclasses.Tower;
 	import com.luislarghi.gamestates.Stage_1;
+	import com.luislarghi.managers.AssetsManager;
 	import com.luislarghi.myfirtsengine.Engine_GUIButton;
 	import com.luislarghi.myfirtsengine.Engine_Game;
 	import com.luislarghi.myfirtsengine.Engine_SoundManager;
@@ -100,7 +101,7 @@ package com.luislarghi.gui
 			else
 				Stage_1.SetPause(false);
 			
-			Engine_SoundManager.PlaySound(R.SND_Click);
+			Engine_SoundManager.PlaySound(AssetsManager.SND_Click);
 		}
 	}
 }

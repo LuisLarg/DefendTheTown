@@ -3,6 +3,7 @@ package com.luislarghi.gui
 	import com.luislarghi.R;
 	import com.luislarghi.gameobjects.Stats;
 	import com.luislarghi.gamestates.Stage_1;
+	import com.luislarghi.managers.AssetsManager;
 	import com.luislarghi.managers.XmlManager;
 	import com.luislarghi.myfirtsengine.Engine_GUIButton;
 	import com.luislarghi.myfirtsengine.Engine_Game;
@@ -97,7 +98,7 @@ package com.luislarghi.gui
 						break;
 				}
 				
-				Engine_SoundManager.PlaySound(R.SND_Click);
+				Engine_SoundManager.PlaySound(AssetsManager.SND_Click);
 			}
 		}
 		
