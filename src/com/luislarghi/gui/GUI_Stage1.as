@@ -5,6 +5,7 @@ package com.luislarghi.gui
 	import com.luislarghi.gameobjects.Stats;
 	import com.luislarghi.gamestates.Stage_1;
 	import com.luislarghi.managers.AssetsManager;
+	import com.luislarghi.managers.XmlManager;
 	import com.luislarghi.myfirtsengine.Engine_GUI;
 	import com.luislarghi.myfirtsengine.Engine_Game;
 	import com.luislarghi.myfirtsengine.Engine_GameState;
@@ -13,6 +14,7 @@ package com.luislarghi.gui
 	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.geom.Point;
+	import flash.text.GridFitType;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
@@ -177,7 +179,7 @@ package com.luislarghi.gui
 			if(!TF_WaveN)
 			{
 				TF_WaveN = new TextField();
-				TF_WaveN.text = "Wave "+(Stats.currentWave + 1)+"-"+Stats.maxWaveCant;
+				TF_WaveN.text = "Wave "+(Stats.currentWave + 1)+"-"+XmlManager.levelWaves.level[Stats.currentLevel - 1].length();
 				TF_WaveN.x = 20;
 				TF_WaveN.y = Engine_Game.orgGameRes.y - TF_WaveN.height;
 				TF_WaveN.selectable = false;
@@ -187,7 +189,7 @@ package com.luislarghi.gui
 			if(!TF_Format)
 			{
 				TF_Format = new TextFormat();
-				TF_Format.size = 40 * Engine_Game.newScale;
+				TF_Format.size = 40 * Engine_Game.newScaleX;
 				TF_Format.font = "Feast of Flesh BB";
 				TF_Format.color = 0xFFFFFF;
 			}
@@ -225,22 +227,26 @@ package com.luislarghi.gui
 			TF_Score.text = "Score = "+Stats.score;
 			TF_Money.text = "Money = "+Stats.money;
 			TF_TownH.text = "Town = "+Stats.townHealth;
-			TF_WaveN.text = "Wave "+(Stats.currentWave + 1)+"-"+Stats.maxWaveCant;
+			TF_WaveN.text = "Wave "+(Stats.currentWave + 1)+"-"+XmlManager.levelWaves.level[Stats.currentLevel - 1].length();
 		}
 		
 		public override function Draw():void
 		{
 			TF_Score.setTextFormat(TF_Format, 0, TF_Score.length);
-			TF_Score.autoSize = TextFieldAutoSize.CENTER;
+			TF_Score.autoSize = TextFieldAutoSize.LEFT;
+			TF_Score.gridFitType = GridFitType.NONE;
 			
 			TF_Money.setTextFormat(TF_Format, 0, TF_Money.length);
-			TF_Money.autoSize = TextFieldAutoSize.CENTER;
+			TF_Money.autoSize = TextFieldAutoSize.RIGHT;
+			TF_Money.gridFitType = GridFitType.NONE;
 			
 			TF_TownH.setTextFormat(TF_Format, 0, TF_TownH.length);
-			TF_TownH.autoSize = TextFieldAutoSize.CENTER;
+			TF_TownH.autoSize = TextFieldAutoSize.LEFT;
+			TF_TownH.gridFitType = GridFitType.NONE;
 			
 			TF_WaveN.setTextFormat(TF_Format, 0, TF_WaveN.length);
-			TF_WaveN.autoSize = TextFieldAutoSize.CENTER;
+			TF_WaveN.autoSize = TextFieldAutoSize.LEFT;
+			TF_WaveN.gridFitType = GridFitType.NONE;
 			
 			BT_CuraIcon.Draw();
 			BT_PerroIcon.Draw();
@@ -256,7 +262,7 @@ package com.luislarghi.gui
 			}
 			else if(Stage_1.GetGameOver())
 			{
-				if(Stats.currentStage < 4)
+				if(Stats.currentLevel < 3)
 				{
 					if(Stats.townHealth > 0)
 					{

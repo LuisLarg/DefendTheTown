@@ -1,7 +1,5 @@
 package com.luislarghi.managers
 {
-	import com.luislarghi.gameobjects.Stats;
-	
 	import flash.events.Event;
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
@@ -15,8 +13,9 @@ package com.luislarghi.managers
 		private static var content:String = "";
 		public static var xmlReady:Boolean = false;
 		public static var xmlData:XML;
-		public static var waveEnemies:XMLList;
+		public static var levelWaves:XMLList;
 		public static var towerTypes:XMLList;
+		public static var enemyTypes:XMLList;
 		
 		public static function LoadXML():void
 		{		
@@ -31,9 +30,9 @@ package com.luislarghi.managers
 			xmlData = XML(fileStream.readMultiByte(fileStream.bytesAvailable, "iso-8859-1"));
 			fileStream.removeEventListener(Event.COMPLETE, xmlLoadComplete);
 			
-			waveEnemies = xmlData.type.(@name=="waves").level.(@id=="1");
+			levelWaves = xmlData.type.(@name=="waves");
 			towerTypes = xmlData.type.(@name=="towers");
-			Stats.maxWaveCant = waveEnemies.wave.length();
+			enemyTypes = xmlData.type.(@name=="enemies");
 			
 			xmlReady = true;
 			fileStream.close();

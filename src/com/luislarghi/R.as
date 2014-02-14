@@ -83,7 +83,7 @@ package com.luislarghi
 		//Helper functions
 		public static function ScreenToMap(screen:Point):Point
 		{
-			return new Point(int(screen.x / (tileWidth * Engine_Game.newScale)), int(screen.y / (tileHeight * Engine_Game.newScale)));
+			return new Point(int(screen.x / (tileWidth * Engine_Game.newScaleX)), int(screen.y / (tileHeight * Engine_Game.newScaleY)));
 		}
 		
 		public static function MapToScreen(col:int, row:int):Point

@@ -57,9 +57,10 @@ package com.luislarghi.gamestates
 		public static var currentBuildMode:int = R.NULLMODE;
 		private var towers:Vector.<Tower> = new Vector.<Tower>;
 		public var bullets:Vector.<Bullet> = new Vector.<Bullet>;
-		public var waves:Vector.<Vector.<Enemy>> = new Vector.<Vector.<Enemy>>;
+		public var waves:Vector.<Enemy> = new Vector.<Enemy>;
 		
 		private var enemySpanwRate:int = 2000;
+		private var enemySpawned:int = 0;
 		private var counter:int = 0;
 		private var GUI_component:GUI_Stage1;
 		
@@ -89,11 +90,8 @@ package com.luislarghi.gamestates
 			
 			for(var row:int = 0; row < waves.length; row++) 
 			{
-				for (var col:int = 0; col < waves[row].length; col++) 
-				{
-					gameObjContainer.addChild(waves[row][col]);
-					waves[row][col].Init();
-				}
+				gameObjContainer.addChild(waves[row]);
+				waves[row].Init();
 			}
 			
 			if(Capabilities.cpuArchitecture == "ARM")
@@ -117,7 +115,7 @@ package com.luislarghi.gamestates
 			GUI_component = new GUI_Stage1(mainGame, this);
 			GUI_component.Init();
 			
-			trace("In Game: "+this.width+", "+this.height+" | Game resolution: "+Engine_Game.orgGameRes);
+			trace("In Game: ("+this.width+", "+this.height+") | Scale: ("+this.scaleX+", "+this.scaleY+")");
 			//trace("You are INGAME");
 		}
 		
@@ -135,18 +133,15 @@ package com.luislarghi.gamestates
 			for(var b:int = 0; b < bullets.length; b++) gameObjContainer.removeChild(bullets[b]);
 			for(var row:int = 0; row < waves.length; row++) 
 			{
-				for (var col:int = 0; col < waves[row].length; col++) 
-				{
-					gameObjContainer.removeChild(waves[row][col]);
-					waves[row][col].Clear();
-				}
+				gameObjContainer.removeChild(waves[row]);
+				waves[row].Clear();
 			}
 			
 			this.removeChild(gameObjContainer);
 			this.removeChild(guiContainer);
 			this.removeChild(levelContainer);
 			
-			towers.length = bullets.length = 0;
+			towers.length = bullets.length = waves.length = 0;
 			
 			if(Capabilities.cpuArchitecture == "ARM")
 			{
@@ -175,7 +170,7 @@ package com.luislarghi.gamestates
 			{
 				for(var t:int = 0; t < towers.length; t++) towers[t].Draw();
 				for(var b:int = 0; b < bullets.length; b++) bullets[b].Draw();
-				for(var w:int = 0; w < waves[Stats.currentWave].length; w++) waves[Stats.currentWave][w].Draw();
+				for(var w:int = 0; w < waves.length; w++) if(waves[w].Active) waves[w].Draw();
 			}
 			
 			GUI_component.Draw();
@@ -204,30 +199,34 @@ package com.luislarghi.gamestates
 				
 				for(var t:int = 0; t < towers.length; t++) towers[t].Logic();
 				for(var b:int = 0; b < bullets.length; b++) bullets[b].Logic();
-				for(var w:int = 0; w < waves[Stats.currentWave].length; w++) waves[Stats.currentWave][w].Logic();
+				for(var w:int = 0; w < waves.length; w++) if(waves[w].Active) waves[w].Logic();
 				
 				CheckForBulletsCollition();
 				CheckForTownAttack();
 				
 				if(GameObjectsManager.CheckForNextWave(waves))
 				{
-					if(Stats.currentWave < Stats.maxWaveCant - 1) Stats.currentWave++;
-					else gameOver = true;
+					if(enemySpawned >= XmlManager.levelWaves.level[Stats.currentLevel - 1].wave[Stats.currentWave].@enemiesCant)
+					{
+						if(Stats.currentWave < XmlManager.levelWaves.level[Stats.currentLevel - 1].wave.length() - 1) 
+							Stats.currentWave++;	
+						else gameOver = true;
+						
+						enemySpawned = 0;
+					}
 				}
 			}
 			
 			GUI_component.Logic();
-			
-			trace("Memory usage = "+System.totalMemory);
 		}
 
 		private function CheckForTownAttack():void
 		{
-			for(var i:int = 0; i < waves[Stats.currentWave].length; i++)
+			for(var i:int = 0; i < waves.length; i++)
 			{
-				if(waves[Stats.currentWave][i].Survivor && !waves[Stats.currentWave][i].Dead && waves[Stats.currentWave][i].Active)
+				if(waves[i].Survivor && waves[i].Active)
 				{
-					waves[Stats.currentWave][i].Kill();
+					waves[i].Deactivate();
 					Stats.townHealth -= 1;
 				}
 			}
@@ -239,19 +238,20 @@ package com.luislarghi.gamestates
 		{
 			counter += mainStage.frameRate * enemySpanwRate / 1000;
 			
-			if(counter >= enemySpanwRate)
+			if(counter >= enemySpanwRate && enemySpawned < int(XmlManager.levelWaves.level[Stats.currentLevel - 1].wave[Stats.currentWave].@enemiesCant))
 			{
-				for (var i:int = 0; i < waves[Stats.currentWave].length; i++) 
+				for (var i:int = 0; i < waves.length; i++) 
 				{
-					if(!waves[Stats.currentWave][i].Active && !waves[Stats.currentWave][i].Survivor) 
+					if(!waves[i].Active && !waves[i].Survivor) 
 					{
-						waves[Stats.currentWave][i].Activate();
+						waves[i].Activate();
+						enemySpawned++;
 						break;
 					}
 				}
 				
 				counter = 0;
-			}		
+			}
 		}
 		
 		private function CheckForDeadBullets():void
@@ -272,22 +272,22 @@ package com.luislarghi.gamestates
 			// For each active bullet
 			for(var b:int = 0; b < bullets.length; b++)
 			{
-				// search each enemy in the current wave
-				for(var i:int = 0; i < waves[Stats.currentWave].length; i++)
+				// search each enemy
+				for(var i:int = 0; i < waves.length; i++)
 				{
-					// and if the current bullet collides with the current enemy
-					if(bullets[b].hitTestObject(waves[Stats.currentWave][i]))
+					// and if the current bullet collides with an active enemy
+					if(waves[i].Active && bullets[b].hitTestObject(waves[i]))
 					{
 						// verify if get a special attack or not
-						if((bullets[b] is Torch && waves[Stats.currentWave][i] is Zomby) ||
-						   (bullets[b] is GlintLight && waves[Stats.currentWave][i] is Vampire) ||
-						   (bullets[b] is Dog && waves[Stats.currentWave][i] is Mummy))
+						if((bullets[b] is Torch && waves[i] is Zomby) ||
+						   (bullets[b] is GlintLight && waves[i] is Vampire) ||
+						   (bullets[b] is Dog && waves[i] is Mummy))
 						{
-							waves[Stats.currentWave][i].Hit(bullets[b].Damage * 2);
+							waves[i].Hit(bullets[b].Damage * 2);
 						}
 						else 
 						{
-							waves[Stats.currentWave][i].Hit(bullets[b].Damage);
+							waves[i].Hit(bullets[b].Damage);
 						}
 
 						
@@ -296,13 +296,13 @@ package com.luislarghi.gamestates
 						bullets.splice(b, 1);
 						
 						// and if the current enemy dies
-						if(waves[Stats.currentWave][i].Life <= 0)
+						if(waves[i].Life <= 0)
 						{
 							// increase the points and money stats
-							Stats.score += waves[Stats.currentWave][i].PointsWorth;
-							Stats.money += waves[Stats.currentWave][i].MoneyDropped;
+							Stats.score += waves[i].PointsWorth;
+							Stats.money += waves[i].MoneyDropped;
 							// then kill that enemy 
-							waves[Stats.currentWave][i].Kill();
+							waves[i].Deactivate();
 						}
 						
 						break;
@@ -313,23 +313,23 @@ package com.luislarghi.gamestates
 		
 		public function ChangeLevel():void
 		{
-			switch(Stats.currentStage)
+			switch(Stats.currentLevel)
 			{
-				case 1:
+				case 0:
 					currentBGimg = new Engine_SpriteSheet(AssetsManager.BM_Map, false, 1280, 768);
 					currentBGimg.drawTile(0);
 					currentMap = new Array();
 					currentMap = R.CopyMultiDArray(R.map);
 					break;
 				
-				case 2:
+				case 1:
 					currentBGimg = new Engine_SpriteSheet(AssetsManager.BM_Map2, false, 1280, 768);
 					currentBGimg.drawTile(0);
 					currentMap = new Array();
 					currentMap = R.CopyMultiDArray(R.map2);
 					break;
 				
-				case 3:
+				case 2:
 					currentBGimg = new Engine_SpriteSheet(AssetsManager.BM_Map3, false, 1280, 768);
 					currentBGimg.drawTile(0);
 					currentMap = new Array();
@@ -337,9 +337,8 @@ package com.luislarghi.gamestates
 					break;
 			}
 			
-			Stats.currentStage++;
+			Stats.currentLevel++;
 			Stats.currentWave = 0;
-			Stats.money = 6;
 			GameObjectsManager.ResetWaves(waves);
 			ResetObjects();
 			gameOver = false;

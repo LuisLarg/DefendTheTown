@@ -11,53 +11,58 @@ package com.luislarghi.managers
 
 	public final class GameObjectsManager
 	{
-		public static function CreateWave(waves:Vector.<Vector.<Enemy>>, stage:Stage_1):void
+		private static var biggestEnemyCant:int = 0;
+		
+		private static function FindBiggestWave():void
 		{
-			var waveCounter:int = 0;
-			var enemy:Enemy;
-			var enemyCounter:int = 0;
-			
-			for (var w:int = 0; w < Stats.maxWaveCant; w++) 
+			for (var i:int = 0; i < XmlManager.levelWaves.level.length(); i++) 
 			{
-				waves[waveCounter] = new Vector.<Enemy>;
-				
-				for (var i:int = 0; i < XmlManager.waveEnemies.wave.(@id==String(waveCounter + 1)).enemy.length(); i++) 
+				for (var j:int = 0; j < XmlManager.levelWaves.level[i].wave.length(); j++) 
 				{
-					if(XmlManager.waveEnemies.wave.(@id==String(waveCounter + 1)).enemy[enemyCounter].@name == "zomby")
-						enemy = new Zomby(XmlManager.waveEnemies.wave.(@id==String(waveCounter + 1)).enemy[enemyCounter]);
-					else if(XmlManager.waveEnemies.wave.(@id==String(waveCounter + 1)).enemy[enemyCounter].@name == "mummy")
-						enemy = new Mummy(XmlManager.waveEnemies.wave.(@id==String(waveCounter + 1)).enemy[enemyCounter]);
-					else if(XmlManager.waveEnemies.wave.(@id==String(waveCounter + 1)).enemy[enemyCounter].@name == "vampire")
-						enemy = new Vampire(XmlManager.waveEnemies.wave.(@id==String(waveCounter + 1)).enemy[enemyCounter]);
-					
-					waves[waveCounter].push(enemy);
-					enemyCounter++;
+					if(XmlManager.levelWaves.level[i].wave[j].@enemiesCant > biggestEnemyCant)
+						biggestEnemyCant = XmlManager.levelWaves.level[i].wave[j].@enemiesCant;
 				}
-
-				waveCounter++;
-				enemyCounter = 0;
 			}
 		}
 		
-		public static function CheckForNextWave(waves:Vector.<Vector.<Enemy>>):Boolean
+		public static function CreateWave(waves:Vector.<Enemy>, stage:Stage_1):void
 		{
-			// Check all active enemies in the current wave
-			for(var i:int = 0; i < waves[Stats.currentWave].length; i++)
-				// if at least one enemy is not dead...
-				if(!waves[Stats.currentWave][i].Dead) return false;
+			var enemy:Enemy;
+			var enemyCounter:int = 0;
+			
+			Stats.maxLevelCant = XmlManager.levelWaves.length();
+			
+			FindBiggestWave();
+			
+			for (var j:int = 0; j < biggestEnemyCant; j++) 
+			{
+				if(enemyCounter > 2) enemyCounter = 0;
+				
+				if(enemyCounter == 0) enemy = new Zomby(XmlManager.enemyTypes.enemy[enemyCounter]);
+				else if(enemyCounter == 1) enemy = new Mummy(XmlManager.enemyTypes.enemy[enemyCounter]);
+				else if(enemyCounter == 2) enemy = new Vampire(XmlManager.enemyTypes.enemy[enemyCounter]);
+				
+				waves.push(enemy);
+				enemyCounter++;
+			}
+			
+		}
+		
+		public static function CheckForNextWave(waves:Vector.<Enemy>):Boolean
+		{
+			// Check for at least one active enemy
+			for(var i:int = 0; i < waves.length; i++)
+			{
+				if(waves[i].Active) return false;
+			}
 	
 			return true;
 		}
 		
-		public static function ResetWaves(waves:Vector.<Vector.<Enemy>>):void
+		public static function ResetWaves(waves:Vector.<Enemy>):void
 		{
 			for(var row:int = 0; row < waves.length; row++) 
-			{
-				for (var col:int = 0; col < waves[row].length; col++) 
-				{
-					waves[row][col].Deactivate();
-				}
-			}
+				waves[row].Deactivate();
 		}
 		
 		public static function SpriteDepthBubbleSort(container:Sprite):void

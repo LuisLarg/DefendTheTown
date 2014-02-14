@@ -4,138 +4,26 @@
 		<tower name="perrero" shootRate="500" cost="3" framePerAnim="50" />
 		<tower name="cura" shootRate="250" cost="2" framePerAnim="44" />
 	</type>
+	<type name="enemies">
+		<enemy name="zomby" speed="2" life="3" points="3" money="2" framePerAnim="48" />
+		<enemy name="mummy" speed="3" life="4" points="2" money="3" framePerAnim="54" />
+		<enemy name="vampire" speed="4" life="2" points="1" money="2" framePerAnim="50" />
+	</type>
 	<type name="waves">
-		<level id="1">
-			<wave id="1">
-				<enemy name="vampire" speed="4" life="2" points="1" money="2" framePerAnim="50" />
-				<enemy name="mummy" speed="3" life="4" points="2" money="3" framePerAnim="54" />
-				<enemy name="zomby" speed="2" life="3" points="3" money="2" framePerAnim="48" />
-				<enemy name="vampire" speed="4" life="2" points="1" money="2" framePerAnim="50" />
-				<enemy name="mummy" speed="3" life="4" points="2" money="3" framePerAnim="54" />
-				<enemy name="zomby" speed="2" life="3" points="3" money="2" framePerAnim="48" />
-				<enemy name="vampire" speed="4" life="2" points="1" money="2" framePerAnim="50" />
-				<enemy name="mummy" speed="3" life="4" points="2" money="3" framePerAnim="54" />
-				<enemy name="zomby" speed="2" life="3" points="3" money="2" framePerAnim="48" />
-				<enemy name="vampire" speed="4" life="2" points="1" money="2" framePerAnim="50" />
-				<enemy name="mummy" speed="3" life="4" points="2" money="3" framePerAnim="54" />
-				<enemy name="zomby" speed="2" life="3" points="3" money="2" framePerAnim="48" />
-				<enemy name="vampire" speed="4" life="2" points="1" money="2" framePerAnim="50" />
-				<enemy name="mummy" speed="3" life="4" points="2" money="3" framePerAnim="54" />
-				<enemy name="zomby" speed="2" life="3" points="3" money="2" framePerAnim="48" />
-				<enemy name="vampire" speed="4" life="2" points="1" money="2" framePerAnim="50" />
-				<enemy name="mummy" speed="3" life="4" points="2" money="3" framePerAnim="54" />
-				<enemy name="zomby" speed="2" life="3" points="3" money="2" framePerAnim="48" />
-				<enemy name="vampire" speed="4" life="2" points="1" money="2" framePerAnim="50" />
-				<enemy name="mummy" speed="3" life="4" points="2" money="3" framePerAnim="54" />
-				<enemy name="zomby" speed="2" life="3" points="3" money="2" framePerAnim="48" />
-				<enemy name="vampire" speed="4" life="2" points="1" money="2" framePerAnim="50" />
-				<enemy name="mummy" speed="3" life="4" points="2" money="3" framePerAnim="54" />
-				<enemy name="zomby" speed="2" life="3" points="3" money="2" framePerAnim="48" />
-			</wave>
-			<wave id="2">
-				<enemy name="vampire" speed="4" life="4" points="1" money="2" framePerAnim="50" />
-				<enemy name="mummy" speed="3" life="8" points="2" money="3" framePerAnim="54" />
-				<enemy name="zomby" speed="2" life="6" points="3" money="2" framePerAnim="48" />
-				<enemy name="vampire" speed="4" life="4" points="1" money="2" framePerAnim="50" />
-				<enemy name="mummy" speed="3" life="8" points="2" money="3" framePerAnim="54" />
-				<enemy name="zomby" speed="2" life="6" points="3" money="2" framePerAnim="48" />
-				<enemy name="vampire" speed="4" life="4" points="1" money="2" framePerAnim="50" />
-				<enemy name="mummy" speed="3" life="8" points="2" money="3" framePerAnim="54" />
-				<enemy name="zomby" speed="2" life="6" points="3" money="2" framePerAnim="48" />
-				<enemy name="vampire" speed="4" life="4" points="1" money="2" framePerAnim="50" />
-				<enemy name="mummy" speed="3" life="8" points="2" money="3" framePerAnim="54" />
-				<enemy name="zomby" speed="2" life="6" points="3" money="2" framePerAnim="48" />
-				<enemy name="vampire" speed="4" life="4" points="1" money="2" framePerAnim="50" />
-				<enemy name="mummy" speed="3" life="8" points="2" money="3" framePerAnim="54" />
-				<enemy name="zomby" speed="2" life="6" points="3" money="2" framePerAnim="48" />
-				<enemy name="vampire" speed="4" life="4" points="1" money="2" framePerAnim="50" />
-				<enemy name="mummy" speed="3" life="8" points="2" money="3" framePerAnim="54" />
-				<enemy name="zomby" speed="2" life="6" points="3" money="2" framePerAnim="48" />
-				<enemy name="vampire" speed="4" life="4" points="1" money="2" framePerAnim="50" />
-				<enemy name="mummy" speed="3" life="8" points="2" money="3" framePerAnim="54" />
-				<enemy name="zomby" speed="2" life="6" points="3" money="2" framePerAnim="48" />
-				<enemy name="vampire" speed="4" life="4" points="1" money="2" framePerAnim="50" />
-				<enemy name="mummy" speed="3" life="8" points="2" money="3" framePerAnim="54" />
-				<enemy name="zomby" speed="2" life="6" points="3" money="2" framePerAnim="48" />
-			</wave>
-			<wave id="3">
-				<enemy name="vampire" speed="4" life="8" points="1" money="2" framePerAnim="50" />
-				<enemy name="mummy" speed="3" life="16" points="2" money="3" framePerAnim="54" />
-				<enemy name="zomby" speed="2" life="12" points="3" money="2" framePerAnim="48" />
-				<enemy name="vampire" speed="4" life="8" points="1" money="2" framePerAnim="50" />
-				<enemy name="mummy" speed="3" life="16" points="2" money="3" framePerAnim="54" />
-				<enemy name="zomby" speed="2" life="12" points="3" money="2" framePerAnim="48" />
-				<enemy name="vampire" speed="4" life="8" points="1" money="2" framePerAnim="50" />
-				<enemy name="mummy" speed="3" life="16" points="2" money="3" framePerAnim="54" />
-				<enemy name="zomby" speed="2" life="12" points="3" money="2" framePerAnim="48" />
-				<enemy name="vampire" speed="4" life="8" points="1" money="2" framePerAnim="50" />
-				<enemy name="mummy" speed="3" life="16" points="2" money="3" framePerAnim="54" />
-				<enemy name="zomby" speed="2" life="12" points="3" money="2" framePerAnim="48" />
-				<enemy name="vampire" speed="4" life="8" points="1" money="2" framePerAnim="50" />
-				<enemy name="mummy" speed="3" life="16" points="2" money="3" framePerAnim="54" />
-				<enemy name="zomby" speed="2" life="12" points="3" money="2" framePerAnim="48" />
-				<enemy name="vampire" speed="4" life="8" points="1" money="2" framePerAnim="50" />
-				<enemy name="mummy" speed="3" life="16" points="2" money="3" framePerAnim="54" />
-				<enemy name="zomby" speed="2" life="12" points="3" money="2" framePerAnim="48" />
-				<enemy name="vampire" speed="4" life="8" points="1" money="2" framePerAnim="50" />
-				<enemy name="mummy" speed="3" life="16" points="2" money="3" framePerAnim="54" />
-				<enemy name="zomby" speed="2" life="12" points="3" money="2" framePerAnim="48" />
-				<enemy name="vampire" speed="4" life="8" points="1" money="2" framePerAnim="50" />
-				<enemy name="mummy" speed="3" life="16" points="2" money="3" framePerAnim="54" />
-				<enemy name="zomby" speed="2" life="12" points="3" money="2" framePerAnim="48" />
-			</wave>
-			<wave id="4">
-				<enemy name="vampire" speed="4" life="16" points="1" money="2" framePerAnim="50" />
-				<enemy name="mummy" speed="3" life="32" points="2" money="3" framePerAnim="54" />
-				<enemy name="zomby" speed="2" life="24" points="3" money="2" framePerAnim="48" />
-				<enemy name="vampire" speed="4" life="16" points="1" money="2" framePerAnim="50" />
-				<enemy name="mummy" speed="3" life="32" points="2" money="3" framePerAnim="54" />
-				<enemy name="zomby" speed="2" life="24" points="3" money="2" framePerAnim="48" />
-				<enemy name="vampire" speed="4" life="16" points="1" money="2" framePerAnim="50" />
-				<enemy name="mummy" speed="3" life="32" points="2" money="3" framePerAnim="54" />
-				<enemy name="zomby" speed="2" life="24" points="3" money="2" framePerAnim="48" />
-				<enemy name="vampire" speed="4" life="16" points="1" money="2" framePerAnim="50" />
-				<enemy name="mummy" speed="3" life="32" points="2" money="3" framePerAnim="54" />
-				<enemy name="zomby" speed="2" life="24" points="3" money="2" framePerAnim="48" />
-				<enemy name="vampire" speed="4" life="16" points="1" money="2" framePerAnim="50" />
-				<enemy name="mummy" speed="3" life="32" points="2" money="3" framePerAnim="54" />
-				<enemy name="zomby" speed="2" life="24" points="3" money="2" framePerAnim="48" />
-				<enemy name="vampire" speed="4" life="16" points="1" money="2" framePerAnim="50" />
-				<enemy name="mummy" speed="3" life="32" points="2" money="3" framePerAnim="54" />
-				<enemy name="zomby" speed="2" life="24" points="3" money="2" framePerAnim="48" />
-				<enemy name="vampire" speed="4" life="16" points="1" money="2" framePerAnim="50" />
-				<enemy name="mummy" speed="3" life="32" points="2" money="3" framePerAnim="54" />
-				<enemy name="zomby" speed="2" life="24" points="3" money="2" framePerAnim="48" />
-				<enemy name="vampire" speed="4" life="16" points="1" money="2" framePerAnim="50" />
-				<enemy name="mummy" speed="3" life="32" points="2" money="3" framePerAnim="54" />
-				<enemy name="zomby" speed="2" life="24" points="3" money="2" framePerAnim="48" />
-			</wave>
-			<wave id="5">
-				<enemy name="vampire" speed="4" life="32" points="1" money="2" framePerAnim="50" />
-				<enemy name="mummy" speed="3" life="64" points="2" money="3" framePerAnim="54" />
-				<enemy name="zomby" speed="2" life="48" points="3" money="2" framePerAnim="48" />
-				<enemy name="vampire" speed="4" life="32" points="1" money="2" framePerAnim="50" />
-				<enemy name="mummy" speed="3" life="64" points="2" money="3" framePerAnim="54" />
-				<enemy name="zomby" speed="2" life="48" points="3" money="2" framePerAnim="48" />
-				<enemy name="vampire" speed="4" life="32" points="1" money="2" framePerAnim="50" />
-				<enemy name="mummy" speed="3" life="64" points="2" money="3" framePerAnim="54" />
-				<enemy name="zomby" speed="2" life="48" points="3" money="2" framePerAnim="48" />
-				<enemy name="vampire" speed="4" life="32" points="1" money="2" framePerAnim="50" />
-				<enemy name="mummy" speed="3" life="64" points="2" money="3" framePerAnim="54" />
-				<enemy name="zomby" speed="2" life="48" points="3" money="2" framePerAnim="48" />
-				<enemy name="vampire" speed="4" life="32" points="1" money="2" framePerAnim="50" />
-				<enemy name="mummy" speed="3" life="64" points="2" money="3" framePerAnim="54" />
-				<enemy name="zomby" speed="2" life="48" points="3" money="2" framePerAnim="48" />
-				<enemy name="vampire" speed="4" life="32" points="1" money="2" framePerAnim="50" />
-				<enemy name="mummy" speed="3" life="64" points="2" money="3" framePerAnim="54" />
-				<enemy name="zomby" speed="2" life="48" points="3" money="2" framePerAnim="48" />
-				<enemy name="vampire" speed="4" life="32" points="1" money="2" framePerAnim="50" />
-				<enemy name="mummy" speed="3" life="64" points="2" money="3" framePerAnim="54" />
-				<enemy name="zomby" speed="2" life="48" points="3" money="2" framePerAnim="48" />
-				<enemy name="vampire" speed="4" life="32" points="1" money="2" framePerAnim="50" />
-				<enemy name="mummy" speed="3" life="64" points="2" money="3" framePerAnim="54" />
-				<enemy name="zomby" speed="2" life="48" points="3" money="2" framePerAnim="48" />
-			</wave>
+		<level>
+			<wave enemiesCant="3" />
+			<wave enemiesCant="6" />
+			<wave enemiesCant="9" />
+		</level>
+		<level>
+			<wave enemiesCant="9" />
+			<wave enemiesCant="12" />
+			<wave enemiesCant="15" />
+		</level>
+		<level>
+			<wave enemiesCant="15" />
+			<wave enemiesCant="18" />
+			<wave enemiesCant="21" />
 		</level>
 	</type>
 </data>

@@ -21,7 +21,6 @@ package com.luislarghi.gameobjects.baseclasses
 		private var points:int;
 		private var money:int;
 		private var maxFramesPerAnim:int;
-		private var dead:Boolean;
 		private var survivor:Boolean;
 		private var active:Boolean;
 		
@@ -47,7 +46,7 @@ package com.luislarghi.gameobjects.baseclasses
 		{
 			super.Init();
 
-			Revive();
+			Deactivate();
 		}
 		
 		public override function Clear():void 
@@ -58,7 +57,7 @@ package com.luislarghi.gameobjects.baseclasses
 		
 		public override function Logic():void
 		{
-			if(!dead && active)
+			if(active)
 			{
 				this.x += speed * currentDirection.x;
 				this.y += speed * currentDirection.y;
@@ -167,29 +166,6 @@ package com.luislarghi.gameobjects.baseclasses
 			lastDir = newDir;
 		}
 		
-		private function Revive():void
-		{
-			dead = false;
-			survivor = false;
-			active = false;			
-			multipleChoiceTile = false;
-			directionChanged = false;
-			lastDir= 1;
-			
-			this.x = deadPoint.x;
-			this.y = deadPoint.y;
-			currentPivot = new Point(0, R.tileHeight / 2);
-			currentDirection = new Point(1, 0);
-			currentLife = originalLife;
-		}
-		
-		public function Kill():void 
-		{ 
-			dead = true;
-			this.x = deadPoint.x;
-			this.y = deadPoint.y;
-		}
-		
 		public function Activate():void 
 		{
 			active = true;
@@ -213,15 +189,22 @@ package com.luislarghi.gameobjects.baseclasses
 		public function Deactivate():void
 		{
 			active = false;
-			Revive();
-			survivor = false;
+			survivor = false;		
+			multipleChoiceTile = false;
+			directionChanged = false;
+			lastDir = 1;
+			
+			this.x = deadPoint.x;
+			this.y = deadPoint.y;
+			currentPivot = new Point(0, R.tileHeight / 2);
+			currentDirection = new Point(1, 0);
+			currentLife = originalLife;
 		}
 		
 		public function get Life():int { return currentLife; }
 		public function Hit(damage:int):void { currentLife -= damage; }
 		public function get PointsWorth():int { return points; }
 		public function get MoneyDropped():int { return money; }
-		public function get Dead():Boolean { return dead; }
 		public function get Survivor():Boolean { return survivor; }
 		public function get Active():Boolean { return active; }
 	}

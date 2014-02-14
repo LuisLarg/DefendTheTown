@@ -10,6 +10,7 @@ package com.luislarghi
 	import com.luislarghi.myfirtsengine.Engine_States;
 	
 	import flash.desktop.NativeApplication;
+	import flash.display.Screen;
 	import flash.display.Stage;
 	import flash.geom.Point;
 	import flash.system.Capabilities;
@@ -20,6 +21,7 @@ package com.luislarghi
 		public function Game()
 		{
 			orgGameRes = new Point(1280, 768);
+			screenBounds = Screen.mainScreen.visibleBounds;
 			
 			super(Main.mainStage);
 			

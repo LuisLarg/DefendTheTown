@@ -48,7 +48,7 @@ package com.luislarghi.gamestates
 			GUI_component = new GUI_Credits(mainGame);
 			GUI_component.Init();
 			
-			trace("Credits: "+mainStage.stageWidth+", "+mainStage.stageHeight+" | Game resolution: "+Engine_Game.orgGameRes);
+			trace("Credits: ("+this.width+", "+this.height+") | Scale: ("+this.scaleX+", "+this.scaleY+")");
 		}
 		
 		protected override function Clear(e:Event):void

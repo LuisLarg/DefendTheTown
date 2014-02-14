@@ -3,6 +3,10 @@ DefendTheTown
 
 A tower defense game halloween themed.
 
+![Main Menu](https://lh4.googleusercontent.com/-2gawYYGIC8I/Uv5-a_XsUfI/AAAAAAAAQ8Q/5NUw4fzF5qE/w983-h553-no/Screenshot_2014-02-14-16-04-48.png)
+
+![Gameplay](https://lh3.googleusercontent.com/-5Lv2tztZJao/Uv5-ZIXCYgI/AAAAAAAAQ74/pk-plxETKwY/w983-h553-no/Screenshot_2014-02-14-16-05-32.png)
+
 Game Story
 ----------
 
@@ -45,7 +49,7 @@ TO DO List
 <b>Need to Fix</b>
 
 - [x] Recreate sprite-sheets with the same W and H.
-- [ ] Resolution handling for multiple resolutions.
+- [x] Resolution handling for multiple resolutions.
 - [x] Monsters proper rotation.
 - [x] Proper object destruction when restarting the game.
 

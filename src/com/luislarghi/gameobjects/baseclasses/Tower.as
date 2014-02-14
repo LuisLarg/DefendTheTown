@@ -81,16 +81,19 @@ package com.luislarghi.gameobjects.baseclasses
 
 		private function NearestEnemy():void
 		{
-			for(var i:int = 0; i < mainStage.waves[Stats.currentWave].length; i++)
+			if(!nearestEnemy || !this.hitTestObject(nearestEnemy))
 			{
-				if(this.hitTestObject(mainStage.waves[Stats.currentWave][i]))
+				for(var i:int = 0; i < mainStage.waves.length; i++)
 				{
-					nearestEnemy = mainStage.waves[Stats.currentWave][i];
-					return;
+					if(mainStage.waves[i].Active && this.hitTestObject(mainStage.waves[i]))
+					{
+						nearestEnemy = mainStage.waves[i];
+						return;
+					}
 				}
+				
+				nearestEnemy = null;
 			}
-			
-			nearestEnemy = null;
 		}
 		
 		private function Aim():void
@@ -98,91 +101,94 @@ package com.luislarghi.gameobjects.baseclasses
 			if(nearestEnemy)
 			{
 				aimSight.rotation = Math.atan2(nearestEnemy.y - this.y, nearestEnemy.x - this.x) * 180 / Math.PI;
-			}
 			
-			if((aimSight.rotation > 135 && this.rotation <= 180) || (aimSight.rotation < 0 && aimSight.rotation >= -45)) //Aim Left
-			{
-				aimDirection.x = -1;
-				aimDirection.y = 0;
-				
-				currentAnimTile = 0;
-				SpriteSheet.scaleX = -1;
-				SpriteSheet.x = R.tileWidth;
-			}
-			else if(aimSight.rotation < -45 && aimSight.rotation >= -135) //Aim Up
-			{
-				aimDirection.x = 0;
-				aimDirection.y = -1;
-				
-				currentAnimTile = maxFramePerAnim * 2;
-				SpriteSheet.scaleX = 1;
-				SpriteSheet.x = 0;
-			}
-			else if((aimSight.rotation < -135 && aimSight.rotation >= -180) || (aimSight.rotation > 0 && aimSight.rotation <= 45)) //Aim Right
-			{
-				aimDirection.x = 1;
-				aimDirection.y = 0;
-				
-				currentAnimTile = 0;
-				SpriteSheet.scaleX = 1;
-				SpriteSheet.x = 0;
-			}
-			else if(aimSight.rotation > 45 && aimSight.rotation >= 135) //Aim Down
-			{
-				aimDirection.x = 0;
-				aimDirection.y = 1;
-				
-				currentAnimTile = maxFramePerAnim;
-				SpriteSheet.scaleX = 1;
-				SpriteSheet.x = 0;
+				if((aimSight.rotation > 135 && this.rotation <= 180) || (aimSight.rotation < 0 && aimSight.rotation >= -45)) //Aim Left
+				{
+					aimDirection.x = -1;
+					aimDirection.y = 0;
+					
+					currentAnimTile = 0;
+					SpriteSheet.scaleX = -1;
+					SpriteSheet.x = R.tileWidth;
+				}
+				else if(aimSight.rotation < -45 && aimSight.rotation >= -135) //Aim Up
+				{
+					aimDirection.x = 0;
+					aimDirection.y = -1;
+					
+					currentAnimTile = maxFramePerAnim * 2;
+					SpriteSheet.scaleX = 1;
+					SpriteSheet.x = 0;
+				}
+				else if((aimSight.rotation < -135 && aimSight.rotation >= -180) || (aimSight.rotation > 0 && aimSight.rotation <= 45)) //Aim Right
+				{
+					aimDirection.x = 1;
+					aimDirection.y = 0;
+					
+					currentAnimTile = 0;
+					SpriteSheet.scaleX = 1;
+					SpriteSheet.x = 0;
+				}
+				else if(aimSight.rotation > 45 && aimSight.rotation >= 135) //Aim Down
+				{
+					aimDirection.x = 0;
+					aimDirection.y = 1;
+					
+					currentAnimTile = maxFramePerAnim;
+					SpriteSheet.scaleX = 1;
+					SpriteSheet.x = 0;
+				}
 			}
 		}
 		
 		protected override function UpdateAnim():void
 		{
-			if(aimDirection.x == 1 && aimDirection.y == 0) //Right
+			if(nearestEnemy)
 			{
-				if(nearestEnemy)
+				if(aimDirection.x == 1 && aimDirection.y == 0) //Right
 				{
-					currentAnimTile++;
-					
-					if(currentAnimTile > maxFramePerAnim - 1) currentAnimTile = 0;
+					if(nearestEnemy)
+					{
+						currentAnimTile++;
+						
+						if(currentAnimTile > maxFramePerAnim - 1) currentAnimTile = 0;
+					}
+					else
+						currentAnimTile = 0;
 				}
-				else
-					currentAnimTile = 0;
-			}
-			else if(aimDirection.x == 0 && aimDirection.y == 1) //Down
-			{
-				if(nearestEnemy)
+				else if(aimDirection.x == 0 && aimDirection.y == 1) //Down
 				{
-					currentAnimTile++;
-					
-					if(currentAnimTile > (maxFramePerAnim * 2) - 1) currentAnimTile = maxFramePerAnim;
+					if(nearestEnemy)
+					{
+						currentAnimTile++;
+						
+						if(currentAnimTile > (maxFramePerAnim * 2) - 1) currentAnimTile = maxFramePerAnim;
+					}
+					else
+						currentAnimTile = maxFramePerAnim;
 				}
-				else
-					currentAnimTile = maxFramePerAnim;
-			}
-			else if(aimDirection.x == -1 && aimDirection.y == 0) //Left
-			{
-				if(nearestEnemy)
+				else if(aimDirection.x == -1 && aimDirection.y == 0) //Left
 				{
-					currentAnimTile++;
-					
-					if(currentAnimTile > maxFramePerAnim - 1) currentAnimTile = 0;
+					if(nearestEnemy)
+					{
+						currentAnimTile++;
+						
+						if(currentAnimTile > maxFramePerAnim - 1) currentAnimTile = 0;
+					}
+					else
+						currentAnimTile = 0;
 				}
-				else
-					currentAnimTile = 0;
-			}
-			else if(aimDirection.x == 0 && aimDirection.y == -1) //Up
-			{
-				if(nearestEnemy)
+				else if(aimDirection.x == 0 && aimDirection.y == -1) //Up
 				{
-					currentAnimTile++;
-					
-					if(currentAnimTile > (maxFramePerAnim * 3) - 1) currentAnimTile = maxFramePerAnim * 2;
+					if(nearestEnemy)
+					{
+						currentAnimTile++;
+						
+						if(currentAnimTile > (maxFramePerAnim * 3) - 1) currentAnimTile = maxFramePerAnim * 2;
+					}
+					else
+						currentAnimTile = maxFramePerAnim * 2;
 				}
-				else
-					currentAnimTile = maxFramePerAnim * 2;
 			}
 		}
 		
