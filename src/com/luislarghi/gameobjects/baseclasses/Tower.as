@@ -54,11 +54,9 @@ package com.luislarghi.gameobjects.baseclasses
 			collitionArea.y = (aimSight.y - (R.tileHeight / 2)) -  R.tileHeight;
 			collitionArea.graphics.beginFill(0xFFFFFF);
 			collitionArea.graphics.drawRect(0, 0, R.tileWidth * 3, R.tileHeight * 3);
+			collitionArea.graphics.endFill();
 			collitionArea.visible = false;
 			this.addChild(collitionArea);
-			
-			this.hitArea = collitionArea;
-			currentAnimTile = 0;
 		}
 		
 		public override function Clear():void
@@ -81,11 +79,11 @@ package com.luislarghi.gameobjects.baseclasses
 
 		private function NearestEnemy():void
 		{
-			if(!nearestEnemy || !this.hitTestObject(nearestEnemy))
+			if(!nearestEnemy || !collitionArea.hitTestObject(nearestEnemy))
 			{
 				for(var i:int = 0; i < mainStage.waves.length; i++)
 				{
-					if(mainStage.waves[i].Active && this.hitTestObject(mainStage.waves[i]))
+					if(mainStage.waves[i].Active && collitionArea.hitTestObject(mainStage.waves[i]))
 					{
 						nearestEnemy = mainStage.waves[i];
 						return;

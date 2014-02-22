@@ -35,6 +35,7 @@ package com.luislarghi.gameobjects.towers
 					var bullet:Bullet = new Dog(this.x, this.y, aimSight.rotation);
 					mainStage.gameObjContainer.addChild(bullet);
 					mainStage.bullets.push(bullet);
+					bullet.Init();
 					counter = 0;
 				}
 			}

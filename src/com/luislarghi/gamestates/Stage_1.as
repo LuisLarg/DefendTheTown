@@ -41,7 +41,6 @@ package com.luislarghi.gamestates
 	import flash.geom.Point;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
-	import flash.system.Capabilities;
 	import flash.system.System;
 	import flash.ui.Keyboard;
 	import flash.utils.ByteArray;
@@ -94,9 +93,11 @@ package com.luislarghi.gamestates
 				waves[row].Init();
 			}
 			
-			if(Capabilities.cpuArchitecture == "ARM")
+			// If running on mobile
+			if(R.isAndroid() || R.isIOS())
 			{
-				if(Capabilities.manufacturer.indexOf("Android") != -1)
+				// If the OS is Android
+				if(R.isAndroid())
 				{
 					NativeApplication.nativeApplication.addEventListener(Event.DEACTIVATE, OnDeactivate, false, 0, true);
 					NativeApplication.nativeApplication.addEventListener(KeyboardEvent.KEY_DOWN, SoftKeyDown);
@@ -143,9 +144,11 @@ package com.luislarghi.gamestates
 			
 			towers.length = bullets.length = waves.length = 0;
 			
-			if(Capabilities.cpuArchitecture == "ARM")
+			// If running on mobile
+			if(R.isAndroid() || R.isIOS())
 			{
-				if(Capabilities.manufacturer.indexOf("Android") != -1)
+				// If the OS is Android
+				if(R.isAndroid())
 				{
 					NativeApplication.nativeApplication.removeEventListener(KeyboardEvent.KEY_DOWN, SoftKeyDown);
 				}
@@ -261,6 +264,7 @@ package com.luislarghi.gamestates
 				if(bullets[b].Dead)
 				{
 					gameObjContainer.removeChild(bullets[b]);
+					bullets[b].Clear();
 					bullets.splice(b, 1);
 					break;
 				}
@@ -276,7 +280,7 @@ package com.luislarghi.gamestates
 				for(var i:int = 0; i < waves.length; i++)
 				{
 					// and if the current bullet collides with an active enemy
-					if(waves[i].Active && bullets[b].hitTestObject(waves[i]))
+					if(waves[i].Active && bullets[b].collitionBox.hitTestObject(waves[i].collitionBox))
 					{
 						// verify if get a special attack or not
 						if((bullets[b] is Torch && waves[i] is Zomby) ||

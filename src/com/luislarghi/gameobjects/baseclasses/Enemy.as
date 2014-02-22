@@ -15,20 +15,24 @@ package com.luislarghi.gameobjects.baseclasses
 	{
 		private var speed:int;
 		private var currentDirection:Point;
-		private var originalLife:int;
 		private const deadPoint:Point = new Point(-999, -999);
-		private var currentLife:int;
 		private var points:int;
 		private var money:int;
 		private var maxFramesPerAnim:int;
 		private var survivor:Boolean;
 		private var active:Boolean;
 		
+		private var lifeBar:Sprite;
+		private var originalLife:int;
+		private var currentLife:int;
+		private var lifeBarScale:int;
+		
 		private var currentMP:Point;
 		private var currentPivot:Point;
 		private var multipleChoiceTile:Boolean;
 		
 		private var spawnPoint:Point;
+		public var collitionBox:Sprite;
 		
 		private var directionChanged:Boolean;
 		private var lastDir:int;
@@ -45,13 +49,28 @@ package com.luislarghi.gameobjects.baseclasses
 		public override function Init():void 
 		{
 			super.Init();
-
+			
+			collitionBox = new Sprite();
+			collitionBox.graphics.beginFill(0xFFFFFF);
+			collitionBox.graphics.drawRect(R.tileWidth / 4, 0, R.tileWidth / 2, R.tileHeight);
+			collitionBox.graphics.endFill();
+			collitionBox.visible = false;
+			this.addChild(collitionBox);
+			
+			lifeBar = new Sprite();
+			this.addChild(lifeBar);
+			
 			Deactivate();
 		}
 		
 		public override function Clear():void 
 		{ 
-			this.removeChild(SpriteSheet);		
+			this.removeChild(SpriteSheet);
+			this.removeChild(collitionBox);
+			this.removeChild(lifeBar);
+			
+			lifeBar = null;
+			collitionBox = null;
 			SpriteSheet = null;
 		}
 		
@@ -64,6 +83,21 @@ package com.luislarghi.gameobjects.baseclasses
 				
 				CheckDirection();
 				UpdateAnim();
+				
+				lifeBarScale = R.tileWidth - (currentLife * R.tileWidth / originalLife);
+			}
+		}
+		
+		public override function Draw():void
+		{
+			if(active)
+			{
+				super.Draw();
+				
+				lifeBar.graphics.clear();
+				lifeBar.graphics.beginFill(0xFF0000);
+				lifeBar.graphics.drawRect(lifeBarScale, -(R.tileHeight / 2), R.tileWidth - lifeBarScale, R.tileHeight / 8);
+				lifeBar.graphics.endFill();
 			}
 		}
 		
@@ -201,8 +235,13 @@ package com.luislarghi.gameobjects.baseclasses
 			currentLife = originalLife;
 		}
 		
+		public function Hit(damage:int):void 
+		{ 
+			currentLife -= damage; 
+			if(currentLife < 1) currentLife = 0; 
+		}
+		
 		public function get Life():int { return currentLife; }
-		public function Hit(damage:int):void { currentLife -= damage; }
 		public function get PointsWorth():int { return points; }
 		public function get MoneyDropped():int { return money; }
 		public function get Survivor():Boolean { return survivor; }

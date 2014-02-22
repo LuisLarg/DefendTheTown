@@ -6,9 +6,10 @@ package com.luislarghi
 	import com.luislarghi.gameobjects.enemies.Vampire;
 	import com.luislarghi.gameobjects.enemies.Zomby;
 	import com.luislarghi.myfirtsengine.Engine_Game;
-
+	
 	import flash.events.Event;
 	import flash.geom.Point;
+	import flash.system.Capabilities;
 
 	public final class R
 	{
@@ -109,5 +110,8 @@ package com.luislarghi
 			}
 			else return Math.floor(Math.random() * (1 + max - min) + min);
 		}
+		
+		public static function isAndroid():Boolean { return (Capabilities.manufacturer.indexOf("Android") != -1); }
+		public static function isIOS():Boolean { return (Capabilities.manufacturer.indexOf("IOS") != -1); }
 	}
 }

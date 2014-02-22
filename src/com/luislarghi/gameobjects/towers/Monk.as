@@ -32,9 +32,10 @@ package com.luislarghi.gameobjects.towers
 				
 				if(counter >= shootRate)
 				{
-					var bullet:Bullet = new GlintLight(this.x, this.y, aimSight.rotation);
+					var bullet:Bullet = new GlintLight(this.x + (R.tileWidth / 2), this.y + (R.tileHeight / 2), aimSight.rotation);
 					mainStage.gameObjContainer.addChild(bullet);
 					mainStage.bullets.push(bullet);
+					bullet.Init();
 					counter = 0;
 				}
 			}

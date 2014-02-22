@@ -13,7 +13,6 @@ package com.luislarghi
 	import flash.display.Screen;
 	import flash.display.Stage;
 	import flash.geom.Point;
-	import flash.system.Capabilities;
 	import flash.system.System;
 	
 	public class Game extends Engine_Game
@@ -21,7 +20,9 @@ package com.luislarghi
 		public function Game()
 		{
 			orgGameRes = new Point(1280, 768);
-			screenBounds = Screen.mainScreen.visibleBounds;
+			
+			if(R.isAndroid() || R.isIOS()) screenBounds = Screen.mainScreen.visibleBounds;
+			else screenBounds = Main.mainStage.fullScreenSourceRect;
 			
 			super(Main.mainStage);
 			
@@ -77,10 +78,7 @@ package com.luislarghi
 		{
 			AssetsManager.DeallocateAsstes();
 			
-			if(Capabilities.playerType == "Desktop")
-				NativeApplication.nativeApplication.exit();
-			else if(Capabilities.playerType == "StandAlone")
-				System.exit(0);
+			NativeApplication.nativeApplication.exit();
 		}
 	}
 }
