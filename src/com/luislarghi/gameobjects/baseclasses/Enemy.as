@@ -246,5 +246,6 @@ package com.luislarghi.gameobjects.baseclasses
 		public function get MoneyDropped():int { return money; }
 		public function get Survivor():Boolean { return survivor; }
 		public function get Active():Boolean { return active; }
+		public function DeathSound():void { }
 	}
 }

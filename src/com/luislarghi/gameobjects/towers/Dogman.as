@@ -6,6 +6,7 @@ package com.luislarghi.gameobjects.towers
 	import com.luislarghi.gameobjects.bullets.Dog;
 	import com.luislarghi.gamestates.Stage_1;
 	import com.luislarghi.managers.AssetsManager;
+	import com.luislarghi.myfirtsengine.Engine_SoundManager;
 	import com.luislarghi.myfirtsengine.Engine_SpriteSheet;
 	
 	import flash.events.Event;
@@ -36,6 +37,8 @@ package com.luislarghi.gameobjects.towers
 					mainStage.gameObjContainer.addChild(bullet);
 					mainStage.bullets.push(bullet);
 					bullet.Init();
+					
+					Engine_SoundManager.PlaySound(AssetsManager.SND_DogBark);
 					counter = 0;
 				}
 			}

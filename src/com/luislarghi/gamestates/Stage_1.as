@@ -306,6 +306,7 @@ package com.luislarghi.gamestates
 							Stats.score += waves[i].PointsWorth;
 							Stats.money += waves[i].MoneyDropped;
 							// then kill that enemy 
+							waves[i].DeathSound();
 							waves[i].Deactivate();
 						}
 						

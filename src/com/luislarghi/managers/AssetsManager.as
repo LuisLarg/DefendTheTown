@@ -10,6 +10,12 @@ package com.luislarghi.managers
 		//Instances of each sound
 		public static var SND_Music:Sound;
 		public static var SND_Click:Sound;
+		public static var SND_DogBark:Sound;
+		public static var SND_GlintLight:Sound;
+		public static var SND_Torch:Sound;
+		public static var SND_ZombyDeath:Sound;
+		public static var SND_MummyDeath:Sound;
+		public static var SND_VampireDeath:Sound;
 		
 		//Instances of each image
 		public static var BM_Map:Bitmap;
@@ -29,6 +35,12 @@ package com.luislarghi.managers
 		{
 			SND_Music = new R.SNDFILE_BackGMusic();
 			SND_Click = new R.SNDFILE_Click();
+			SND_DogBark = new R.SNDFILE_DogB();
+			SND_GlintLight = new R.SNDFILE_GlintL();
+			SND_Torch = new R.SNDFILE_Torch();
+			SND_ZombyDeath = new R.SNDFILE_ZombyD();
+			SND_MummyDeath = new R.SNDFILE_MummyD();
+			SND_VampireDeath = new R.SNDFILE_VampireD();
 			
 			BM_Map = new R.BG_Map();
 			BM_Map2 = new R.BG_Map2();
@@ -46,7 +58,9 @@ package com.luislarghi.managers
 		
 		public static function DeallocateAsstes():void
 		{
-			SND_Music = SND_Click = null;
+			SND_Music = SND_Click = SND_DogBark = null;
+			SND_GlintLight = SND_Torch = SND_ZombyDeath = null;
+			SND_MummyDeath = SND_VampireDeath = null;
 			
 			BM_Map.bitmapData.dispose();
 			BM_Map2.bitmapData.dispose();

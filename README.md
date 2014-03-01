@@ -63,7 +63,7 @@ TO DO List
 - [x] Code for ending a level and switch to the next one.
 - [x] Add depth sorting for sprites.
 - [x] Add bullet sprite for each citizen.
-- [ ] Add sound when firing bullet, for each citizen.
+- [x] Add sound when firing bullet, for each citizen.
 - [ ] Add sound when placing a citizen, for each citizen.
-- [ ] Add sound when killing a monster, for each monster.
+- [x] Add sound when killing a monster, for each monster.
 - [x] Complete the Credits screen.

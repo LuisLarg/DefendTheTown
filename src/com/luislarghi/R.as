@@ -16,6 +16,12 @@ package com.luislarghi
 		//External embeded sounds
 		[Embed(source="sounds/DayofChaos.mp3")] public static const SNDFILE_BackGMusic:Class;
 		[Embed(source="sounds/click.mp3")] public static const SNDFILE_Click:Class;
+		[Embed(source="sounds/Dog.mp3")] public static const SNDFILE_DogB:Class;
+		[Embed(source="sounds/GlintLight.mp3")] public static const SNDFILE_GlintL:Class;
+		[Embed(source="sounds/Torch.mp3")] public static const SNDFILE_Torch:Class;
+		[Embed(source="sounds/ZombyDeath.mp3")] public static const SNDFILE_ZombyD:Class;
+		[Embed(source="sounds/MummyDeath.mp3")] public static const SNDFILE_MummyD:Class;
+		[Embed(source="sounds/VampireDeath.mp3")] public static const SNDFILE_VampireD:Class;
 		
 		//External embeded images
 		[Embed(source="images/map.png")] public static const BG_Map:Class;
