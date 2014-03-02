@@ -56,16 +56,16 @@ package com.luislarghi.gui
 			if(!TF_Format)
 			{
 				TF_Format = new TextFormat();
-				TF_Format.size = 80 * Engine_Game.newScaleX;
-				TF_Format.font = "Feast of Flesh BB";
+				TF_Format.size = 60 * (Engine_Game.newScaleX / Engine_Game.newScaleY);
+				TF_Format.font = "Arial";
 				TF_Format.color = 0xFFFFFF;
 			}
 			
 			if(!BT_Return)
 			{
 				BT_Return = new GUI_Button("Return", 280, 97, mainGame, AssetsManager.BM_Button, Engine_States.STATE_MAINMENU);
-				BT_Return.x = Engine_Game.orgGameRes.x / 2 - (BT_Return.Size().x / 2);
-				BT_Return.y = Engine_Game.orgGameRes.y - BT_Return.Size().y * 2;
+				BT_Return.x = (Engine_Game.orgGameRes.x / 2) - (BT_Return.Size().x / 2);
+				BT_Return.y = (Engine_Game.orgGameRes.y / 2) + BT_Return.Size().y * 2;
 			}
 			
 			TF_Credits.setTextFormat(TF_Format, 0, TF_Credits.length);
