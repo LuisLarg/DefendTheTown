@@ -15,7 +15,7 @@
 
 	<!-- A universally unique application identifier. Must be unique across all AIR applications.
 	Using a reverse DNS-style name as the id is recommended. (Eg. com.example.ExampleApplication.) Required. -->
-	<id>com.luislarghi.DefendTheTown.debug</id>
+	<id>com.luislarghi.defendthetown.debug</id>
 
 	<!-- Used as the filename for the application. Required. -->
 	<filename>Defend The Town</filename>
@@ -107,8 +107,6 @@
 		<!-- <softKeyboardBehavior></softKeyboardBehavior> -->
 		<aspectRatio>landscape</aspectRatio>
 		<autoOrients>false</autoOrients>
-		<width>1280</width>
-		<height>800</height>
         <fullScreen>true</fullScreen>
         <visible>true</visible>
         <renderMode>gpu</renderMode>

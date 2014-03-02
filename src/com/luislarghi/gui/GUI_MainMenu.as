@@ -3,6 +3,7 @@ package com.luislarghi.gui
 	import com.luislarghi.Game;
 	import com.luislarghi.R;
 	import com.luislarghi.gamestates.MainMenu;
+	import com.luislarghi.managers.AssetsManager;
 	import com.luislarghi.myfirtsengine.Engine_GUI;
 	import com.luislarghi.myfirtsengine.Engine_Game;
 	import com.luislarghi.myfirtsengine.Engine_GameState;
@@ -47,21 +48,21 @@ package com.luislarghi.gui
 		{
 			if(!BT_Play)
 			{
-				BT_Play = new GUI_Button("Play", 280, 97, mainGame, R.BM_Button, Engine_States.STATE_INGAME);
+				BT_Play = new GUI_Button("Play", 280, 97, mainGame, AssetsManager.BM_Button, Engine_States.STATE_INGAME);
 				BT_Play.x = Engine_Game.orgGameRes.x - BT_Play.Size().x - 100;
 				BT_Play.y = (Engine_Game.orgGameRes.y / 2) + 30;
 			}
 			
 			if(!BT_Credits)
 			{
-				BT_Credits = new GUI_Button("Credits", 280, 97, mainGame, R.BM_Button, Engine_States.STATE_CREDITS);
+				BT_Credits = new GUI_Button("Credits", 280, 97, mainGame, AssetsManager.BM_Button, Engine_States.STATE_CREDITS);
 				BT_Credits.x = Engine_Game.orgGameRes.x - BT_Credits.Size().x - 100;
 				BT_Credits.y = (Engine_Game.orgGameRes.y / 2) + BT_Credits.Size().y + 50;
 			}
 			
 			if(!BT_Exit)
 			{
-				BT_Exit = new GUI_Button("Exit", 280, 97, mainGame, R.BM_Button, Engine_States.STATE_EXITAPP);
+				BT_Exit = new GUI_Button("Exit", 280, 97, mainGame, AssetsManager.BM_Button, Engine_States.STATE_EXITAPP);
 				BT_Exit.x = Engine_Game.orgGameRes.x - BT_Play.Size().x - 100;
 				BT_Exit.y = (Engine_Game.orgGameRes.y / 2) + BT_Exit.Size().y * 2 + 70;
 			}

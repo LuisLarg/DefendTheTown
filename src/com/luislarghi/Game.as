@@ -3,14 +3,16 @@ package com.luislarghi
 	import com.luislarghi.gamestates.Credits;
 	import com.luislarghi.gamestates.MainMenu;
 	import com.luislarghi.gamestates.Stage_1;
+	import com.luislarghi.managers.AssetsManager;
+	import com.luislarghi.managers.XmlManager;
 	import com.luislarghi.myfirtsengine.Engine_Game;
 	import com.luislarghi.myfirtsengine.Engine_SoundManager;
 	import com.luislarghi.myfirtsengine.Engine_States;
 	
 	import flash.desktop.NativeApplication;
+	import flash.display.Screen;
 	import flash.display.Stage;
 	import flash.geom.Point;
-	import flash.system.Capabilities;
 	import flash.system.System;
 	
 	public class Game extends Engine_Game
@@ -19,9 +21,13 @@ package com.luislarghi
 		{
 			orgGameRes = new Point(1280, 768);
 			
+			if(R.isAndroid() || R.isIOS()) screenBounds = Screen.mainScreen.visibleBounds;
+			else screenBounds = Main.mainStage.fullScreenSourceRect;
+			
 			super(Main.mainStage);
 			
-			orgFrameRate = mainStage.frameRate;
+			XmlManager.LoadXML();
+			AssetsManager.InstantiateAssets();
 			
 			//The game starts with it's menu
 			SetNextState(Engine_States.STATE_MAINMENU);
@@ -46,7 +52,7 @@ package com.luislarghi
 						currentState = new MainMenu(this);
 						mainStage.addChild(currentState);
 						mainStage.frameRate = LOW_FRAME_RATE;
-						Engine_SoundManager.PlayMusic(R.SND_Music);
+						Engine_SoundManager.PlayMusic(AssetsManager.SND_Music);
 						break;
 					
 					case Engine_States.STATE_CREDITS:
@@ -70,10 +76,9 @@ package com.luislarghi
 		
 		protected override function ExitApp():void
 		{
-			if(Capabilities.playerType == "Desktop")
-				NativeApplication.nativeApplication.exit();
-			else if(Capabilities.playerType == "StandAlone")
-				System.exit(0);
+			AssetsManager.DeallocateAsstes();
+			
+			NativeApplication.nativeApplication.exit();
 		}
 	}
 }

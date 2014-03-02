@@ -4,6 +4,7 @@ package com.luislarghi.gamestates
 	import com.luislarghi.R;
 	import com.luislarghi.gui.GUI_Button;
 	import com.luislarghi.gui.GUI_MainMenu;
+	import com.luislarghi.managers.AssetsManager;
 	import com.luislarghi.myfirtsengine.Engine_Game;
 	import com.luislarghi.myfirtsengine.Engine_GameState;
 	import com.luislarghi.myfirtsengine.Engine_SpriteSheet;
@@ -33,7 +34,7 @@ package com.luislarghi.gamestates
 		{
 			super.Init(e);
 			
-			bgImage = new Engine_SpriteSheet(R.BM_MainMenu, false, 1280, 800);
+			bgImage = new Engine_SpriteSheet(AssetsManager.BM_MainMenu, false, 1280, 800);
 			bgImage.drawTile(0);
 			this.addChild(bgImage);
 			
@@ -51,7 +52,7 @@ package com.luislarghi.gamestates
 			GUI_component = new GUI_MainMenu(mainGame);
 			GUI_component.Init();
 			
-			trace("Main Menu: "+mainStage.stageWidth+", "+mainStage.stageHeight+" | Game resolution: "+Engine_Game.orgGameRes);
+			trace("Main Menu: ("+this.width+", "+this.height+") | Scale: ("+this.scaleX+", "+this.scaleY+")");
 			//trace("You are in the MAINMENU");
 		}
 		

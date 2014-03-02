@@ -6,8 +6,8 @@ package com.luislarghi.gameobjects
 		public static var money:int;
 		public static var townHealth:int;
 		public static var currentWave:int;
-		public static var maxWaveCant:int;
-		public static var currentStage:int;
+		public static var currentLevel:int;
+		public static var maxLevelCant:int;
 		
 		public static function Reset():void 
 		{
@@ -15,7 +15,7 @@ package com.luislarghi.gameobjects
 			money = 6;
 			townHealth = 100;
 			currentWave = 0;
-			currentStage = 1;
+			currentLevel = 0;
 		}
 	}
 }
