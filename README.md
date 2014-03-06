@@ -5,7 +5,7 @@ A tower defense game halloween themed.
 
 ![Main Menu](https://lh4.googleusercontent.com/-2gawYYGIC8I/Uv5-a_XsUfI/AAAAAAAAQ8Q/5NUw4fzF5qE/w983-h553-no/Screenshot_2014-02-14-16-04-48.png)
 
-![Gameplay](https://lh3.googleusercontent.com/-5Lv2tztZJao/Uv5-ZIXCYgI/AAAAAAAAQ74/pk-plxETKwY/w983-h553-no/Screenshot_2014-02-14-16-05-32.png)
+![Gameplay](https://lh4.googleusercontent.com/-7Y4YNYIZp5U/UxiGhHeY-mI/AAAAAAAARCw/8N9a9mMaOLE/w1001-h563-no/Screenshot_2014-03-02-20-00-03.png)
 
 Game Story
 ----------
@@ -32,7 +32,7 @@ Place citizens along the road that leads to the town. Each citizen has a special
 </tr>
 </table>
 
-Until the time runs out, try to defend the town from the monsters attack!
+Until the town fall, try to defend it from monster attacks!
 
 Technical Info.
 ---------------
