@@ -7,6 +7,7 @@ package com.luislarghi.gamestates
 	import com.luislarghi.managers.AssetsManager;
 	import com.luislarghi.myfirtsengine.Engine_Game;
 	import com.luislarghi.myfirtsengine.Engine_GameState;
+	import com.luislarghi.myfirtsengine.Engine_SoundManager;
 	import com.luislarghi.myfirtsengine.Engine_SpriteSheet;
 	import com.luislarghi.myfirtsengine.Engine_States;
 	
@@ -14,6 +15,7 @@ package com.luislarghi.gamestates
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.display.Stage;
+	import flash.display.StageDisplayState;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.geom.Point;
@@ -41,16 +43,20 @@ package com.luislarghi.gamestates
 			guiContainer = new Sprite();
 			this.addChild(guiContainer);
 			
-			if(Capabilities.cpuArchitecture == "ARM")
+			if(R.isAndroid() || R.isIOS())
 			{
-				if(Capabilities.manufacturer.indexOf("Android") != -1)
+				if(R.isAndroid())
 				{
+					NativeApplication.nativeApplication.addEventListener(Event.ACTIVATE, OnActivate);
+					NativeApplication.nativeApplication.addEventListener(Event.DEACTIVATE, OnDeactivate);
 					NativeApplication.nativeApplication.addEventListener(KeyboardEvent.KEY_DOWN, SoftKeyDown);
 				}
 			}
 			
 			GUI_component = new GUI_MainMenu(mainGame);
 			GUI_component.Init();
+			
+			Engine_SoundManager.PlayMusic(AssetsManager.SND_Music);
 			
 			trace("Main Menu: ("+this.width+", "+this.height+") | Scale: ("+this.scaleX+", "+this.scaleY+")");
 			//trace("You are in the MAINMENU");
@@ -60,10 +66,12 @@ package com.luislarghi.gamestates
 		{
 			super.Clear(e);
 			
-			if(Capabilities.cpuArchitecture == "ARM")
+			if(R.isAndroid() || R.isIOS())
 			{
-				if(Capabilities.manufacturer.indexOf("Android") != -1)
+				if(R.isAndroid())
 				{
+					NativeApplication.nativeApplication.removeEventListener(Event.ACTIVATE, OnActivate);
+					NativeApplication.nativeApplication.removeEventListener(Event.DEACTIVATE, OnDeactivate);
 					NativeApplication.nativeApplication.removeEventListener(KeyboardEvent.KEY_DOWN, SoftKeyDown);
 				}
 			}
@@ -88,6 +96,7 @@ package com.luislarghi.gamestates
 			switch(e.keyCode)
 			{
 				case Keyboard.BACK:
+					e.preventDefault();
 					mainGame.SetNextState(Engine_States.STATE_EXITAPP);
 					break;
 				
@@ -99,6 +108,16 @@ package com.luislarghi.gamestates
 					e.preventDefault();
 					break;
 			}
+		}
+		
+		private function OnActivate(e:Event):void
+		{
+			Engine_SoundManager.PlayMusic(AssetsManager.SND_Music);
+		}
+		
+		private function OnDeactivate(e:Event):void
+		{
+			Engine_SoundManager.StopMusic();
 		}
 	}
 }

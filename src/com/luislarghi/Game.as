@@ -6,7 +6,6 @@ package com.luislarghi
 	import com.luislarghi.managers.AssetsManager;
 	import com.luislarghi.managers.XmlManager;
 	import com.luislarghi.myfirtsengine.Engine_Game;
-	import com.luislarghi.myfirtsengine.Engine_SoundManager;
 	import com.luislarghi.myfirtsengine.Engine_States;
 	
 	import flash.desktop.NativeApplication;
@@ -52,7 +51,6 @@ package com.luislarghi
 						currentState = new MainMenu(this);
 						mainStage.addChild(currentState);
 						mainStage.frameRate = LOW_FRAME_RATE;
-						Engine_SoundManager.PlayMusic(AssetsManager.SND_Music);
 						break;
 					
 					case Engine_States.STATE_CREDITS:
@@ -64,7 +62,6 @@ package com.luislarghi
 						currentState = new Stage_1(this);
 						mainStage.addChild(currentState);
 						mainStage.frameRate = orgFrameRate;
-						Engine_SoundManager.StopMusic();
 						break;
 				}
 				
@@ -76,9 +73,19 @@ package com.luislarghi
 		
 		protected override function ExitApp():void
 		{
-			AssetsManager.DeallocateAsstes();
-			
-			NativeApplication.nativeApplication.exit();
+			if(!quited)
+			{
+				super.ExitApp();
+				
+				mainStage.removeChild(currentState);
+				currentState = null;
+				
+				AssetsManager.DeallocateAsstes();
+				
+				NativeApplication.nativeApplication.exit();
+				
+				quited = true;
+			}
 		}
 	}
 }

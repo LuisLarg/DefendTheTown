@@ -24,6 +24,7 @@ package com.luislarghi.gamestates
 	import com.luislarghi.myfirtsengine.Engine_GUIButton;
 	import com.luislarghi.myfirtsengine.Engine_Game;
 	import com.luislarghi.myfirtsengine.Engine_GameState;
+	import com.luislarghi.myfirtsengine.Engine_SoundManager;
 	import com.luislarghi.myfirtsengine.Engine_SpriteSheet;
 	import com.luislarghi.myfirtsengine.Engine_States;
 	
@@ -99,7 +100,7 @@ package com.luislarghi.gamestates
 				// If the OS is Android
 				if(R.isAndroid())
 				{
-					NativeApplication.nativeApplication.addEventListener(Event.DEACTIVATE, OnDeactivate, false, 0, true);
+					NativeApplication.nativeApplication.addEventListener(Event.DEACTIVATE, OnDeactivate);
 					NativeApplication.nativeApplication.addEventListener(KeyboardEvent.KEY_DOWN, SoftKeyDown);
 				}
 			}
@@ -115,6 +116,8 @@ package com.luislarghi.gamestates
 
 			GUI_component = new GUI_Stage1(mainGame, this);
 			GUI_component.Init();
+			
+			Engine_SoundManager.StopMusic();
 			
 			trace("In Game: ("+this.width+", "+this.height+") | Scale: ("+this.scaleX+", "+this.scaleY+")");
 			//trace("You are INGAME");
@@ -150,6 +153,7 @@ package com.luislarghi.gamestates
 				// If the OS is Android
 				if(R.isAndroid())
 				{
+					NativeApplication.nativeApplication.removeEventListener(Event.DEACTIVATE, OnDeactivate);
 					NativeApplication.nativeApplication.removeEventListener(KeyboardEvent.KEY_DOWN, SoftKeyDown);
 				}
 			}
