@@ -63,7 +63,7 @@ package com.luislarghi.gui
 			if(!TF_Format)
 			{
 				TF_Format = new TextFormat();
-				TF_Format.size = 40;
+				TF_Format.size = 40 * (Engine_Game.newScaleX / Engine_Game.newScaleY);
 				TF_Format.font = "Arial";
 			}
 			
@@ -99,7 +99,7 @@ package com.luislarghi.gui
 				}
 			}
 			else
-				Stage_1.SetPause(false);
+				mainGame.pause = false;
 			
 			Engine_SoundManager.PlaySound(AssetsManager.SND_Click);
 		}

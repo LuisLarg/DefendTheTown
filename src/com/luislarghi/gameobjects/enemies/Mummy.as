@@ -11,11 +11,9 @@ package com.luislarghi.gameobjects.enemies
 
 	public class Mummy extends Enemy
 	{
-		public function Mummy(data:XML) { super(data); }
-		
-		public override function Init():void
-		{
-			super.Init();
+		public function Mummy(data:XML) 
+		{ 
+			super(data);
 			
 			SpriteSheet = new Engine_SpriteSheet(AssetsManager.BM_Momia, false, R.tileWidth, R.tileHeight * 2);
 			SpriteSheet.y -= R.tileHeight;

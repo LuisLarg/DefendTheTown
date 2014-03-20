@@ -116,8 +116,5 @@ package com.luislarghi
 			}
 			else return Math.floor(Math.random() * (1 + max - min) + min);
 		}
-		
-		public static function isAndroid():Boolean { return (Capabilities.manufacturer.indexOf("Android") != -1); }
-		public static function isIOS():Boolean { return (Capabilities.manufacturer.indexOf("IOS") != -1); }
 	}
 }

@@ -55,7 +55,7 @@ package com.luislarghi.gui
 				if(state == R.PIROMODE) TF_TowerCost.text = XmlManager.towerTypes.tower[0].@cost;
 				else if(state == R.PERROMODE) TF_TowerCost.text = XmlManager.towerTypes.tower[1].@cost;
 				else if(state == R.CURAMODE) TF_TowerCost.text = XmlManager.towerTypes.tower[2].@cost;
-				TF_TowerCost.x = btWidth - 70;
+				TF_TowerCost.x = btWidth - 75;
 				TF_TowerCost.y = btHeight - 20;
 				TF_TowerCost.selectable = TF_TowerCost.mouseEnabled = false;
 			}
@@ -63,7 +63,7 @@ package com.luislarghi.gui
 			if(!TF_Format)
 			{
 				TF_Format = new TextFormat();
-				TF_Format.size = 15;
+				TF_Format.size = 20 * (Engine_Game.newScaleX / Engine_Game.newScaleY);
 				TF_Format.color = 0xFFFFFF;
 				TF_Format.font = "Arial";
 			}

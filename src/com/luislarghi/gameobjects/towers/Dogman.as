@@ -27,21 +27,13 @@ package com.luislarghi.gameobjects.towers
 		
 		protected override function Shoot():void
 		{
-			if(nearestEnemy)
-			{
-				counter += Main.mainStage.frameRate * shootRate / 1000;
-				
-				if(counter >= shootRate)
-				{
-					var bullet:Bullet = new Dog(this.x, this.y, aimSight.rotation);
-					mainStage.gameObjContainer.addChild(bullet);
-					mainStage.bullets.push(bullet);
-					bullet.Init();
-					
-					Engine_SoundManager.PlaySound(AssetsManager.SND_DogBark);
-					counter = 0;
-				}
-			}
+			var bullet:Bullet = new Dog(this.x, this.y, aimSight.rotation);
+			mainStage.gameObjContainer.addChild(bullet);
+			mainStage.bullets.push(bullet);
+			bullet.Init();
+			
+			Engine_SoundManager.PlaySound(AssetsManager.SND_DogBark);
+			//counter = 0;
 		}
 	}
 }

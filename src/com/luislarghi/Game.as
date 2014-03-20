@@ -20,9 +20,6 @@ package com.luislarghi
 		{
 			orgGameRes = new Point(1280, 768);
 			
-			if(R.isAndroid() || R.isIOS()) screenBounds = Screen.mainScreen.visibleBounds;
-			else screenBounds = Main.mainStage.fullScreenSourceRect;
-			
 			super(Main.mainStage);
 			
 			XmlManager.LoadXML();
@@ -68,6 +65,8 @@ package com.luislarghi
 				stateID = nextState;
 				
 				nextState = Engine_States.STATE_NULL;
+				
+				pause = false;
 			}
 		}
 		
@@ -75,14 +74,12 @@ package com.luislarghi
 		{
 			if(!quited)
 			{
-				super.ExitApp();
-				
 				mainStage.removeChild(currentState);
 				currentState = null;
 				
 				AssetsManager.DeallocateAsstes();
 				
-				NativeApplication.nativeApplication.exit();
+				super.ExitApp();
 				
 				quited = true;
 			}

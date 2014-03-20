@@ -1,13 +1,13 @@
 <data>
 	<type name="towers">
-		<tower name="piromano" shootRate="400" cost="3" framePerAnim="50" />
-		<tower name="perrero" shootRate="500" cost="3" framePerAnim="50" />
-		<tower name="cura" shootRate="250" cost="2" framePerAnim="44" />
+		<tower name="piromano" shootRate="400" cost="4" framePerAnim="50" />
+		<tower name="perrero" shootRate="500" cost="2" framePerAnim="50" />
+		<tower name="cura" shootRate="250" cost="3" framePerAnim="44" />
 	</type>
 	<type name="enemies">
-		<enemy name="zomby" speed="2" life="3" points="3" money="2" framePerAnim="48" />
-		<enemy name="mummy" speed="3" life="4" points="2" money="3" framePerAnim="54" />
-		<enemy name="vampire" speed="4" life="2" points="1" money="2" framePerAnim="50" />
+		<enemy name="zomby" speed="2" life="4" points="3" money="2" framePerAnim="48" />
+		<enemy name="mummy" speed="3" life="5" points="2" money="3" framePerAnim="54" />
+		<enemy name="vampire" speed="4" life="3" points="1" money="2" framePerAnim="50" />
 	</type>
 	<type name="waves">
 		<level>

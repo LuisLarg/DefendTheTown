@@ -43,16 +43,6 @@ package com.luislarghi.gamestates
 			guiContainer = new Sprite();
 			this.addChild(guiContainer);
 			
-			if(R.isAndroid() || R.isIOS())
-			{
-				if(R.isAndroid())
-				{
-					NativeApplication.nativeApplication.addEventListener(Event.ACTIVATE, OnActivate);
-					NativeApplication.nativeApplication.addEventListener(Event.DEACTIVATE, OnDeactivate);
-					NativeApplication.nativeApplication.addEventListener(KeyboardEvent.KEY_DOWN, SoftKeyDown);
-				}
-			}
-			
 			GUI_component = new GUI_MainMenu(mainGame);
 			GUI_component.Init();
 			
@@ -65,16 +55,6 @@ package com.luislarghi.gamestates
 		protected override function Clear(e:Event):void
 		{
 			super.Clear(e);
-			
-			if(R.isAndroid() || R.isIOS())
-			{
-				if(R.isAndroid())
-				{
-					NativeApplication.nativeApplication.removeEventListener(Event.ACTIVATE, OnActivate);
-					NativeApplication.nativeApplication.removeEventListener(Event.DEACTIVATE, OnDeactivate);
-					NativeApplication.nativeApplication.removeEventListener(KeyboardEvent.KEY_DOWN, SoftKeyDown);
-				}
-			}
 			
 			GUI_component.Clear();
 			GUI_component = null;
@@ -91,31 +71,17 @@ package com.luislarghi.gamestates
 			GUI_component.Draw();
 		}
 		
-		private function SoftKeyDown(e:KeyboardEvent):void
+		public override function OnBackKey():void
 		{
-			switch(e.keyCode)
-			{
-				case Keyboard.BACK:
-					e.preventDefault();
-					mainGame.SetNextState(Engine_States.STATE_EXITAPP);
-					break;
-				
-				case Keyboard.SEARCH:
-					e.preventDefault();
-					break;
-				
-				case Keyboard.MENU:
-					e.preventDefault();
-					break;
-			}
+			mainGame.SetNextState(Engine_States.STATE_EXITAPP);
 		}
 		
-		private function OnActivate(e:Event):void
+		public override function OnAppActivate():void
 		{
 			Engine_SoundManager.PlayMusic(AssetsManager.SND_Music);
 		}
 		
-		private function OnDeactivate(e:Event):void
+		public override function OnAppDeactivate():void
 		{
 			Engine_SoundManager.StopMusic();
 		}

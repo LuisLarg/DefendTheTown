@@ -11,11 +11,9 @@ package com.luislarghi.gameobjects.enemies
 
 	public class Vampire extends Enemy
 	{
-		public function Vampire(data:XML) { super(data); }
-		
-		public override function Init():void
-		{
-			super.Init();
+		public function Vampire(data:XML) 
+		{ 
+			super(data);
 			
 			SpriteSheet = new Engine_SpriteSheet(AssetsManager.BM_Vampiro, false, R.tileWidth, R.tileHeight * 2);
 			SpriteSheet.y -= R.tileHeight;

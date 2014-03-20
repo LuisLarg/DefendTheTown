@@ -60,6 +60,9 @@ package com.luislarghi.gameobjects.baseclasses
 			lifeBar = new Sprite();
 			this.addChild(lifeBar);
 			
+			currentDirection = new Point(1, 0);
+			currentPivot = new Point(0, R.tileHeight / 2);
+			
 			Deactivate();
 		}
 		
@@ -226,13 +229,22 @@ package com.luislarghi.gameobjects.baseclasses
 			survivor = false;		
 			multipleChoiceTile = false;
 			directionChanged = false;
+			
+			currentLife = originalLife;
 			lastDir = 1;
+			
+			currentAnimTile = 0;
+			SpriteSheet.scaleX = 1;
+			SpriteSheet.x = 0;
 			
 			this.x = deadPoint.x;
 			this.y = deadPoint.y;
-			currentPivot = new Point(0, R.tileHeight / 2);
-			currentDirection = new Point(1, 0);
-			currentLife = originalLife;
+			
+			currentPivot.x = 0;
+			currentPivot.y = R.tileHeight / 2;
+			
+			currentDirection.x = 1;
+			currentDirection.y = 0;
 		}
 		
 		public function Hit(damage:int):void 

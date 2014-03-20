@@ -51,8 +51,6 @@ package com.luislarghi.gamestates
 		private var currentBGimg:Engine_SpriteSheet;
 		public static var currentMap:Array;
 		public static var changingLevel:Boolean;
-		
-		private var keysMapper:Array;
 
 		public static var currentBuildMode:int = R.NULLMODE;
 		private var towers:Vector.<Tower> = new Vector.<Tower>;
@@ -94,24 +92,6 @@ package com.luislarghi.gamestates
 				waves[row].Init();
 			}
 			
-			// If running on mobile
-			if(R.isAndroid() || R.isIOS())
-			{
-				// If the OS is Android
-				if(R.isAndroid())
-				{
-					NativeApplication.nativeApplication.addEventListener(Event.DEACTIVATE, OnDeactivate);
-					NativeApplication.nativeApplication.addEventListener(KeyboardEvent.KEY_DOWN, SoftKeyDown);
-				}
-			}
-			else
-			{
-				if(!keysMapper) keysMapper = new Array();
-				
-				mainStage.addEventListener(KeyboardEvent.KEY_DOWN, KeyDown);
-				mainStage.addEventListener(KeyboardEvent.KEY_UP, KeyUp);
-			}
-			
 			mainStage.addEventListener(MouseEvent.CLICK, CheckClick);
 
 			GUI_component = new GUI_Stage1(mainGame, this);
@@ -147,24 +127,6 @@ package com.luislarghi.gamestates
 			
 			towers.length = bullets.length = waves.length = 0;
 			
-			// If running on mobile
-			if(R.isAndroid() || R.isIOS())
-			{
-				// If the OS is Android
-				if(R.isAndroid())
-				{
-					NativeApplication.nativeApplication.removeEventListener(Event.DEACTIVATE, OnDeactivate);
-					NativeApplication.nativeApplication.removeEventListener(KeyboardEvent.KEY_DOWN, SoftKeyDown);
-				}
-			}
-			else
-			{
-				keysMapper = null;
-				
-				mainStage.removeEventListener(KeyboardEvent.KEY_DOWN, KeyDown);
-				mainStage.removeEventListener(KeyboardEvent.KEY_UP, KeyUp);
-			}
-			
 			mainStage.removeEventListener(MouseEvent.CLICK, CheckClick);
 			
 			GUI_component.Clear();
@@ -173,7 +135,7 @@ package com.luislarghi.gamestates
 		
 		protected override function Draw():void
 		{
-			if(!pause && XmlManager.xmlReady && !gameOver)
+			if(!mainGame.pause && XmlManager.xmlReady && !gameOver)
 			{
 				for(var t:int = 0; t < towers.length; t++) towers[t].Draw();
 				for(var b:int = 0; b < bullets.length; b++) bullets[b].Draw();
@@ -196,7 +158,7 @@ package com.luislarghi.gamestates
 				changingLevel = false;
 			}
 			
-			if(!pause && XmlManager.xmlReady &&!gameOver)
+			if(!mainGame.pause && XmlManager.xmlReady &&!gameOver)
 			{	
 				CheckForDeadBullets();
 	
@@ -365,7 +327,7 @@ package com.luislarghi.gamestates
 		private function CheckClick(e:MouseEvent):void
 		{
 			// If the game is not paused or finnished
-			if(!pause && !gameOver)
+			if(!mainGame.pause && !gameOver)
 			{
 				// and if the position clicked is a map tile or a HUD Button Object
 				if((!(e.target.parent is Engine_GUIButton) || !(e.target.parent is GUI_HUDButton)) && currentBuildMode != R.NULLMODE)
@@ -394,43 +356,10 @@ package com.luislarghi.gamestates
 			}
 		}
 		
-		private function SoftKeyDown(e:KeyboardEvent):void
-		{
-			switch(e.keyCode)
-			{
-				case Keyboard.BACK:
-					e.preventDefault();
-					pause = !pause;
-					break;
-					
-				case Keyboard.MENU:
-					e.preventDefault();
-					break;
-				
-				case Keyboard.SEARCH:
-					e.preventDefault();
-					break;
-			}
-		}
+		public override function OnBackKey():void { mainGame.pause = !mainGame.pause;}		
+		public override function OnKeyboard(key:uint):void { if(key == Keyboard.L) mainGame.pause = !mainGame.pause; }
+		public override function OnAppDeactivate():void { mainGame.pause = true; }
 		
-		private function KeyDown(e:KeyboardEvent):void { keysMapper[e.keyCode] = true; }
-		private function KeyUp(e:KeyboardEvent):void
-		{
-			keysMapper[e.keyCode] = false;
-			
-			if(e.keyCode == Keyboard.L || e.keyCode == Keyboard.BACK)
-			{
-				pause = !pause;
-			}
-			else if(e.keyCode == Keyboard.BACKSPACE)
-			{
-				if(pause) mainGame.SetNextState(Engine_States.STATE_MAINMENU);
-			}
-		}
-		
-		private function OnDeactivate(e:Event):void { pause = true; }		
-		public static function GetPause():Boolean { return pause; }
-		public static function SetPause(v:Boolean):void { pause = v; }		
 		public static function GetGameOver():Boolean { return gameOver; }
 	}
 }

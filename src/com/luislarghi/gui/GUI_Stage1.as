@@ -179,7 +179,7 @@ package com.luislarghi.gui
 			if(!TF_WaveN)
 			{
 				TF_WaveN = new TextField();
-				TF_WaveN.text = "Wave "+(Stats.currentWave + 1)+"-"+XmlManager.levelWaves.level[Stats.currentLevel - 1].length();
+				TF_WaveN.text = "Wave "+(Stats.currentWave + 1)+"-"+Stats.currentLevel;
 				TF_WaveN.x = 20;
 				TF_WaveN.y = Engine_Game.orgGameRes.y - TF_WaveN.height;
 				TF_WaveN.selectable = false;
@@ -189,7 +189,7 @@ package com.luislarghi.gui
 			if(!TF_Format)
 			{
 				TF_Format = new TextFormat();
-				TF_Format.size = 40 * Engine_Game.newScaleX;
+				TF_Format.size = 40 * (Engine_Game.newScaleX / Engine_Game.newScaleY);
 				TF_Format.font = "Feast of Flesh BB";
 				TF_Format.color = 0xFFFFFF;
 			}
@@ -227,7 +227,7 @@ package com.luislarghi.gui
 			TF_Score.text = "Score = "+Stats.score;
 			TF_Money.text = "Money = "+Stats.money;
 			TF_TownH.text = "Town = "+Stats.townHealth;
-			TF_WaveN.text = "Wave "+(Stats.currentWave + 1)+"-"+XmlManager.levelWaves.level[Stats.currentLevel - 1].length();
+			TF_WaveN.text = "Wave "+(Stats.currentWave + 1)+"-"+Stats.currentLevel;
 		}
 		
 		public override function Draw():void
@@ -252,7 +252,7 @@ package com.luislarghi.gui
 			BT_PerroIcon.Draw();
 			BT_PiroIcon.Draw();
 			
-			if(Stage_1.GetPause())
+			if(mainGame.pause)
 			{
 				TF_WinLabel.text = "Pause";
 				window.visible = BT_Resume.visible = BT_Menu.visible = TF_WinLabel.visible = true;
