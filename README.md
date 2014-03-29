@@ -34,6 +34,12 @@ Place citizens along the road that leads to the town. Each citizen has a special
 
 Until the town fall, try to defend it from monster attacks!
 
+Development Team
+----------------
+
+- <b>Artist:</b> [Paula Gonzalez](http://pagoni.deviantart.com/)
+- <b>Programmer:</b> [Luis Larghi](http://ar.linkedin.com/in/luislarghi/)
+
 Technical Info.
 ---------------
 
