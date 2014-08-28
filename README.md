@@ -1,7 +1,7 @@
 DefendTheTown
 =============
 
-A tower defense game halloween themed.
+A Adobe AIR tower defense game halloween themed.
 
 ![Main Menu](https://lh4.googleusercontent.com/-2gawYYGIC8I/Uv5-a_XsUfI/AAAAAAAAQ8Q/5NUw4fzF5qE/w983-h553-no/Screenshot_2014-02-14-16-04-48.png)
 
