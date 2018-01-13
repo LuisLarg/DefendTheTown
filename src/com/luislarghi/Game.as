@@ -25,7 +25,6 @@ package com.luislarghi
 			XmlManager.LoadXML();
 			AssetsManager.InstantiateAssets();
 			
-			//The game starts with it's menu
 			SetNextState(Engine_States.STATE_MAINMENU);
 		}
 		
