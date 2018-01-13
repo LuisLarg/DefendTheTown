@@ -34,7 +34,7 @@ package com.luislarghi
 			// If there's a stage to change to
 			if(nextState != Engine_States.STATE_NULL)
 			{
-				// If the next stage is not exit remove the current one...
+				// If the next stage is not the "exit state" then remove the current one...
 				if(nextState != Engine_States.STATE_EXITAPP && currentState)
 				{
 					mainStage.removeChild(currentState);
